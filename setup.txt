@@ -7,6 +7,12 @@ sudo apt-get install python3-pip
 #required for ALL
 pip3 install pymongo
 
+#get the script:
+curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/feed_copterspotter.py
+
+#add your credentials and feeder type to the top of the file:
+nano feed_copterspotter.py
+
 #type:
 crontab -e
 
