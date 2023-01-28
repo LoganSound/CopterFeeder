@@ -46,8 +46,16 @@ Add your credentials and feeder type to the .env file
 nano .env
 ```
 
+Change the permissions on the .env file so that only you read Read/Write the file: 
+
+```Shell
+chmod go-rwx .env
+```
+
+
 Credentials can also be specified using command line options (see below). Command line options 
-take precedence over environtment settings. 
+take precedence over environtment settings. Note that Userid/Password specified on the commandline 
+will able to be seen by others using "ps -ef" 
 
 
 Make the main script executable
@@ -55,10 +63,17 @@ Make the main script executable
 chmod +x feed_copterspotter.py
 ```
 
+Note: Examples below assume the script is installed in "/home/pi/"  - this is not a
+requirement and certainly not a recommendation - the script can be installed in a
+convenient directory of your choice. 
+
+
 The script is intended to be run as a daemon: 
 
 ```Shell
+
 /home/pi/feed_copterspotter.py -d
+
 ```
 
 Or run on the command line, so that you can watch debugging output:
@@ -128,4 +143,3 @@ optional arguments:
 
 ```
  
-
