@@ -9,7 +9,7 @@ pip3 install pymongo
 
 #get the script and our helicopter database:
 curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/feed_copterspotter.py
-curl "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -o "/home/pi/bills_operators.csv"
+wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/bills_operators.csv"
 
 #add your credentials and feeder type to the top of the file:
 nano feed_copterspotter.py
@@ -21,8 +21,8 @@ chmod a+x feed_copterspotter.py
 crontab -e
 
 #and add the following lines:
-* * * * * /home/pi/feed_copterspotter.py >> copterspotter.log 2>&1
-0 0 * * * curl  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -o "/home/pi/bills_operators.csv"
+* * * * * python /home/pi/feed_copterspotter.py >> copterspotter.log 2>&1
+0 0 * * * wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/bills_operators.csv"
 
 #DONE
 #you can TEST it by typing
