@@ -55,7 +55,7 @@ chmod go-rwx .env
 
 Credentials can also be specified using command line options (see below). Command line options 
 take precedence over environtment settings. Note that Userid/Password specified on the commandline 
-will able to be seen by others using "ps -ef" 
+will be able to be seen by others using "ps -ef" 
 
 
 Make the main script executable
