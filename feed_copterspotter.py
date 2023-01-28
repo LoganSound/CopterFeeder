@@ -186,7 +186,7 @@ def update_helidb():
             squawk = ""
             output += " no squawk"
 
-        logger.debug("Output: %s", output )
+        logger.info("Heliopter Reported: %s", output )
 
         if heli_type != "":
             mydict = {"type": "Feature",
@@ -326,9 +326,8 @@ if __name__ == '__main__':
 
     if args.feederid:
         FEEDER_ID = args.feederid
-
-    elif config['FEEDER_ID']:
-        FEEDER_ID = config.['FEEDER_ID']
+    elif "FEEDER_ID" in config:
+        FEEDER_ID = config["FEEDER_ID"]
     else: 
         FEEDER_ID = None
         logger.error("No FEEDER_ID Found - Exiting")
@@ -337,7 +336,7 @@ if __name__ == '__main__':
     if args.server:
         server = args.server
     elif 'SERVER' in config:  
-        server = config['server']
+        server = config["SERVER"]
     else:
         server = 'localhost'
 
@@ -346,7 +345,7 @@ if __name__ == '__main__':
     if args.port:
         port = args.port
     elif 'PORT' in config:  
-        port = config['PORT']
+        port = config["PORT"]
     else:
          port = 8080
 

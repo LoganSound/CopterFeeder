@@ -1,33 +1,129 @@
-#start by running
+
+Start by running
+
+```Shell
 sudo apt-get update
+```
 
 #the following is required for FR24 feeder images
+
+```Shell
 sudo apt-get install python3-pip
+```
 
-#required for ALL
-pip3 install pymongo
+Get the script using git 
 
-#get the script and our helicopter database:
+```Shell
+git clone https://github.com/LoganSound/CopterFeeder.git
+```
+
+or using curl
+
+```Shell
 curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/feed_copterspotter.py
+curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/requirements.txt
+```
+
+And then our helicopter database:
+
+```Shell 
 wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/bills_operators.csv"
+``` 
 
-#add your credentials and feeder type to the top of the file:
-nano feed_copterspotter.py
+Run pip3 to install requirements 
+```Shell
+pip3 install -r requirements.txt 
+```
 
-#make it executable
-chmod a+x feed_copterspotter.py
+
+Copy example_env_file to .env
+```Shell
+cp  example_env_file .env
+```
+
+
+Add your credentials and feeder type to the .env file
+```Shell
+nano .env
+```
+
+Make the main script executable
+```Shell
+chmod +x feed_copterspotter.py
+```
+
+The script is intended to be run as a daemon: 
+
+```Shell
+/home/pi/feed_copterspotter.py -d
+```
+
+Or run on the command line, so that you can watch debugging output:
+
+```Shell
+
+/home/pi/feed_copterspotter.py -D
+
+```
+
+If you want to run from Crontab, use the -o (one shot) option 
 
 #type:
+```Shell
 crontab -e
+```
 
-#and add the following lines:
-* * * * * python /home/pi/feed_copterspotter.py >> copterspotter.log 2>&1
+And add the following lines:
+
+```Code
+* * * * * python3 /home/pi/feed_copterspotter.py -o >> copterspotter.log 2>&1
 0 0 * * * wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/bills_operators.csv"
+```
 
 #DONE
-#you can TEST it by typing
-python3 feed_copterspotter.py
 
-# when an identifyied helicopter is nearby it should return something like:
-1674864903.049228 A139 TRP7 450 600 97.22 38.909385,-76.845398 5107
-#if you consistently see "None" or "Null" we may need to tweak your variables
+You can TEST one iteration by typing
+
+```Shell
+python3 feed_copterspotter.py -o 
+``` 
+
+When an identifyied helicopter is nearby, in debug mode (-D switch), the script will
+
+output lines something like:
+
+```Code
+Helicopter Reported: 1674864903.049228 A139 TRP7 450 600 97.22 38.909385,-76.845398 5107
+```
+
+If you consistently see "None" or "Null" we may need to tweak your variables
+
+
+Help is available with the -h or --help option: 
+
+
+```Code
+
+./feed_copterspotter.py --help 
+usage: feed_copterspotter.py [-h] [-V] [-v] [-D] [-i] [-o] [-s] [-p] [-u] [-P] [-f] [-d]
+
+Helicopters of DC data loader
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -V, --version    Print version and exit
+  -v, --verbose    Emit Verbose message stream
+  -D, --debug      Emit Debug messages
+  -i, --interval   Interval between cycles in seconds
+  -o, --once       Run once and exit
+  -s, --server     dump1090 server hostname
+  -p, --port       alt-http port on dump1090 server
+  -u, --mongouser  MONGO DB User
+  -P, --mongopw    Mongo DB Password
+  -f, --feederid   Feeder ID
+  -d, --daemon     Run as a daemon
+
+```
+ 
+
+

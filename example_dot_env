@@ -1,0 +1,6 @@
+FEEDER_ID = "MyFeederID"
+MONGOUSER = "MyMONGOUSER"
+MONGOPW = "SuperSecretPassword"
+
+SERVER = localhost
+PORT = 8080
