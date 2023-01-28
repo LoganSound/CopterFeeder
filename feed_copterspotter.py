@@ -38,12 +38,6 @@ import pymongo
 ## YYYYMMDD_HHMM_REV
 VERSION = 20220128_1127_001
 
-
-
-
-
-
-
 logger = logging.getLogger(__name__)
 
 

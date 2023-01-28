@@ -5,26 +5,27 @@ Start by running
 sudo apt-get update
 ```
 
-#the following is required for FR24 feeder images
+The following is required if you don't have pip3 installed (eg: FR24 feeder images )
+
 
 ```Shell
 sudo apt-get install python3-pip
 ```
 
-Get the script using git 
+Get the script using git:
 
 ```Shell
 git clone https://github.com/LoganSound/CopterFeeder.git
 ```
 
-or using curl
+or using curl:
 
 ```Shell
 curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/feed_copterspotter.py
 curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/requirements.txt
 ```
 
-And then our helicopter database:
+And then the helicopter database:
 
 ```Shell 
 wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/bills_operators.csv"
@@ -35,17 +36,19 @@ Run pip3 to install requirements
 pip3 install -r requirements.txt 
 ```
 
-
 Copy example_env_file to .env
 ```Shell
 cp  example_env_file .env
 ```
 
-
 Add your credentials and feeder type to the .env file
 ```Shell
 nano .env
 ```
+
+Credentials can also be specified using command line options (see below). Command line options 
+take precedence over environtment settings. 
+
 
 Make the main script executable
 ```Shell
@@ -80,17 +83,17 @@ And add the following lines:
 0 0 * * * wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/bills_operators.csv"
 ```
 
-#DONE
+And you're DONE!
 
-You can TEST one iteration by typing
+
+You can TEST one iteration by typing:
 
 ```Shell
 python3 feed_copterspotter.py -o 
 ``` 
 
-When an identifyied helicopter is nearby, in debug mode (-D switch), the script will
-
-output lines something like:
+When an identifyied helicopter is nearby, in verbose mode (-v switch) or debug mode
+(-D switch), the script will output lines something like:
 
 ```Code
 Helicopter Reported: 1674864903.049228 A139 TRP7 450 600 97.22 38.909385,-76.845398 5107
@@ -125,5 +128,4 @@ optional arguments:
 
 ```
  
-
 
