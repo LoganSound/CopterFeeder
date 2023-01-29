@@ -114,6 +114,17 @@ When an identifyied helicopter is nearby, in verbose mode (-v switch) or debug m
 Helicopter Reported: 1674864903.049228 A139 TRP7 450 600 97.22 38.909385,-76.845398 5107
 ```
 
+You can optionally log those reports to a file using the -l option, which can be handy if
+you're running in daemon mode:
+
+```Code
+
+/home/pi/feed_copterspotter.py -d -l /full/path/to/logfile
+
+```
+
+
+
 If you consistently see "None" or "Null" we may need to tweak your variables
 
 
@@ -122,24 +133,33 @@ Help is available with the -h or --help option:
 
 ```Code
 
-./feed_copterspotter.py --help 
-usage: feed_copterspotter.py [-h] [-V] [-v] [-D] [-i] [-o] [-s] [-p] [-u] [-P] [-f] [-d]
+./feed_copterspotter.py --help
+usage: feed_copterspotter.py [-h] [-V] [-v] [-D] [-d] [-o] [-l LOG] [-i INTERVAL] [-s SERVER]
+                             [-p PORT] [-u MONGOUSER] [-P MONGOPW] [-f FEEDERID]
 
 Helicopters of DC data loader
 
 optional arguments:
-  -h, --help       show this help message and exit
-  -V, --version    Print version and exit
-  -v, --verbose    Emit Verbose message stream
-  -D, --debug      Emit Debug messages
-  -i, --interval   Interval between cycles in seconds
-  -o, --once       Run once and exit
-  -s, --server     dump1090 server hostname
-  -p, --port       alt-http port on dump1090 server
-  -u, --mongouser  MONGO DB User
-  -P, --mongopw    Mongo DB Password
-  -f, --feederid   Feeder ID
-  -d, --daemon     Run as a daemon
+  -h, --help            show this help message and exit
+  -V, --version         Print version and exit
+  -v, --verbose         Emit Verbose message stream
+  -D, --debug           Emit Debug messages
+  -d, --daemon          Run as a daemon
+  -o, --once            Run once and exit
+  -l LOG, --log LOG     File for logging reported rotorcraft
+  -i INTERVAL, --interval INTERVAL
+                        Interval between cycles in seconds
+  -s SERVER, --server SERVER
+                        dump1090 server hostname (default localhost)
+  -p PORT, --port PORT  alt-http port on dump1090 server (default 8080)
+  -u MONGOUSER, --mongouser MONGOUSER
+                        MONGO DB User
+  -P MONGOPW, --mongopw MONGOPW
+                        Mongo DB Password
+  -f FEEDERID, --feederid FEEDERID
+                        Feeder ID
+
+
 
 ```
  

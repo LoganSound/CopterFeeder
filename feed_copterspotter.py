@@ -278,16 +278,21 @@ if __name__ == '__main__':
     parser.add_argument("-D","--debug", help="Emit Debug messages",
                          action="store_true", default=False)
 
-    parser.add_argument("-l","--log", help="File for logging reported rotorcraft",
-                         action="store", default="")
+    parser.add_argument("-d","--daemon", help="Run as a daemon",
+                         action="store_true", default=False)
 
-    parser.add_argument("-i","--interval", help="Interval between cycles in seconds",
-                         action="store", type=int, default=60)
     parser.add_argument("-o","--once", help="Run once and exit",
                          action="store_true", default=False)
 
+    parser.add_argument("-l","--log", help="File for logging reported rotorcraft",
+                         action="store", default=None)
+
+    parser.add_argument("-i","--interval", help="Interval between cycles in seconds",
+                         action="store", type=int, default=60)
+
     parser.add_argument("-s","--server", help="dump1090 server hostname (default localhost)",
-                         nargs='?',action="store", default=None)
+                         nargs=1, action="store", default=None)
+
     parser.add_argument("-p","--port", help="alt-http port on dump1090 server (default 8080)",
                          action="store", type=int, default=None)
 
@@ -297,9 +302,6 @@ if __name__ == '__main__':
                          action="store", default=None)
     parser.add_argument("-f","--feederid", help="Feeder ID",
                          action="store", default=None)
-
-    parser.add_argument("-d","--daemon", help="Run as a daemon",
-                         action="store_true", default=False)
 
     args = parser.parse_args()
 
