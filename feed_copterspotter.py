@@ -126,8 +126,11 @@ def update_helidb():
         except BaseException:
             output += " no type or reg"
 
+        if "category" in plane and plane["category"] == "A7": 
+            logger.info("Aircraft: %s may be rotorcraft - Category: %s",plane["hex"],plane["category"])
+
         if heli_type == "" or heli_type is None :
-            logger.debug('%s Not a known rotorcraft', iaco_hex)
+            logger.debug('%s Not a known rotorcraft ', iaco_hex)
             continue
 
         logger.debug("Parsing Helicopter: %s", iaco_hex)
