@@ -6,7 +6,7 @@ __pycache__/
 
 # Bills Operators 
 
-bills_operators.csv
+bills_operators*.csv
 
 # C extensions
 *.so
