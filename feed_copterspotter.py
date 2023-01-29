@@ -180,14 +180,15 @@ def update_helidb():
         try:
             squawk = str(plane["squawk"])
             output += " " + squawk
+        except BaseException:
 
             squawk = ""
             output += " no squawk"
 
-        logger.info("Heliopter Reported %s %s", hex_iaco, output )
+        logger.info("Heliopter Reported %s %s", plane["hex"], output )
 
         if copter_logger:
-            copter_logger.info("Heliopter Reported %s  %s", hex_iaco, output )
+            copter_logger.info("Heliopter Reported %s: %s", plane["hex"], output )
 
         if heli_type != "":
             mydict = {"type": "Feature",
