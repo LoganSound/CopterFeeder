@@ -185,7 +185,7 @@ def update_helidb():
             squawk = ""
             output += " no squawk"
 
-        logger.info("Heliopter Reported %s %s", plane["hex"], output )
+        logger.info("Heliopter Reported %s: %s", plane["hex"], output )
 
         if copter_logger:
             copter_logger.info("Heliopter Reported %s: %s", plane["hex"], output )
