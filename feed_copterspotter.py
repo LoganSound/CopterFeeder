@@ -87,7 +87,7 @@ def update_helidb():
     ''' Main '''
 
 
-    logger.info('Updating Helidb')
+    logger.info('Updating Helidb at %s', datetime.datetime.now())
 
     try:
 
@@ -127,7 +127,7 @@ def update_helidb():
             output += " no type or reg"
 
         if "category" in plane and plane["category"] == "A7": 
-            logger.info("Aircraft: %s may be rotorcraft - Category: %s",plane["hex"],plane["category"])
+            logger.info("Aircraft: %s appears be rotorcraft - Category: %s", iaco_hex, plane["category"])
 
         if heli_type == "" or heli_type is None :
             logger.debug('%s Not a known rotorcraft ', iaco_hex)
@@ -180,14 +180,14 @@ def update_helidb():
         try:
             squawk = str(plane["squawk"])
             output += " " + squawk
-        except BaseException:
+
             squawk = ""
             output += " no squawk"
 
-        logger.info("Heliopter Reported: %s", output )
+        logger.info("Heliopter Reported %s %s", hex_iaco, output )
 
         if copter_logger:
-            copter_logger.info("Heliopter Reported: %s", output )
+            copter_logger.info("Heliopter Reported %s  %s", hex_iaco, output )
 
         if heli_type != "":
             mydict = {"type": "Feature",
