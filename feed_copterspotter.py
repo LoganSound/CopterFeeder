@@ -223,7 +223,7 @@ def find_helis( iaco_hex ):
     '''
         check if iaco is known and return type or empty string
     '''
-
+    logger.debug("Checking for: %s", iaco_hex)
     if heli_types[iaco_hex]:
         return heli_types[iaco_hex]
 
@@ -239,8 +239,8 @@ def load_helis_from_file(heli_file):
     with open(heli_file, encoding='UTF-8') as csvfile:
         opsread = csv.DictReader(csvfile)
         for row in opsread:
-            helis_dict[row["hex"]] = row["type"]
-
+            helis_dict[row["hex"].lower()] = row["type"]
+            logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"] )
         return helis_dict
 
 
