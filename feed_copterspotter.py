@@ -170,6 +170,7 @@ def update_helidb():
             lat = float(plane["lat"])
             lon = float(plane["lon"])
             output += " " + str(lat) + "," + str(lon)
+
         except BaseException:
             lat = None
             lon = None
@@ -181,6 +182,9 @@ def update_helidb():
             output += " no squawk"
 
         logger.info("Heliopter Reported: %s", output )
+
+        if copter_logger:
+            copter_logger.info("Heliopter Reported: %s", output )
 
         if heli_type != "":
             mydict = {"type": "Feature",
@@ -273,22 +277,26 @@ if __name__ == '__main__':
                          action="store_true", default=False)
     parser.add_argument("-D","--debug", help="Emit Debug messages",
                          action="store_true", default=False)
+
+    parser.add_argument("-l","--log", help="File for logging reported rotorcraft",
+                         action="store", default="")
+
     parser.add_argument("-i","--interval", help="Interval between cycles in seconds",
-                         action="store_true", default=60)
+                         action="store", type=int, default=60)
     parser.add_argument("-o","--once", help="Run once and exit",
                          action="store_true", default=False)
 
-    parser.add_argument("-s","--server", help="dump1090 server hostname",
-                         action="store_true", default=None)
-    parser.add_argument("-p","--port", help="alt-http port on dump1090 server",
-                         action="store_true", default=None)
+    parser.add_argument("-s","--server", help="dump1090 server hostname (default localhost)",
+                         nargs='?',action="store", default=None)
+    parser.add_argument("-p","--port", help="alt-http port on dump1090 server (default 8080)",
+                         action="store", type=int, default=None)
 
     parser.add_argument("-u","--mongouser", help="MONGO DB User",
-                         action="store_true", default=None)
+                         action="store", default=None)
     parser.add_argument("-P","--mongopw", help="Mongo DB Password",
-                         action="store_true", default=None)
+                         action="store", default=None)
     parser.add_argument("-f","--feederid", help="Feeder ID",
-                         action="store_true", default=None)
+                         action="store", default=None)
 
     parser.add_argument("-d","--daemon", help="Run as a daemon",
                          action="store_true", default=False)
@@ -315,6 +323,16 @@ if __name__ == '__main__':
 #        logger.addHandler(ch)
 
         logger.setLevel(logging.DEBUG)
+
+
+    if args.log:
+
+	# opens a second logging instance specifically for logging noted copters "output"
+        copter_logger = logging.getLogger('copter_logger')
+        cl=logging.FileHandler(args.log)
+        cl.setLevel(logging.INFO)
+        copter_logger.addHandler(cl)
+
 
     # Should be pulling these from env
 
