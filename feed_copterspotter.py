@@ -120,6 +120,9 @@ def update_helidb():
                 data = requests.get(AIRCRAFT_URL, timeout=5)
                 data.status_code == 200
                 logger.debug("Found data at URL: %s", AIRCRAFT_URL)
+                dt_stamp = data.json()["now"]
+                logger.debug("Found TimeStamp %s", dt_stamp)
+                planes = data.json()["aircraft"]
 
             except requests.exceptions.RequestException as e:
                 logger.error("Got ConnectionError trying to request URL %s", e)
@@ -131,6 +134,9 @@ def update_helidb():
                     with open("/run/" + AIRPLANES_FOLDER + "/aircraft.json") as json_file:
                         logger.debug("Loading data from file: %s ", '/run/' + AIRPLANES_FOLDER + '/aircraft.json')
                         data = json.load(json_file)
+                        planes = data["aircraft"]
+                        dt_stamp = data["now"]
+                        logger.debug("Found TimeStamp %s", dt_stamp)
                         break
                 else: 
                     logger.info("File not Found: %s", '/run/' + AIRPLANES_FOLDER + '/aircraft.json')
@@ -140,9 +146,9 @@ def update_helidb():
             sys.exit()
         
         
-        dt_stamp = data.json()["now"]
-        logger.debug("Found TimeStamp %s", dt_stamp)
-        planes = data.json()["aircraft"]
+        # dt_stamp = data.json()["now"]
+        # logger.debug("Found TimeStamp %s", dt_stamp)
+        # planes = data.json()["aircraft"]
 
 
     except (ValueError, UnboundLocalError, AttributeError) as err:
