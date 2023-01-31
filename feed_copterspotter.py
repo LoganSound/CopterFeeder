@@ -37,7 +37,7 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = 20220129_0815_001
+VERSION = "20230131_1600_002"
 
 logger = logging.getLogger(__name__)
 
@@ -120,6 +120,9 @@ def update_helidb():
                 data = requests.get(AIRCRAFT_URL, timeout=5)
                 data.status_code == 200
                 logger.debug("Found data at URL: %s", AIRCRAFT_URL)
+                dt_stamp = data.json()["now"]
+                logger.debug("Found TimeStamp %s", dt_stamp)
+                planes = data.json()["aircraft"]
 
             except requests.exceptions.RequestException as e:
                 logger.error("Got ConnectionError trying to request URL %s", e)
@@ -129,20 +132,23 @@ def update_helidb():
             for AIRPLANES_FOLDER in AIRPLANES_FOLDERS:
                 if os.path.exists('/run/'+AIRPLANES_FOLDER+'/aircraft.json'):
                     with open("/run/" + AIRPLANES_FOLDER + "/aircraft.json") as json_file:
-                        logger.debug("Loading data from file: ", '/run/'+AIRPLANES_FOLDER+'/aircraft.json')
+                        logger.debug("Loading data from file: %s ", '/run/' + AIRPLANES_FOLDER + '/aircraft.json')
                         data = json.load(json_file)
+                        planes = data["aircraft"]
+                        dt_stamp = data["now"]
+                        logger.debug("Found TimeStamp %s", dt_stamp)
                         break
                 else: 
-                    logger.info("File not Found: %s", '/run/'+AIRPLANES_FOLDER+'/aircraft.json')
+                    logger.info("File not Found: %s", '/run/' + AIRPLANES_FOLDER + '/aircraft.json')
 
         if data == "" or data == None:
             logger.error("No aircraft data read")
             sys.exit()
         
         
-        dt_stamp = data.json()["now"]
-        logger.debug("Found TimeStamp %s", dt_stamp)
-        planes = data.json()["aircraft"]
+        # dt_stamp = data.json()["now"]
+        # logger.debug("Found TimeStamp %s", dt_stamp)
+        # planes = data.json()["aircraft"]
 
 
     except (ValueError, UnboundLocalError, AttributeError) as err:
