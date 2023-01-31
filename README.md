@@ -32,7 +32,10 @@ wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8k
 ``` 
 move into the project folder:
 
-```Shell ``` 
+```Shell 
+cd CopterFeeder/
+``` 
+
 Run pip3 to install requirements 
 ```Shell
 pip3 install -r requirements.txt 
