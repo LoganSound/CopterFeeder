@@ -43,18 +43,18 @@ pip3 install -r requirements.txt
 
 Copy example_env_file to .env
 ```Shell
-cp  example_env_file .env
+cp  example_dot_env YOURNAME.env
 ```
 
 Add your credentials and feeder type to the .env file
 ```Shell
-nano .env
+nano YOURNAME.env
 ```
 
 Change the permissions on the .env file so that only you read Read/Write the file: 
 
 ```Shell
-chmod go-rwx .env
+chmod go-rwx YOURNAME.env
 ```
 
 
