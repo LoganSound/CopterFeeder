@@ -25,15 +25,15 @@ curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/feed_co
 curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/requirements.txt
 ```
 
-And then the helicopter database:
-
-```Shell 
-wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "CopterFeeder/bills_operators.csv"
-``` 
 move into the project folder:
 
 ```Shell 
 cd CopterFeeder/
+``` 
+And then download the latest helicopter database:
+
+```Shell 
+wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "bills_operators.csv"
 ``` 
 
 Run pip3 to install requirements 
