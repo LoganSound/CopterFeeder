@@ -129,11 +129,11 @@ def update_helidb():
             for AIRPLANES_FOLDER in AIRPLANES_FOLDERS:
                 if os.path.exists('/run/'+AIRPLANES_FOLDER+'/aircraft.json'):
                     with open("/run/" + AIRPLANES_FOLDER + "/aircraft.json") as json_file:
-                        logger.debug("Loading data from file: ", '/run/'+AIRPLANES_FOLDER+'/aircraft.json')
+                        logger.debug("Loading data from file: %s ", '/run/' + AIRPLANES_FOLDER + '/aircraft.json')
                         data = json.load(json_file)
                         break
                 else: 
-                    logger.info("File not Found: %s", '/run/'+AIRPLANES_FOLDER+'/aircraft.json')
+                    logger.info("File not Found: %s", '/run/' + AIRPLANES_FOLDER + '/aircraft.json')
 
         if data == "" or data == None:
             logger.error("No aircraft data read")
