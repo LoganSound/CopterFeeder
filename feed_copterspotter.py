@@ -4,7 +4,7 @@
 Upload rotorcraft positions to Helicopters of DC
 '''
 
-#import json
+import json
 
 import csv
 
@@ -17,6 +17,7 @@ import datetime
 import logging
 import argparse
 import sys
+import os
 
 from time import sleep
 
@@ -36,10 +37,19 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = 20220128_1127_001
+VERSION = 20220129_0815_001
 
 logger = logging.getLogger(__name__)
 
+# list of folders to check for dump1090 json files
+# FR24: /run/dump1090-mutability
+# ADSBEXchange location: /run/adsbexchange-feed
+# Readsb location: /run/readsb
+# anecdotally I heard some images have data in:  /run/dump1090/data/
+# Flight Aware /run/dump1090-fa
+
+
+AIRPLANES_FOLDERS = ["dump1090-fa", "dump1090-mutability", "adsbexchange-feed", "readsb","dump1090", ]
 
 # Hard Coding User/Pw etc is bad umkay
 # Should be pulling thse from env
@@ -87,7 +97,7 @@ def update_helidb():
     ''' Main '''
 
 
-    logger.info('Updating Helidb')
+    logger.info('Updating Helidb at %s', datetime.datetime.now())
 
     try:
 
@@ -100,10 +110,44 @@ def update_helidb():
 #       planes = req.json()["aircraft"]
 
 #       use this if assuming the request succeeds and spits out json
-        planes = requests.get(AIRCRAFT_URL, timeout=5).json()["aircraft"]
+
+        data=None
+
+        # The following if / else should probably be outside of this function as it should only be done at startup time. 
+        
+        if AIRCRAFT_URL:
+            try:
+                data = requests.get(AIRCRAFT_URL, timeout=5)
+                data.status_code == 200
+                logger.debug("Found data at URL: %s", AIRCRAFT_URL)
+
+            except requests.exceptions.RequestException as e:
+                logger.error("Got ConnectionError trying to request URL %s", e)
+                raise SystemExit(e)
+                
+        else:
+            for AIRPLANES_FOLDER in AIRPLANES_FOLDERS:
+                if os.path.exists('/run/'+AIRPLANES_FOLDER+'/aircraft.json'):
+                    with open("/run/" + AIRPLANES_FOLDER + "/aircraft.json") as json_file:
+                        logger.debug("Loading data from file: ", '/run/'+AIRPLANES_FOLDER+'/aircraft.json')
+                        data = json.load(json_file)
+                        break
+                else: 
+                    logger.info("File not Found: %s", '/run/'+AIRPLANES_FOLDER+'/aircraft.json')
+
+        if data == "" or data == None:
+            logger.error("No aircraft data read")
+            sys.exit()
+        
+        
+        dt_stamp = data.json()["now"]
+        logger.debug("Found TimeStamp %s", dt_stamp)
+        planes = data.json()["aircraft"]
+
 
     except (ValueError, UnboundLocalError, AttributeError) as err:
         logger.error("JSON Decode Error: %s", err)
+        sys.exit()
 
     logger.debug("Aircraft to check: %d", len(planes))
 
@@ -113,7 +157,7 @@ def update_helidb():
 
         # There is a ts in the json output - should we use that?
 #        dt = ts = datetime.datetime.now().timestamp()
-        dt_stamp = datetime.datetime.now().timestamp()
+        #dt_stamp = datetime.datetime.now().timestamp()
 
         output += str(dt_stamp)
         callsign = ""
@@ -126,8 +170,16 @@ def update_helidb():
         except BaseException:
             output += " no type or reg"
 
+        if "category" in plane and plane["category"] == "A7": 
+            if "flight" in plane:
+                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], str(plane["flight"]).strip(), heli_type )
+            else:
+                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], "no_call", heli_type )
+
+
         if heli_type == "" or heli_type is None :
-            logger.debug('%s Not a known rotorcraft', iaco_hex)
+            # This short circuits parsing of aircraft with unknown iaco_hex codes
+            logger.debug('%s Not a known rotorcraft ', iaco_hex)
             continue
 
         logger.debug("Parsing Helicopter: %s", iaco_hex)
@@ -170,6 +222,7 @@ def update_helidb():
             lat = float(plane["lat"])
             lon = float(plane["lon"])
             output += " " + str(lat) + "," + str(lon)
+
         except BaseException:
             lat = None
             lon = None
@@ -177,10 +230,12 @@ def update_helidb():
             squawk = str(plane["squawk"])
             output += " " + squawk
         except BaseException:
+
             squawk = ""
             output += " no squawk"
 
-        logger.info("Heliopter Reported: %s", output )
+        logger.info("Heliopter Reported %s: %s", plane["hex"], output )
+
 
         if heli_type != "":
             mydict = {"type": "Feature",
@@ -219,7 +274,7 @@ def find_helis( iaco_hex ):
     '''
         check if iaco is known and return type or empty string
     '''
-
+    logger.debug("Checking for: %s", iaco_hex)
     if heli_types[iaco_hex]:
         return heli_types[iaco_hex]
 
@@ -235,8 +290,8 @@ def load_helis_from_file(heli_file):
     with open(heli_file, encoding='UTF-8') as csvfile:
         opsread = csv.DictReader(csvfile)
         for row in opsread:
-            helis_dict[row["hex"]] = row["type"]
-
+            helis_dict[row["hex"].lower()] = row["type"]
+            logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"] )
         return helis_dict
 
 
@@ -273,25 +328,35 @@ if __name__ == '__main__':
                          action="store_true", default=False)
     parser.add_argument("-D","--debug", help="Emit Debug messages",
                          action="store_true", default=False)
-    parser.add_argument("-i","--interval", help="Interval between cycles in seconds",
-                         action="store_true", default=60)
-    parser.add_argument("-o","--once", help="Run once and exit",
-                         action="store_true", default=False)
-
-    parser.add_argument("-s","--server", help="dump1090 server hostname",
-                         action="store_true", default=None)
-    parser.add_argument("-p","--port", help="alt-http port on dump1090 server",
-                         action="store_true", default=None)
-
-    parser.add_argument("-u","--mongouser", help="MONGO DB User",
-                         action="store_true", default=None)
-    parser.add_argument("-P","--mongopw", help="Mongo DB Password",
-                         action="store_true", default=None)
-    parser.add_argument("-f","--feederid", help="Feeder ID",
-                         action="store_true", default=None)
 
     parser.add_argument("-d","--daemon", help="Run as a daemon",
                          action="store_true", default=False)
+
+    parser.add_argument("-o","--once", help="Run once and exit",
+                         action="store_true", default=False)
+
+    parser.add_argument("-l","--log", help="File for logging reported rotorcraft",
+                         action="store", default=None)
+
+    parser.add_argument("-i","--interval", help="Interval between cycles in seconds",
+                         action="store", type=int, default=60)
+
+    parser.add_argument("-s","--server", help="dump1090 server hostname (default localhost)",
+                         nargs=1, action="store", default=None)
+
+    parser.add_argument("-p","--port", help="alt-http port on dump1090 server (default 8080)",
+                         action="store", type=int, default=None)
+
+    parser.add_argument("-u","--mongouser", help="MONGO DB User",
+                         action="store", default=None)
+    parser.add_argument("-P","--mongopw", help="Mongo DB Password",
+                         action="store", default=None)
+    parser.add_argument("-f","--feederid", help="Feeder ID",
+                         action="store", default=None)
+    
+    parser.add_argument("-r", "--readlocalfiles", help="Check for aircraft.json files under /run/... ",
+                        action="store_true", default=False)
+    
 
     args = parser.parse_args()
 
@@ -316,6 +381,17 @@ if __name__ == '__main__':
 
         logger.setLevel(logging.DEBUG)
 
+
+    if args.log:
+
+	# opens a second logging instance specifically for logging noted copters "output"
+        logger.debug("Adding FileHandler to logger with filename %s", args.log)
+        # copter_logger = logging.getLogger('copter_logger')
+        cl=logging.FileHandler(args.log)
+        logger.addHandler(cl)
+        cl.setLevel(logging.INFO)
+
+
     # Should be pulling these from env
 
     if args.feederid:
@@ -327,27 +403,32 @@ if __name__ == '__main__':
         logger.error("No FEEDER_ID Found - Exiting")
         sys.exit()
 
-    if args.server:
-        server = args.server
-    elif 'SERVER' in config:  
-        server = config["SERVER"]
+    if args.readlocalfiles:
+        logger.debug("Using Local json files")
+        AIRCRAFT_URL = None
+        server = None
+        port = None
+
     else:
-        server = 'localhost'
+        if args.server:
+            server = args.server
+        elif 'SERVER' in config:  
+            server = config["SERVER"]
+        else:
+            server = 'localhost'
+        if args.port:
+         port = args.port
+        elif 'PORT' in config:  
+            port = config["PORT"]
+        else:
+            port = 8080
 
-    #reqUrl = f"{base_url}/api/token/"
-
-    if args.port:
-        port = args.port
-    elif 'PORT' in config:  
-        port = config["PORT"]
+    if server and port: 
+        AIRCRAFT_URL = f'http://{server}:{port}/data/aircraft.json'
+        logger.debug("Using AIRCRAFT_URL: %s", AIRCRAFT_URL) 
     else:
-         port = 8080
-
-    AIRCRAFT_URL=f'http://{server}:{port}/data/aircraft.json'
-
-    logger.debug("Using AIRCRAFT_URL: %s", AIRCRAFT_URL) 
-
-
+        AIRCRAFT_URL = None
+        logger.debug("AIRCRAFT_URL set to None") 
 
     if args.mongopw:
         MONGOPW = args.mongopw
