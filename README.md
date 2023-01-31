@@ -132,14 +132,13 @@ Help is available with the -h or --help option:
 
 
 ```Code
-
 ./feed_copterspotter.py --help
-usage: feed_copterspotter.py [-h] [-V] [-v] [-D] [-d] [-o] [-l LOG] [-i INTERVAL] [-s SERVER]
-                             [-p PORT] [-u MONGOUSER] [-P MONGOPW] [-f FEEDERID]
+usage: feed_copterspotter.py [-h] [-V] [-v] [-D] [-d] [-o] [-l LOG] [-i INTERVAL] [-s SERVER] [-p PORT] [-u MONGOUSER]
+                             [-P MONGOPW] [-f FEEDERID] [-r]
 
 Helicopters of DC data loader
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -V, --version         Print version and exit
   -v, --verbose         Emit Verbose message stream
@@ -158,8 +157,7 @@ optional arguments:
                         Mongo DB Password
   -f FEEDERID, --feederid FEEDERID
                         Feeder ID
-
-
+  -r, --readlocalfiles  Check for aircraft.json files under /run/...
 
 ```
  
