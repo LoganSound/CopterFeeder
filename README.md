@@ -15,14 +15,8 @@ sudo apt-get install python3-pip
 Get the script using git:
 
 ```Shell
+sudo apt-get install git
 git clone https://github.com/LoganSound/CopterFeeder.git
-```
-
-or using curl:
-
-```Shell
-curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/feed_copterspotter.py
-curl -LJO https://raw.githubusercontent.com/LoganSound/CopterFeeder/main/requirements.txt
 ```
 
 move into the project folder:
@@ -77,7 +71,7 @@ The script is intended to be run as a daemon:
 
 ```Shell
 
-/home/pi/feed_copterspotter.py -d
+/home/pi/feed_copterspotter.py -d -r
 
 ```
 
@@ -85,7 +79,7 @@ Or run on the command line, so that you can watch debugging output:
 
 ```Shell
 
-/home/pi/feed_copterspotter.py -D
+/home/pi/feed_copterspotter.py -D -r
 
 ```
 
@@ -99,7 +93,7 @@ crontab -e
 And add the following lines:
 
 ```Code
-* * * * * python3 /home/pi/feed_copterspotter.py -o >> copterspotter.log 2>&1
+* * * * * python3 /home/pi/feed_copterspotter.py -o -r >> copterspotter.log 2>&1
 0 0 * * * wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/bills_operators.csv"
 ```
 
@@ -109,7 +103,7 @@ And you're DONE!
 You can TEST one iteration by typing:
 
 ```Shell
-python3 feed_copterspotter.py -o 
+python3 feed_copterspotter.py -o -r
 ``` 
 
 When an identifyied helicopter is nearby, in verbose mode (-v switch) or debug mode
