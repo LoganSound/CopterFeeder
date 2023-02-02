@@ -183,9 +183,9 @@ def update_helidb():
 
         if "category" in plane and plane["category"] == "A7": 
             if "flight" in plane:
-                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], str(plane["flight"]).strip(), heli_type )
+                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], str(plane["flight"]).strip(), heli_type or "Unknown" )
             else:
-                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], "no_call", heli_type )
+                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], "no_call", heli_type or "Unknown" )
 
 
         if heli_type == "" or heli_type is None :
