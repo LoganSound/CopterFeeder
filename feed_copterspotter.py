@@ -49,7 +49,12 @@ logger = logging.getLogger(__name__)
 # Flight Aware /run/dump1090-fa
 
 
-AIRPLANES_FOLDERS = ["dump1090-fa", "dump1090-mutability", "adsbexchange-feed", "readsb","dump1090", ]
+AIRPLANES_FOLDERS = ["dump1090-fa",
+                     "dump1090-mutability",
+                     "adsbexchange-feed",
+                     "readsb",
+                     "dump1090", 
+                     "adbsfi-feed", ]
 
 # Hard Coding User/Pw etc is bad umkay
 # Should be pulling thse from env
