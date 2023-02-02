@@ -90,11 +90,11 @@ If you want to run from Crontab, use the -o (one shot) option
 crontab -e
 ```
 
-And add the following lines:
+And add the following lines (these file paths need to match wherever you installed to, below is example for /home/pi/CopterFeeder):
 
 ```Code
-* * * * * python3 /home/pi/feed_copterspotter.py -o -r >> copterspotter.log 2>&1
-0 0 * * * wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/bills_operators.csv"
+* * * * * python3 /home/pi/CopterFeeder/feed_copterspotter.py -o -r >> copterspotter.log 2>&1
+0 0 * * * wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/CopterFeeder/bills_operators.csv"
 ```
 
 And you're DONE!
