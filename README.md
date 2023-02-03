@@ -71,7 +71,7 @@ The script is intended to be run as a daemon:
 
 ```Shell
 
-/home/pi/feed_copterspotter.py -d -r
+feed_copterspotter.py -d -r
 
 ```
 
@@ -79,7 +79,7 @@ Or run on the command line, so that you can watch debugging output:
 
 ```Shell
 
-/home/pi/feed_copterspotter.py -D -r
+feed_copterspotter.py -D -r
 
 ```
 
