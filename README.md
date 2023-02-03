@@ -118,7 +118,7 @@ you're running in daemon mode:
 
 ```Code
 
-/home/pi/feed_copterspotter.py -d -l /full/path/to/logfile
+feed_copterspotter.py -d -l /full/path/to/logfile
 
 ```
 
