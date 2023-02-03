@@ -8,6 +8,10 @@ __pycache__/
 
 bills_operators*.csv
 
+Releasable*
+
+
+
 # C extensions
 *.so
 
