@@ -471,8 +471,21 @@ if __name__ == '__main__':
 
     if args.daemon:
 
-        with daemon.DaemonContext():
+#         going to need to add something this to keep the logging going
+# see: https://stackoverflow.com/questions/13180720/maintaining-logging-and-or-stdout-stderr-in-python-daemon
+#                   files_preserve = [ cl.stream,], ):
+#
+
+        log_handles = []
+        for handler in logger.handlers:
+            log_handles.append(handler.stream.fileno())
+
+#        if logger.parent:
+#            log_handles += getLogFileHandles(logger.parent)
+
+        with daemon.DaemonContext( files_preserve = log_handles ):
             run_loop(args.interval)
+
     else:
 
         try:
