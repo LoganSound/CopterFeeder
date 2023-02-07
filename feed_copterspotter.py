@@ -49,7 +49,12 @@ logger = logging.getLogger(__name__)
 # Flight Aware /run/dump1090-fa
 
 
-AIRPLANES_FOLDERS = ["dump1090-fa", "dump1090-mutability", "adsbexchange-feed", "readsb","dump1090", ]
+AIRPLANES_FOLDERS = ["dump1090-fa",
+                     "dump1090-mutability",
+                     "adsbexchange-feed",
+                     "readsb",
+                     "dump1090", 
+                     "adbsfi-feed", ]
 
 # Hard Coding User/Pw etc is bad umkay
 # Should be pulling thse from env
@@ -178,9 +183,9 @@ def update_helidb():
 
         if "category" in plane and plane["category"] == "A7": 
             if "flight" in plane:
-                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], str(plane["flight"]).strip(), heli_type )
+                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], str(plane["flight"]).strip(), heli_type or "Unknown" )
             else:
-                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], "no_call", heli_type )
+                logger.info("Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s", iaco_hex, plane["category"], "no_call", heli_type or "Unknown" )
 
 
         if heli_type == "" or heli_type is None :
@@ -466,8 +471,21 @@ if __name__ == '__main__':
 
     if args.daemon:
 
-        with daemon.DaemonContext():
+#         going to need to add something this to keep the logging going
+# see: https://stackoverflow.com/questions/13180720/maintaining-logging-and-or-stdout-stderr-in-python-daemon
+#                   files_preserve = [ cl.stream,], ):
+#
+
+        log_handles = []
+        for handler in logger.handlers:
+            log_handles.append(handler.stream.fileno())
+
+#        if logger.parent:
+#            log_handles += getLogFileHandles(logger.parent)
+
+        with daemon.DaemonContext( files_preserve = log_handles ):
             run_loop(args.interval)
+
     else:
 
         try:

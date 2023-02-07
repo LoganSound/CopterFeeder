@@ -62,9 +62,15 @@ Make the main script executable
 chmod +x feed_copterspotter.py
 ```
 
-Note: Examples below assume the script is installed in "/home/pi/"  - this is not a
-requirement and certainly not a recommendation - the script can be installed in a
-convenient directory of your choice. 
+The script needs to be told how to get to the "aircraft.json" on your ADS-B Feeder. It can do this either
+by reading local files using the "-r" option or by making a request over the net to small webserver packaged
+with the feeder software (dump1090) which is typically lighthttp or similar. Because there are different 
+directories and urls for this different versions of software, the best way to do this in your setup may
+take a bit of trial and error. If you are running the script on the system you use as a ADS-B feeder, 
+you might want to start with the "-r" option, which will scan several different directories under /run. 
+If you're on a different machine, you'll want to use the server (-s) and port (-p) options. Note: if you use
+the -r option, -s and -p options will be ignored. 
+
 
 
 The script is intended to be run as a daemon: 
@@ -93,6 +99,13 @@ crontab -e
 And add the following lines (these file paths need to match wherever you installed to, below is example for /home/pi/CopterFeeder):
 
 ```Code
+
+
+
+Note: Examples below assume the script is installed in "/home/pi/"  - this is not a
+requirement and certainly not a recommendation - the script can be installed in a
+convenient directory of your choice. 
+
 * * * * * python3 /home/pi/CopterFeeder/feed_copterspotter.py -o -r >> copterspotter.log 2>&1
 0 0 * * * wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/CopterFeeder/bills_operators.csv"
 ```
@@ -103,7 +116,11 @@ And you're DONE!
 You can TEST one iteration by typing:
 
 ```Shell
+
 python3 feed_copterspotter.py -o -r
+
+
+
 ``` 
 
 When an identifyied helicopter is nearby, in verbose mode (-v switch) or debug mode
