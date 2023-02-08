@@ -35,7 +35,7 @@ Run pip3 to install requirements
 pip3 install -r requirements.txt 
 ```
 
-Copy example_env_file to .env
+Copy example_env_file to .env ( this should only have to be done for the first install!!!) 
 ```Shell
 cp  example_dot_env .env
 ```
