@@ -38,7 +38,7 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "20230205_1015_001"
+VERSION = "20230209_0522_001"
 
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 # logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
