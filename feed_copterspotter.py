@@ -373,7 +373,7 @@ if __name__ == '__main__':
 
 
     if args.version:
-        print(f"{parser.prog} version: {VERSION}")
+        print("{parser.prog} version: {VERSION}")
         sys.exit()
 
     logging.basicConfig(level=logging.WARN)
