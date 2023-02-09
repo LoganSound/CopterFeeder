@@ -37,9 +37,17 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "20230131_1600_002"
+VERSION = "20230205_1015_001"
+
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+#logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# create formatter
 
 logger = logging.getLogger(__name__)
+
 
 # list of folders to check for dump1090 json files
 # FR24: /run/dump1090-mutability
@@ -399,8 +407,10 @@ if __name__ == '__main__':
         logger.debug("Adding FileHandler to logger with filename %s", args.log)
         # copter_logger = logging.getLogger('copter_logger')
         cl=logging.FileHandler(args.log)
-        logger.addHandler(cl)
+        cl.setFormatter(formatter)
         cl.setLevel(logging.INFO)
+
+        logger.addHandler(cl)
 
 
     # Should be pulling these from env
