@@ -28,7 +28,7 @@ import daemon
 import requests
 
 # used for getting MONGOPW and MONGOUSER
-from dotenv import dotenv_values, set_key
+from dotenv import dotenv_values #, set_key
 
 
 # only need one of these
@@ -165,7 +165,7 @@ def update_helidb():
                         "/run/" + AIRPLANES_FOLDER + "/aircraft.json",
                     )
 
-        if data == "" or data == None:
+        if data == "" or data is None:
             logger.error("No aircraft data read")
             sys.exit()
 
