@@ -9,4 +9,3 @@ wget  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8
 
 
 diff bills_operators.csv bills_operators_${DATELINE}.csv
-
