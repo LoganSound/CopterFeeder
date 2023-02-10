@@ -1,0 +1,10 @@
+# Include Stadard requirements as well
+-r requirements.txt
+
+# Dev requirements
+ipython
+pre-commit
+pytest
+pytest-cov
+pytest-mock
+pytest-notimplemented

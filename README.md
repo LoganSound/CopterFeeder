@@ -21,18 +21,18 @@ git clone https://github.com/LoganSound/CopterFeeder.git
 
 move into the project folder:
 
-```Shell 
+```Shell
 cd CopterFeeder/
-``` 
+```
 And then download the latest helicopter database:
 
-```Shell 
-wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "bills_operators.csv"
-``` 
-
-Run pip3 to install requirements 
 ```Shell
-pip3 install -r requirements.txt 
+wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "bills_operators.csv"
+```
+
+Run pip3 to install requirements
+```Shell
+pip3 install -r requirements.txt
 ```
 
 Copy example_env_file to .env ( this should only have to be done for the first install!!!) 
@@ -45,16 +45,16 @@ Add your credentials and feeder type to the .env file
 nano .env
 ```
 
-Change the permissions on the .env file so that only you read Read/Write the file: 
+Change the permissions on the .env file so that only you read Read/Write the file:
 
 ```Shell
 chmod go-rwx .env
 ```
 
 
-Credentials can also be specified using command line options (see below). Command line options 
-take precedence over environtment settings. Note that Userid/Password specified on the commandline 
-will be able to be seen by others using "ps -ef" 
+Credentials can also be specified using command line options (see below). Command line options
+take precedence over environtment settings. Note that Userid/Password specified on the commandline
+will be able to be seen by others using "ps -ef"
 
 
 Make the main script executable
@@ -64,16 +64,16 @@ chmod +x feed_copterspotter.py
 
 The script needs to be told how to get to the "aircraft.json" on your ADS-B Feeder. It can do this either
 by reading local files using the "-r" option or by making a request over the net to small webserver packaged
-with the feeder software (dump1090) which is typically lighthttp or similar. Because there are different 
+with the feeder software (dump1090) which is typically lighthttp or similar. Because there are different
 directories and urls for this different versions of software, the best way to do this in your setup may
-take a bit of trial and error. If you are running the script on the system you use as a ADS-B feeder, 
-you might want to start with the "-r" option, which will scan several different directories under /run. 
+take a bit of trial and error. If you are running the script on the system you use as a ADS-B feeder,
+you might want to start with the "-r" option, which will scan several different directories under /run.
 If you're on a different machine, you'll want to use the server (-s) and port (-p) options. Note: if you use
-the -r option, -s and -p options will be ignored. 
+the -r option, -s and -p options will be ignored.
 
 
 
-The script is intended to be run as a daemon: 
+The script is intended to be run as a daemon:
 
 ```Shell
 
@@ -89,7 +89,7 @@ feed_copterspotter.py -D -r
 
 ```
 
-If you want to run from Crontab, use the -o (one shot) option 
+If you want to run from Crontab, use the -o (one shot) option
 
 #type:
 ```Shell
@@ -104,7 +104,7 @@ And add the following lines (these file paths need to match wherever you install
 
 Note: Examples below assume the script is installed in "/home/pi/"  - this is not a
 requirement and certainly not a recommendation - the script can be installed in a
-convenient directory of your choice. 
+convenient directory of your choice.
 
 * * * * * python3 /home/pi/CopterFeeder/feed_copterspotter.py -o -r >> copterspotter.log 2>&1
 0 0 * * * wget "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv" -O "/home/pi/CopterFeeder/bills_operators.csv"
@@ -121,7 +121,7 @@ python3 feed_copterspotter.py -o -r
 
 
 
-``` 
+```
 
 When an identifyied helicopter is nearby, in verbose mode (-v switch) or debug mode
 (-D switch), the script will output lines something like:
@@ -144,7 +144,7 @@ feed_copterspotter.py -d -l /full/path/to/logfile
 If you consistently see "None" or "Null" we may need to tweak your variables
 
 
-Help is available with the -h or --help option: 
+Help is available with the -h or --help option:
 
 
 ```Code
@@ -176,4 +176,3 @@ options:
   -r, --readlocalfiles  Check for aircraft.json files under /run/...
 
 ```
- 
