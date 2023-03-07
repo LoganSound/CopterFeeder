@@ -28,7 +28,7 @@ import daemon
 import requests
 
 # used for getting MONGOPW and MONGOUSER
-from dotenv import dotenv_values #, set_key
+from dotenv import dotenv_values  # , set_key
 
 
 # only need one of these
@@ -38,7 +38,7 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "20230209_0522_001"
+VERSION = "2023030u_1532_001"
 
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 # logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
