@@ -67,6 +67,16 @@ AIRPLANES_FOLDERS = [
     "adbsfi-feed",
 ]
 
+
+# Trying to make this more user friendly
+
+CONF_FOLDERS = [
+    "~/.CopterFeeder",
+    "~/CopterFeeder",
+    "~",
+    ".",
+]
+
 # Hard Coding User/Pw etc is bad umkay
 # Should be pulling thse from env
 #    FEEDER_ID = ""
@@ -129,16 +139,17 @@ def update_helidb():
 
         data = None
 
-        # The following if / else should probably be outside of this function as it should only be done at startup time.
+        # The following if / else should probably be outside of this function as
+        # it should only be done at startup time.
 
         if AIRCRAFT_URL:
             try:
                 data = requests.get(AIRCRAFT_URL, timeout=5)
-                data.status_code == 200
-                logger.debug("Found data at URL: %s", AIRCRAFT_URL)
-                dt_stamp = data.json()["now"]
-                logger.debug("Found TimeStamp %s", dt_stamp)
-                planes = data.json()["aircraft"]
+                if data.status_code == 200:
+                    logger.debug("Found data at URL: %s", AIRCRAFT_URL)
+                    dt_stamp = data.json()["now"]
+                    logger.debug("Found TimeStamp %s", dt_stamp)
+                    planes = data.json()["aircraft"]
 
             except requests.exceptions.RequestException as e:
                 logger.error("Got ConnectionError trying to request URL %s", e)
@@ -327,6 +338,9 @@ def load_helis_from_file(heli_file):
     returns dictionary of helis and types
     """
     helis_dict = {}
+
+    bills_age = os.path.getmtime(heli_file)
+
     with open(heli_file, encoding="UTF-8") as csvfile:
         opsread = csv.DictReader(csvfile)
         for row in opsread:
@@ -354,8 +368,7 @@ def run_loop(interval):
 if __name__ == "__main__":
 
     # Read Environment
-
-    config = dotenv_values(".env")
+    # Need to be smarter about where this is located.
 
     parser = argparse.ArgumentParser(description="Helicopters of DC data loader")
     parser.add_argument(
@@ -470,6 +483,24 @@ if __name__ == "__main__":
 
         logger.addHandler(cl)
 
+    # once logging is setup we can read the environment
+
+    for conf_folder in CONF_FOLDERS:
+
+        conf_folder = os.path.expanduser(conf_folder)
+        conf_folder = os.path.abspath(conf_folder)
+        # .env is probably not unique enough to search for
+        if os.path.exists(os.path.join(conf_folder, ".env")) and os.path.exists(
+            os.path.join(conf_folder, ".bills_operators.csv")
+        ):
+            logger.debug("Conf folder found: %s", conf_folder)
+            break
+
+    env_file = os.path.join(conf_folder, ".env")
+    bills_operators = os.path.join(conf_folder, "bills_operators.csv")
+    logger.debug("Using bills_operators as : %s", bills_operators)
+    config = dotenv_values(env_file)
+
     # Should be pulling these from env
 
     if args.feederid:
@@ -478,7 +509,9 @@ if __name__ == "__main__":
         FEEDER_ID = config["FEEDER_ID"]
     else:
         FEEDER_ID = None
-        logger.error("No FEEDER_ID Found - Exiting")
+        logger.error(
+            "No FEEDER_ID defined in command line options or .env file - Exiting"
+        )
         sys.exit()
 
     if args.readlocalfiles:
@@ -530,7 +563,7 @@ if __name__ == "__main__":
 
     heli_types = {}
 
-    heli_types = load_helis_from_file("bills_operators.csv")
+    heli_types = load_helis_from_file(bills_operators)
 
     if args.once:
         update_helidb()
