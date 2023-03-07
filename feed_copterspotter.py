@@ -341,6 +341,8 @@ def load_helis_from_file(heli_file):
 
     bills_age = os.path.getmtime(heli_file)
 
+    logger.debug("Bills Age: %s", bills_age)
+
     with open(heli_file, encoding="UTF-8") as csvfile:
         opsread = csv.DictReader(csvfile)
         for row in opsread:
@@ -458,10 +460,12 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=logging.WARN)
 
-    if args.verbose:
+    if args.verbose or args.log:
         #        ch=logging.StreamHandler()
         #        ch.setLevel(logging.INFO)
         #        logger.addHandler(ch)
+        #
+        # args.log also sets args.verbose so theres something to log
 
         logger.setLevel(logging.INFO)
 
