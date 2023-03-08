@@ -19,7 +19,9 @@ import argparse
 import sys
 import os
 
-from time import sleep
+
+from time import sleep, ctime
+
 
 import daemon
 
@@ -340,10 +342,11 @@ def load_helis_from_file(heli_file):
     helis_dict = {}
 
     bills_age = os.path.getmtime(heli_file)
-    
 
-    if datetime.datetime.now().timestamp()  - bills_age > 86400:
-        logger.warn("Warning: bills_operators.csv more than 24hrs old: %s", time.ctime(bills_age))
+    if datetime.datetime.now().timestamp() - bills_age > 86400:
+        logger.warn(
+            "Warning: bills_operators.csv more than 24hrs old: %s", ctime(bills_age)
+        )
 
     logger.debug("Bills Age: %s", bills_age)
 
