@@ -435,6 +435,14 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        "-w",
+        "--web",
+        help="Download Bills Operators automatically",
+        action="store_true",
+        default=False,
+    )
+
+    parser.add_argument(
         "-i",
         "--interval",
         help="Interval between cycles in seconds",
@@ -592,9 +600,14 @@ if __name__ == "__main__":
 
     heli_types = {}
 
-    # (heli_types, bills_age) = load_helis_from_file(bills_operators)
+    if args.web:
+        logger.debug("Loading bills_operators from URL: %s ", BILLS_URL)
+        (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
+    else:
+        logger.debug("Loading bills_operators from file: %s ", bills_operators)
+        (heli_types, bills_age) = load_helis_from_file(bills_operators)
 
-    (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
+    logger.debug("Loaded %s helis from Bills", str(len(heli_types)))
 
     if args.once:
         update_helidb()
