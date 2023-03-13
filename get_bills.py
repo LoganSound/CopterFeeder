@@ -46,7 +46,7 @@ def get_bills_operators(bills_url):
         with open("bills_operators_tmp.csv", "w", encoding="UTF-8") as tmpcsvfile:
             tmpcsvfile.write(bills.text)
             tmpcsvfile.close()
-            bills_age = os.path.getmtime("bills_operators.csv")
+            bills_age = os.path.getmtime("bills_operators_tmp.csv")
             os.rename(
                 "bills_operators.csv",
                 "bills_operators" + time.strftime("%Y%m%d-%H%M%S") + ".csv",
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         logger.info(f"Updated bills_operators.csv at: %s", time.ctime(bills_age))
     else:
         logger.info(
-            "bills_operators.csv less than 24hrs old - updated at: %s",
+            "bills_operators.csv less than 24hrs old - last updated at: %s",
             time.ctime(bills_age),
         )
 
