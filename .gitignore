@@ -18,6 +18,10 @@ Releasable*
 #tmp files
 *~
 
+*.tmp
+*.foo
+
+
 #mac crap
 .DS_Store
 
