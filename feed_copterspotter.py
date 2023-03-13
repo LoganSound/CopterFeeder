@@ -18,8 +18,11 @@ import logging
 import argparse
 import sys
 import os
+import requests
 
-from time import sleep
+
+from time import sleep, ctime, time
+
 
 import daemon
 
@@ -28,7 +31,7 @@ import daemon
 import requests
 
 # used for getting MONGOPW and MONGOUSER
-from dotenv import dotenv_values #, set_key
+from dotenv import dotenv_values  # , set_key
 
 
 # only need one of these
@@ -38,7 +41,13 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "20230209_0522_001"
+VERSION = "2023030u_1532_001"
+
+
+# Bills
+
+BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
+
 
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 # logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
@@ -65,6 +74,16 @@ AIRPLANES_FOLDERS = [
     "readsb",
     "dump1090",
     "adbsfi-feed",
+]
+
+
+# Trying to make this more user friendly
+
+CONF_FOLDERS = [
+    "~/.CopterFeeder",
+    "~/CopterFeeder",
+    "~",
+    ".",
 ]
 
 # Hard Coding User/Pw etc is bad umkay
@@ -116,7 +135,6 @@ def update_helidb():
     logger.info("Updating Helidb at %s", datetime.datetime.now())
 
     try:
-
         #        with open("/run/" + AIRPLANES_FOLDER + "/aircraft.json") as json_file:
         #        data = json.load(json_file)
         #       planes = data["aircraft"]
@@ -129,16 +147,17 @@ def update_helidb():
 
         data = None
 
-        # The following if / else should probably be outside of this function as it should only be done at startup time.
+        # The following if / else should probably be outside of this function as
+        # it should only be done at startup time.
 
         if AIRCRAFT_URL:
             try:
                 data = requests.get(AIRCRAFT_URL, timeout=5)
-                data.status_code == 200
-                logger.debug("Found data at URL: %s", AIRCRAFT_URL)
-                dt_stamp = data.json()["now"]
-                logger.debug("Found TimeStamp %s", dt_stamp)
-                planes = data.json()["aircraft"]
+                if data.status_code == 200:
+                    logger.debug("Found data at URL: %s", AIRCRAFT_URL)
+                    dt_stamp = data.json()["now"]
+                    logger.debug("Found TimeStamp %s", dt_stamp)
+                    planes = data.json()["aircraft"]
 
             except requests.exceptions.RequestException as e:
                 logger.error("Got ConnectionError trying to request URL %s", e)
@@ -229,7 +248,6 @@ def update_helidb():
             output += " no call"
 
         try:
-
             # Assumtion is made that negative altitude is unlikely
             # Using max() here removes negative numbers
 
@@ -268,7 +286,6 @@ def update_helidb():
             squawk = str(plane["squawk"])
             output += " " + squawk
         except BaseException:
-
             squawk = ""
             output += " no squawk"
 
@@ -321,18 +338,46 @@ def find_helis(iaco_hex):
     return ""
 
 
+def load_helis_from_url(bills_url):
+    helis_dict = {}
+
+    # bills_age = os.path.getmtime(heli_file)
+
+    bills = requests.get(bills_url)
+
+    if bills.status_code == 200:
+        bills_age = time()
+
+        opsread = csv.DictReader(bills.text.splitlines())
+        for row in opsread:
+            # print(row)
+            helis_dict[row["hex"].lower()] = row["type"]
+            logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"])
+        return (helis_dict, bills_age)
+
+
 def load_helis_from_file(heli_file):
     """
     Read Bills catalog of DC Helicopters into array
     returns dictionary of helis and types
     """
     helis_dict = {}
+
+    bills_age = os.path.getmtime(heli_file)
+
+    if datetime.datetime.now().timestamp() - bills_age > 86400:
+        logger.warn(
+            "Warning: bills_operators.csv more than 24hrs old: %s", ctime(bills_age)
+        )
+
+    logger.debug("Bills Age: %s", bills_age)
+
     with open(heli_file, encoding="UTF-8") as csvfile:
         opsread = csv.DictReader(csvfile)
         for row in opsread:
             helis_dict[row["hex"].lower()] = row["type"]
             logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"])
-        return helis_dict
+        return (helis_dict, bills_age)
 
 
 def run_loop(interval):
@@ -341,7 +386,6 @@ def run_loop(interval):
     """
 
     while True:
-
         logger.debug("Starting Update")
 
         update_helidb()
@@ -352,10 +396,8 @@ def run_loop(interval):
 
 
 if __name__ == "__main__":
-
     # Read Environment
-
-    config = dotenv_values(".env")
+    # Need to be smarter about where this is located.
 
     parser = argparse.ArgumentParser(description="Helicopters of DC data loader")
     parser.add_argument(
@@ -445,10 +487,12 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=logging.WARN)
 
-    if args.verbose:
+    if args.verbose or args.log:
         #        ch=logging.StreamHandler()
         #        ch.setLevel(logging.INFO)
         #        logger.addHandler(ch)
+        #
+        # args.log also sets args.verbose so theres something to log
 
         logger.setLevel(logging.INFO)
 
@@ -460,7 +504,6 @@ if __name__ == "__main__":
         logger.setLevel(logging.DEBUG)
 
     if args.log:
-
         # opens a second logging instance specifically for logging noted copters "output"
         logger.debug("Adding FileHandler to logger with filename %s", args.log)
         # copter_logger = logging.getLogger('copter_logger')
@@ -470,6 +513,23 @@ if __name__ == "__main__":
 
         logger.addHandler(cl)
 
+    # once logging is setup we can read the environment
+
+    for conf_folder in CONF_FOLDERS:
+        conf_folder = os.path.expanduser(conf_folder)
+        conf_folder = os.path.abspath(conf_folder)
+        # .env is probably not unique enough to search for
+        if os.path.exists(os.path.join(conf_folder, ".env")) and os.path.exists(
+            os.path.join(conf_folder, ".bills_operators.csv")
+        ):
+            logger.debug("Conf folder found: %s", conf_folder)
+            break
+
+    env_file = os.path.join(conf_folder, ".env")
+    bills_operators = os.path.join(conf_folder, "bills_operators.csv")
+    logger.debug("Using bills_operators as : %s", bills_operators)
+    config = dotenv_values(env_file)
+
     # Should be pulling these from env
 
     if args.feederid:
@@ -478,7 +538,9 @@ if __name__ == "__main__":
         FEEDER_ID = config["FEEDER_ID"]
     else:
         FEEDER_ID = None
-        logger.error("No FEEDER_ID Found - Exiting")
+        logger.error(
+            "No FEEDER_ID defined in command line options or .env file - Exiting"
+        )
         sys.exit()
 
     if args.readlocalfiles:
@@ -530,14 +592,15 @@ if __name__ == "__main__":
 
     heli_types = {}
 
-    heli_types = load_helis_from_file("bills_operators.csv")
+    # (heli_types, bills_age) = load_helis_from_file(bills_operators)
+
+    (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
 
     if args.once:
         update_helidb()
         sys.exit()
 
     if args.daemon:
-
         #         going to need to add something this to keep the logging going
         # see: https://stackoverflow.com/questions/13180720/maintaining-logging-and-or-stdout-stderr-in-python-daemon
         #                   files_preserve = [ cl.stream,], ):
@@ -554,7 +617,6 @@ if __name__ == "__main__":
             run_loop(args.interval)
 
     else:
-
         try:
             logger.debug("Starting main processing loop")
             run_loop(args.interval)
