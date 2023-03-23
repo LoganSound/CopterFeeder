@@ -21,7 +21,7 @@ import os
 import requests
 
 
-from time import sleep, ctime, time
+from time import sleep, ctime, time, strftime
 
 
 import daemon
@@ -43,10 +43,28 @@ import pymongo
 ## YYYYMMDD_HHMM_REV
 VERSION = "2023030u_1532_001"
 
-
 # Bills
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
+
+# Mongo URL
+MONGO_URL = (
+    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+)
+
+# curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers"  -H "Content-Type: application/json" \-d '{"foo":"bar"}' https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb
+
+# but filling in foo-bar with our entry structured like this:
+# {"type":"Feature",
+#   "properties":{"date":{"$numberDouble":"1678132376.867"},
+#   "icao":"ac9f65",
+#   "type":"MD52",
+#   "call":"GARDN2",
+#   "heading":{"$numberDouble":"163.3"},
+#   "squawk":"5142",
+#   "altitude_baro":{"$numberInt":"625"},
+#   "altitude_geo":{"$numberInt":"675"},
+#   "feeder":
 
 
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -342,11 +360,30 @@ def load_helis_from_url(bills_url):
     helis_dict = {}
 
     # bills_age = os.path.getmtime(heli_file)
+    try:
+        bills = requests.get(bills_url)
+    except requests.exceptions.RequestException as e:
+        raise
 
-    bills = requests.get(bills_url)
+    logger.debug("Request returns Status_Code: %s", bills.status_code)
 
     if bills.status_code == 200:
         bills_age = time()
+        # Saving Copy for subsequent operations
+        # Note: it would be best if we were in the right directory before we tried to write
+        with open("bills_operators_tmp.csv", "w", encoding="UTF-8") as tmpcsvfile:
+            try:
+                tmpcsvfile.write(bills.text)
+                tmpcsvfile.close()
+                bills_age = os.path.getmtime("bills_operators_tmp.csv")
+                os.rename(
+                    "bills_operators.csv",
+                    "bills_operators" + strftime("%Y%m%d-%H%M%S") + ".csv",
+                )
+                os.rename("bills_operators_tmp.csv", "bills_operators.csv")
+            except Exception as err_except:
+                logger.error("Got error %s", err_except)
+                raise
 
         opsread = csv.DictReader(bills.text.splitlines())
         for row in opsread:
@@ -354,6 +391,11 @@ def load_helis_from_url(bills_url):
             helis_dict[row["hex"].lower()] = row["type"]
             logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"])
         return (helis_dict, bills_age)
+    else:
+        logger.warning(
+            "Could not Download bills_operators - status_code: %s", bills.status_code
+        )
+        return (None, None)
 
 
 def load_helis_from_file(heli_file):
