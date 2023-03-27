@@ -694,7 +694,7 @@ if __name__ == "__main__":
         logger.info("Loaded bills_operators from URL: %s ", BILLS_URL)
     elif bills_age > 0:
         logger.debug("Loading bills_operators from file: %s ", bills_operators)
-        (heli_types, bills_age) = load_helis_from_file(bills_operators)
+        (heli_types, bills_age) = load_helis_from_file()
         logger.info("Loaded bills_operators from file: %s ", bills_operators)
 
     else:
