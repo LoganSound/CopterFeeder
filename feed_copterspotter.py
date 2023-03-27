@@ -398,14 +398,14 @@ def load_helis_from_url(bills_url):
         return (None, None)
 
 
-def load_helis_from_file(heli_file):
+def load_helis_from_file():
     """
     Read Bills catalog of DC Helicopters into array
     returns dictionary of helis and types
     """
     helis_dict = {}
 
-    bills_age = os.path.getmtime(heli_file)
+    bills_age = os.path.getmtime(bills_operators)
 
     if datetime.datetime.now().timestamp() - bills_age > 86400:
         logger.warn(
@@ -414,7 +414,7 @@ def load_helis_from_file(heli_file):
 
     logger.debug("Bills Age: %s", bills_age)
 
-    with open(heli_file, encoding="UTF-8") as csvfile:
+    with open(bills_operators, encoding="UTF-8") as csvfile:
         opsread = csv.DictReader(csvfile)
         for row in opsread:
             helis_dict[row["hex"].lower()] = row["type"]
@@ -429,6 +429,20 @@ def run_loop(interval):
 
     while True:
         logger.debug("Starting Update")
+        bills_age = os.path.getmtime(
+            bills_operators
+        )  # could just keep bills_age as global?
+        if int(time.time() - bills_age) >= 86340:  # 24hrs - 1 minute
+            logger.info(
+                "bills_operators.csv more than 24hrs old: %s", time.ctime(bills_age)
+            )
+            (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
+            logger.info(f"Updated bills_operators.csv at: %s", time.ctime(bills_age))
+        else:
+            logger.info(
+                "bills_operators.csv less than 24hrs old - last updated at: %s",
+                time.ctime(bills_age),
+            )
 
         update_helidb()
 
