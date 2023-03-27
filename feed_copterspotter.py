@@ -435,9 +435,9 @@ def run_loop(interval):
 
     while True:
         logger.debug("Starting Update")
-        # bills_age = os.path.getmtime(
-        #     bills_operators
-        # )  # could just keep bills_age as global?
+        bills_age = os.path.getmtime(
+            bills_operators
+        )  # could just keep bills_age as global?
         if int(time() - bills_age) >= 86340:  # 24hrs - 1 minute
             logger.info("bills_operators.csv more than 24hrs old: %s", ctime(bills_age))
             (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
@@ -594,8 +594,10 @@ if __name__ == "__main__":
             break
 
     env_file = os.path.join(conf_folder, ".env")
+
     bills_operators = os.path.join(conf_folder, "bills_operators.csv")
     bills_age = gmtime(0)
+
     if os.path.exists(bills_operators):
         bills_age = os.path.getmtime(bills_operators)
 
