@@ -21,7 +21,7 @@ import os
 import requests
 
 
-from time import sleep, ctime, time, strftime, gmtime
+from time import sleep, ctime, time, strftime
 
 
 import daemon
@@ -372,15 +372,15 @@ def load_helis_from_url(bills_url):
     logger.debug("Request returns Status_Code: %s", bills.status_code)
 
     if bills.status_code == 200:
-        bills_age = time()
+        tmp_bills_age = time()
         # Saving Copy for subsequent operations
         # Note: it would be best if we were in the right directory before we tried to write
         with open("bills_operators_tmp.csv", "w", encoding="UTF-8") as tmpcsvfile:
             try:
                 tmpcsvfile.write(bills.text)
                 tmpcsvfile.close()
-                bills_age = os.path.getmtime("bills_operators_tmp.csv")
-                if os.path.exists(bills_operators):
+                old_bills_age = check_bills_age()
+                if old_bills_age > 0:
                     os.rename(
                         "bills_operators.csv",
                         "bills_operators_" + strftime("%Y%m%d-%H%M%S") + ".csv",
@@ -389,7 +389,7 @@ def load_helis_from_url(bills_url):
                 logger.info(
                     "Bills File Updated from web %s at %s",
                     bills_operators,
-                    ctime(bills_age),
+                    ctime(tmp_bills_age),
                 )
             except Exception as err_except:
                 logger.error("Got error %s", err_except)
@@ -415,7 +415,10 @@ def load_helis_from_file():
     """
     helis_dict = {}
 
-    bills_age = os.path.getmtime(bills_operators)
+    bills_age = check_bills_age()
+
+    if bills_age == 0:
+        logger.warn("Warning: bills_operators.csv Not found")
 
     if datetime.datetime.now().timestamp() - bills_age > 86400:
         logger.warn(
@@ -432,6 +435,19 @@ def load_helis_from_file():
         return (helis_dict, bills_age)
 
 
+def check_bills_age():
+    """
+    Checks age of file - returns zero if File not Found
+    """
+    try:
+        bills_age = os.path.getmtime(bills_operators)
+
+    except FileNotFoundError:
+        bills_age = 0
+
+    return bills_age
+
+
 def run_loop(interval):
     """
     Run as loop and sleep specified interval
@@ -439,11 +455,14 @@ def run_loop(interval):
 
     while True:
         logger.debug("Starting Update")
-        bills_age = os.path.getmtime(
-            bills_operators
-        )  # could just keep bills_age as global?
+
+        bills_age = check_bills_age()
+
         if int(time() - bills_age) >= 86340:  # 24hrs - 1 minute
-            logger.info("bills_operators.csv more than 24hrs old: %s", ctime(bills_age))
+            logger.info(
+                "bills_operators.csv not found or more than 24hrs old: %s",
+                ctime(bills_age),
+            )
             (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
             logger.info(f"Updated bills_operators.csv at: %s", ctime(bills_age))
         else:
@@ -600,10 +619,8 @@ if __name__ == "__main__":
     env_file = os.path.join(conf_folder, ".env")
 
     bills_operators = os.path.join(conf_folder, "bills_operators.csv")
-    bills_age = gmtime(0)
 
-    if os.path.exists(bills_operators):
-        bills_age = os.path.getmtime(bills_operators)
+    bills_age = check_bills_age()
 
     logger.debug("Using bills_operators as : %s", bills_operators)
     config = dotenv_values(env_file)
