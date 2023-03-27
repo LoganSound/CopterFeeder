@@ -4,6 +4,3 @@ MONGOPW = "SuperSecretPassword"
 
 SERVER = localhost
 PORT = 8080
-
-
-API-KEY = "BigLongRandomStringOfLettersAndNumbers"

@@ -629,7 +629,10 @@ if __name__ == "__main__":
 
     # Should be pulling these from env
 
-    if "API-KEY" in config:
+    if (
+        "API-KEY" in config
+        and config["API-KEY"] != "BigLongRandomStringOfLettersAndNumbers"
+    ):
         logger.debug("Mongo API Key found - using https api ")
         MONGO_API_KEY = config["API-KEY"]
         mongo_insert = mongo_https_insert

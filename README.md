@@ -5,6 +5,20 @@ Start by running
 sudo apt-get update
 ```
 
+If your system hasn't had its Operating system updated in a while, you may need to run:
+
+```Shell
+sudo apt-get upgrade
+```
+
+or
+
+```Shell
+sudo apt-get dist-upgrade
+```
+
+
+
 The following is required if you don't have pip3 installed (eg: FR24 feeder images )
 
 
@@ -12,7 +26,7 @@ The following is required if you don't have pip3 installed (eg: FR24 feeder imag
 sudo apt-get install python3-pip
 ```
 
-Get the script using git:
+Get the CopterFeeder script using git:
 
 ```Shell
 sudo apt-get install git
@@ -40,7 +54,7 @@ Copy example_env_file to .env ( this should only have to be done for the first i
 cp  example_dot_env .env
 ```
 
-Add your credentials and feeder type to the .env file
+Add your credentials or API-key, and Feeder-ID type to the .env file
 ```Shell
 nano .env
 ```
@@ -139,6 +153,15 @@ feed_copterspotter.py -d -l /full/path/to/logfile
 
 ```
 
+You can do:
+
+```Code
+tail -f /full/path/to/logfile
+```
+to watch the logging messages in the logfile.
+
+
+Note: the -D debug mode will be very noisy as it is intended for debugging - you probably want to use -v or -l to just see periodic reports.
 
 
 If you consistently see "None" or "Null" we may need to tweak your variables
