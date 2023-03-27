@@ -620,9 +620,6 @@ if __name__ == "__main__":
 
     bills_operators = os.path.join(conf_folder, "bills_operators.csv")
 
-    bills_age = check_bills_age()
-
-    logger.debug("Using bills_operators as : %s", bills_operators)
     config = dotenv_values(env_file)
 
     # Should be pulling these from env
@@ -687,14 +684,22 @@ if __name__ == "__main__":
 
     heli_types = {}
 
+    logger.debug("Using bills_operators as : %s", bills_operators)
+
+    bills_age = check_bills_age()
+
     if args.web:
         logger.debug("Loading bills_operators from URL: %s ", BILLS_URL)
         (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
         logger.info("Loaded bills_operators from URL: %s ", BILLS_URL)
-    else:
+    elif bills_age > 0:
         logger.debug("Loading bills_operators from file: %s ", bills_operators)
         (heli_types, bills_age) = load_helis_from_file(bills_operators)
         logger.info("Loaded bills_operators from file: %s ", bills_operators)
+
+    else:
+        logger.error("Operators file not found at %s -- exiting")
+        raise FileNotFoundError
 
     logger.info("Loaded %s helis from Bills", str(len(heli_types)))
 
