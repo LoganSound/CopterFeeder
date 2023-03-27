@@ -148,7 +148,14 @@ def mongo_client_insert(mydict):
 
 
 def mongo_https_insert(mydict):
-    return None
+    # url = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+
+    headers = {"api-key": MONGO_API_KEY, "Content-Type": "application/json"}
+
+    response = requests.post(MONGO_URL, headers=headers, json=mydict)
+    logger.debug("Mongo Insert Status: %s", response.status_code)
+
+    return response.status_code
 
 
 def update_helidb():
