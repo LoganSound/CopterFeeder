@@ -359,10 +359,10 @@ def find_helis(iaco_hex):
 def load_helis_from_url(bills_url):
     helis_dict = {}
 
-    if os.path.exists(bills_operators):
-        bills_age = os.path.getmtime(bills_operators)
-    else:
-        bills_age = gmtime(0)
+    # if os.path.exists(bills_operators):
+    #     bills_age = os.path.getmtime(bills_operators)
+    # else:
+    #     bills_age = gmtime(0)
 
     try:
         bills = requests.get(bills_url)
@@ -380,10 +380,11 @@ def load_helis_from_url(bills_url):
                 tmpcsvfile.write(bills.text)
                 tmpcsvfile.close()
                 bills_age = os.path.getmtime("bills_operators_tmp.csv")
-                os.rename(
-                    "bills_operators.csv",
-                    "bills_operators" + strftime("%Y%m%d-%H%M%S") + ".csv",
-                )
+                if os.path.exists(bills_operators):
+                    os.rename(
+                        "bills_operators.csv",
+                        "bills_operators_" + strftime("%Y%m%d-%H%M%S") + ".csv",
+                    )
                 os.rename("bills_operators_tmp.csv", "bills_operators.csv")
                 logger.info(
                     "Bills File Updated from web %s at %s",
