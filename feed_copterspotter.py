@@ -359,11 +359,6 @@ def find_helis(iaco_hex):
 def load_helis_from_url(bills_url):
     helis_dict = {}
 
-    # if os.path.exists(bills_operators):
-    #     bills_age = os.path.getmtime(bills_operators)
-    # else:
-    #     bills_age = gmtime(0)
-
     try:
         bills = requests.get(bills_url)
     except requests.exceptions.RequestException as e:
@@ -387,8 +382,7 @@ def load_helis_from_url(bills_url):
                     )
                 os.rename("bills_operators_tmp.csv", "bills_operators.csv")
                 logger.info(
-                    "Bills File Updated from web %s at %s",
-                    bills_operators,
+                    "Bills File Updated from web at %s",
                     ctime(tmp_bills_age),
                 )
             except Exception as err_except:
@@ -459,14 +453,14 @@ def run_loop(interval):
         bills_age = check_bills_age()
 
         if int(time() - bills_age) >= 86340:  # 24hrs - 1 minute
-            logger.info(
+            logger.debug(
                 "bills_operators.csv not found or more than 24hrs old: %s",
                 ctime(bills_age),
             )
             (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
             logger.info(f"Updated bills_operators.csv at: %s", ctime(bills_age))
         else:
-            logger.info(
+            logger.debug(
                 "bills_operators.csv less than 24hrs old - last updated at: %s",
                 ctime(bills_age),
             )
@@ -520,7 +514,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-w",
         "--web",
-        help="Download Bills Operators automatically",
+        help="Force download Bills Operators from URL",
         action="store_true",
         default=False,
     )
@@ -692,13 +686,14 @@ if __name__ == "__main__":
         logger.debug("Loading bills_operators from URL: %s ", BILLS_URL)
         (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
         logger.info("Loaded bills_operators from URL: %s ", BILLS_URL)
+
     elif bills_age > 0:
         logger.debug("Loading bills_operators from file: %s ", bills_operators)
         (heli_types, bills_age) = load_helis_from_file()
         logger.info("Loaded bills_operators from file: %s ", bills_operators)
 
     else:
-        logger.error("Operators file not found at %s -- exiting")
+        logger.error("Bills Operators file not found at %s -- exiting", bills_operators)
         raise FileNotFoundError
 
     logger.info("Loaded %s helis from Bills", str(len(heli_types)))
