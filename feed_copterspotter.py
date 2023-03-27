@@ -153,7 +153,7 @@ def mongo_https_insert(mydict):
     headers = {"api-key": MONGO_API_KEY, "Content-Type": "application/json"}
 
     response = requests.post(MONGO_URL, headers=headers, json=mydict)
-    logger.debug("Mongo Insert Status: %s", response.status_code)
+    logger.info("Mongo Insert Status: %s", response.status_code)
 
     return response.status_code
 
