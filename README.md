@@ -35,7 +35,7 @@ Run pip3 to install requirements
 pip3 install -r requirements.txt
 ```
 
-Copy example_env_file to .env ( this should only have to be done for the first install!!!) 
+Copy example_env_file to .env ( this should only have to be done for the first install!!!)
 ```Shell
 cp  example_dot_env .env
 ```
@@ -149,12 +149,13 @@ Help is available with the -h or --help option:
 
 ```Code
 ./feed_copterspotter.py --help
-usage: feed_copterspotter.py [-h] [-V] [-v] [-D] [-d] [-o] [-l LOG] [-i INTERVAL] [-s SERVER] [-p PORT] [-u MONGOUSER]
-                             [-P MONGOPW] [-f FEEDERID] [-r]
+
+usage: feed_copterspotter.py [-h] [-V] [-v] [-D] [-d] [-o] [-l LOG] [-w] [-i INTERVAL] [-s SERVER] [-p PORT]
+                             [-u MONGOUSER] [-P MONGOPW] [-f FEEDERID] [-r]
 
 Helicopters of DC data loader
 
-options:
+optional arguments:
   -h, --help            show this help message and exit
   -V, --version         Print version and exit
   -v, --verbose         Emit Verbose message stream
@@ -162,6 +163,7 @@ options:
   -d, --daemon          Run as a daemon
   -o, --once            Run once and exit
   -l LOG, --log LOG     File for logging reported rotorcraft
+  -w, --web             Download Bills Operators automatically
   -i INTERVAL, --interval INTERVAL
                         Interval between cycles in seconds
   -s SERVER, --server SERVER
@@ -174,5 +176,6 @@ options:
   -f FEEDERID, --feederid FEEDERID
                         Feeder ID
   -r, --readlocalfiles  Check for aircraft.json files under /run/...
+
 
 ```
