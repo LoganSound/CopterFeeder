@@ -432,7 +432,7 @@ def run_loop(interval):
         bills_age = os.path.getmtime(
             bills_operators
         )  # could just keep bills_age as global?
-        if int(time.time() - bills_age) >= 86340:  # 24hrs - 1 minute
+        if int(time() - bills_age) >= 86340:  # 24hrs - 1 minute
             logger.info(
                 "bills_operators.csv more than 24hrs old: %s", time.ctime(bills_age)
             )
