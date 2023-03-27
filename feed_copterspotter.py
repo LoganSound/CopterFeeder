@@ -433,15 +433,13 @@ def run_loop(interval):
             bills_operators
         )  # could just keep bills_age as global?
         if int(time() - bills_age) >= 86340:  # 24hrs - 1 minute
-            logger.info(
-                "bills_operators.csv more than 24hrs old: %s", time.ctime(bills_age)
-            )
+            logger.info("bills_operators.csv more than 24hrs old: %s", ctime(bills_age))
             (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
-            logger.info(f"Updated bills_operators.csv at: %s", time.ctime(bills_age))
+            logger.info(f"Updated bills_operators.csv at: %s", ctime(bills_age))
         else:
             logger.info(
                 "bills_operators.csv less than 24hrs old - last updated at: %s",
-                time.ctime(bills_age),
+                ctime(bills_age),
             )
 
         update_helidb()
