@@ -381,6 +381,11 @@ def load_helis_from_url(bills_url):
                     "bills_operators" + strftime("%Y%m%d-%H%M%S") + ".csv",
                 )
                 os.rename("bills_operators_tmp.csv", "bills_operators.csv")
+                logger.info(
+                    "Bills File Updated from web %s at %s",
+                    bills_operators,
+                    ctime(bills_age),
+                )
             except Exception as err_except:
                 logger.error("Got error %s", err_except)
                 raise
@@ -429,9 +434,9 @@ def run_loop(interval):
 
     while True:
         logger.debug("Starting Update")
-        bills_age = os.path.getmtime(
-            bills_operators
-        )  # could just keep bills_age as global?
+        # bills_age = os.path.getmtime(
+        #     bills_operators
+        # )  # could just keep bills_age as global?
         if int(time() - bills_age) >= 86340:  # 24hrs - 1 minute
             logger.info("bills_operators.csv more than 24hrs old: %s", ctime(bills_age))
             (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
