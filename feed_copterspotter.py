@@ -595,6 +595,10 @@ if __name__ == "__main__":
 
     env_file = os.path.join(conf_folder, ".env")
     bills_operators = os.path.join(conf_folder, "bills_operators.csv")
+    bills_age = gmtime(0)
+    if os.path.exists(bills_operators):
+        bills_age = os.path.getmtime(bills_operators)
+
     logger.debug("Using bills_operators as : %s", bills_operators)
     config = dotenv_values(env_file)
 
@@ -661,7 +665,6 @@ if __name__ == "__main__":
     heli_types = {}
 
     if args.web:
-        bills_age = gmtime(0)
         logger.debug("Loading bills_operators from URL: %s ", BILLS_URL)
         (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
         logger.info("Loaded bills_operators from URL: %s ", BILLS_URL)
