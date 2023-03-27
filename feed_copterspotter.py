@@ -359,7 +359,10 @@ def find_helis(iaco_hex):
 def load_helis_from_url(bills_url):
     helis_dict = {}
 
-    bills_age = os.path.getmtime(bills_operators)
+    if os.path.exists(bills_operators):
+        bills_age = os.path.getmtime(bills_operators)
+    else:
+        bills_age = gmtime(0)
 
     try:
         bills = requests.get(bills_url)
