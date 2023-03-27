@@ -1,5 +1,5 @@
 
-# Uncomment and update this line if you have an API-Key
+# Update this line if you have an API-Key
 API-KEY = "BigLongRandomStringOfLettersAndNumbers"
 
 FEEDER_ID = "MyFeederID"
