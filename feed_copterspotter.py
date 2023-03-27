@@ -21,7 +21,7 @@ import os
 import requests
 
 
-from time import sleep, ctime, time, strftime
+from time import sleep, ctime, time, strftime, gmtime
 
 
 import daemon
@@ -359,7 +359,8 @@ def find_helis(iaco_hex):
 def load_helis_from_url(bills_url):
     helis_dict = {}
 
-    # bills_age = os.path.getmtime(heli_file)
+    bills_age = os.path.getmtime(bills_operators)
+
     try:
         bills = requests.get(bills_url)
     except requests.exceptions.RequestException as e:
@@ -660,6 +661,7 @@ if __name__ == "__main__":
     heli_types = {}
 
     if args.web:
+        bills_age = gmtime(0)
         logger.debug("Loading bills_operators from URL: %s ", BILLS_URL)
         (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
         logger.info("Loaded bills_operators from URL: %s ", BILLS_URL)
