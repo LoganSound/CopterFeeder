@@ -525,7 +525,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-w",
         "--web",
-        help="Force download Bills Operators from URL",
+        help="Download / Update Bills Operators from Web on startup (defaults to reading local file)",
         action="store_true",
         default=False,
     )

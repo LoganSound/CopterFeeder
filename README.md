@@ -163,7 +163,7 @@ optional arguments:
   -d, --daemon          Run as a daemon
   -o, --once            Run once and exit
   -l LOG, --log LOG     File for logging reported rotorcraft
-  -w, --web             Download Bills Operators automatically
+  -w, --web             Download / Update Bills Operators from Web on startup (defaults to reading local file)
   -i INTERVAL, --interval INTERVAL
                         Interval between cycles in seconds
   -s SERVER, --server SERVER
