@@ -122,7 +122,7 @@ CONF_FOLDERS = [
 # Readsb location: readsb
 
 
-def mongo_insert(mydict):
+def mongo_client_insert(mydict):
     """
     Insert one entry into Mongo db
     """
@@ -145,6 +145,10 @@ def mongo_insert(mydict):
     ret_val = mycol.insert_one(mydict)
 
     return ret_val
+
+
+def mongo_https_insert(mydict):
+    return None
 
 
 def update_helidb():
@@ -618,6 +622,32 @@ if __name__ == "__main__":
 
     # Should be pulling these from env
 
+    if "API-KEY" in config:
+        logger.debug("Mongo API Key found - using https api ")
+        MONGO_API_KEY = config["API-KEY"]
+        mongo_insert = mongo_https_insert
+    else:
+        if args.mongopw:
+            MONGOPW = args.mongopw
+        elif "MONGOPW" in config:
+            MONGOPW = config["MONGOPW"]
+        else:
+            MONGOPW = None
+            logger.error("No Mongo PW Found - Exiting")
+            sys.exit()
+
+        if args.mongouser:
+            MONGOUSER = args.mongouser
+        elif "MONGOUSER" in config:
+            MONGOUSER = config["MONGOUSER"]
+        else:
+            MONGOUSER = None
+            logger.error("No Mongo User Found - Exiting")
+            sys.exit()
+
+        logger.debug("Mongo User and Password found - using MongoClient")
+        mongo_insert = mongo_client_insert
+
     if args.feederid:
         FEEDER_ID = args.feederid
     elif "FEEDER_ID" in config:
@@ -655,24 +685,6 @@ if __name__ == "__main__":
     else:
         AIRCRAFT_URL = None
         logger.debug("AIRCRAFT_URL set to None")
-
-    if args.mongopw:
-        MONGOPW = args.mongopw
-    elif "MONGOPW" in config:
-        MONGOPW = config["MONGOPW"]
-    else:
-        MONGOPW = None
-        logger.error("No Mongo PW Found - Exiting")
-        sys.exit()
-
-    if args.mongouser:
-        MONGOUSER = args.mongouser
-    elif "MONGOUSER" in config:
-        MONGOUSER = config["MONGOUSER"]
-    else:
-        MONGOUSER = None
-        logger.error("No Mongo User Found - Exiting")
-        sys.exit()
 
     # probably need to have an option for different file names
 
