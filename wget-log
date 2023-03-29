@@ -1,0 +1,6 @@
+--2023-03-22 11:20:43--  https://sheets.googleapis.com/v4/spreadsheets/1NKOdC3ALrtJBItlONPa33fqxrWnW6-xuSL5Iji-GCEg/values/Sheet1?alt=json
+Resolving sheets.googleapis.com (sheets.googleapis.com)... 142.250.31.95, 142.251.16.95, 172.253.62.95, ...
+Connecting to sheets.googleapis.com (sheets.googleapis.com)|142.250.31.95|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2023-03-22 11:20:44 ERROR 403: Forbidden.
+
