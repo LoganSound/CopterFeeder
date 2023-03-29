@@ -47,6 +47,9 @@ VERSION = "20230323_1300_001"
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
+BILLS_TIMEOUT = 3600
+
+
 # Mongo URL
 MONGO_URL = (
     "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
@@ -463,16 +466,16 @@ def run_loop(interval):
 
         bills_age = check_bills_age()
 
-        if int(time() - bills_age) >= 86340:  # 24hrs - 1 minute
+        if int(time() - bills_age) >= (BILLS_TIMEOUT - 60):  # Timeout - 1 minute
             logger.debug(
-                "bills_operators.csv not found or more than 24hrs old: %s",
+                "bills_operators.csv not found or older than timeout value: %s",
                 ctime(bills_age),
             )
             (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
             logger.info(f"Updated bills_operators.csv at: %s", ctime(bills_age))
         else:
             logger.debug(
-                "bills_operators.csv less than 24hrs old - last updated at: %s",
+                "bills_operators.csv less than timeout value old - last updated at: %s",
                 ctime(bills_age),
             )
 
