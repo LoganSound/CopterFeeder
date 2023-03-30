@@ -18,17 +18,13 @@ import logging
 import argparse
 import sys
 import os
-import requests
-
-
 from time import sleep, ctime, time, strftime
+
+import requests
 
 
 import daemon
 
-
-# import urllib
-import requests
 
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
@@ -55,7 +51,9 @@ MONGO_URL = (
     "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
 )
 
-# curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers"  -H "Content-Type: application/json" \-d '{"foo":"bar"}' https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb
+# curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers" \
+#  -H "Content-Type: application/json" \-d '{"foo":"bar"}' \
+#  https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb
 
 # but filling in foo-bar with our entry structured like this:
 # {"type":"Feature",
@@ -151,11 +149,14 @@ def mongo_client_insert(mydict):
 
 
 def mongo_https_insert(mydict):
+    """
+    Insert into Mongo using HTTPS requests call
+    """
     # url = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
 
     headers = {"api-key": MONGO_API_KEY, "Content-Type": "application/json"}
 
-    response = requests.post(MONGO_URL, headers=headers, json=mydict)
+    response = requests.post(MONGO_URL, headers=headers, json=mydict, timeout=7.5)
     logger.info("Mongo Insert Status: %s", response.status_code)
 
     return response.status_code
@@ -196,14 +197,14 @@ def update_helidb():
                 raise SystemExit(e)
 
         else:
-            for AIRPLANES_FOLDER in AIRPLANES_FOLDERS:
-                if os.path.exists("/run/" + AIRPLANES_FOLDER + "/aircraft.json"):
+            for airplanes_folder in AIRPLANES_FOLDERS:
+                if os.path.exists("/run/" + airplanes_folder + "/aircraft.json"):
                     with open(
-                        "/run/" + AIRPLANES_FOLDER + "/aircraft.json"
+                        "/run/" + airplanes_folder + "/aircraft.json"
                     ) as json_file:
                         logger.debug(
                             "Loading data from file: %s ",
-                            "/run/" + AIRPLANES_FOLDER + "/aircraft.json",
+                            "/run/" + airplanes_folder + "/aircraft.json",
                         )
                         data = json.load(json_file)
                         planes = data["aircraft"]
@@ -213,7 +214,7 @@ def update_helidb():
                 else:
                     logger.info(
                         "File not Found: %s",
-                        "/run/" + AIRPLANES_FOLDER + "/aircraft.json",
+                        "/run/" + airplanes_folder + "/aircraft.json",
                     )
 
         if data == "" or data is None:
@@ -371,6 +372,9 @@ def find_helis(iaco_hex):
 
 
 def load_helis_from_url(bills_url):
+    """
+    Loads helis dictionary with bills_operators pulled from URL
+    """
     helis_dict = {}
 
     try:
@@ -409,11 +413,11 @@ def load_helis_from_url(bills_url):
             helis_dict[row["hex"].lower()] = row["type"]
             logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"])
         return (helis_dict, bills_age)
-    else:
-        logger.warning(
-            "Could not Download bills_operators - status_code: %s", bills.status_code
-        )
-        return (None, None)
+    # else:
+    logger.warning(
+        "Could not Download bills_operators - status_code: %s", bills.status_code
+    )
+    return (None, None)
 
 
 def load_helis_from_file():
@@ -426,10 +430,10 @@ def load_helis_from_file():
     bills_age = check_bills_age()
 
     if bills_age == 0:
-        logger.warn("Warning: bills_operators.csv Not found")
+        logger.warning("Warning: bills_operators.csv Not found")
 
     if datetime.datetime.now().timestamp() - bills_age > 86400:
-        logger.warn(
+        logger.warning(
             "Warning: bills_operators.csv more than 24hrs old: %s", ctime(bills_age)
         )
 
@@ -456,7 +460,7 @@ def check_bills_age():
     return bills_age
 
 
-def run_loop(interval):
+def run_loop(interval, h_types):
     """
     Run as loop and sleep specified interval
     """
@@ -471,8 +475,8 @@ def run_loop(interval):
                 "bills_operators.csv not found or older than timeout value: %s",
                 ctime(bills_age),
             )
-            (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
-            logger.info(f"Updated bills_operators.csv at: %s", ctime(bills_age))
+            (h_types, bills_age) = load_helis_from_url(BILLS_URL)
+            logger.info("Updated bills_operators.csv at: %s", ctime(bills_age))
         else:
             logger.debug(
                 "bills_operators.csv less than timeout value old - last updated at: %s",
@@ -741,12 +745,12 @@ if __name__ == "__main__":
         #            log_handles += getLogFileHandles(logger.parent)
 
         with daemon.DaemonContext(files_preserve=log_handles):
-            run_loop(args.interval)
+            run_loop(args.interval, heli_types)
 
     else:
         try:
             logger.debug("Starting main processing loop")
-            run_loop(args.interval)
+            run_loop(args.interva, heli_types)
 
         except KeyboardInterrupt:
             logger.warning("Received Keyboard Interrupt -- Exiting...")
