@@ -752,7 +752,7 @@ if __name__ == "__main__":
     else:
         try:
             logger.debug("Starting main processing loop")
-            run_loop(args.interva, heli_types)
+            run_loop(args.interval, heli_types)
 
         except KeyboardInterrupt:
             logger.warning("Received Keyboard Interrupt -- Exiting...")
