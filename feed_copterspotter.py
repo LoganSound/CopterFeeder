@@ -5,7 +5,6 @@ Upload rotorcraft positions to Helicopters of DC
 """
 
 import json
-
 import csv
 
 # unused
@@ -13,7 +12,6 @@ import csv
 # from datetime import timezone
 
 import datetime
-
 import logging
 import argparse
 import sys
@@ -21,8 +19,6 @@ import os
 from time import sleep, ctime, time, strftime
 
 import requests
-
-
 import daemon
 
 
