@@ -5,7 +5,6 @@ Upload rotorcraft positions to Helicopters of DC
 """
 
 import json
-
 import csv
 
 # unused
@@ -13,22 +12,15 @@ import csv
 # from datetime import timezone
 
 import datetime
-
 import logging
 import argparse
 import sys
 import os
+from time import sleep, ctime, time, strftime
+
 import requests
-
-
-from time import sleep, ctime, time
-
-
 import daemon
 
-
-# import urllib
-import requests
 
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
@@ -41,12 +33,35 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "2023030u_1532_001"
-
+VERSION = "20230323_1300_001"
 
 # Bills
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
+
+BILLS_TIMEOUT = 86400  # Standard is 1 day
+
+
+# Mongo URL
+MONGO_URL = (
+    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+)
+
+# curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers" \
+#  -H "Content-Type: application/json" \-d '{"foo":"bar"}' \
+#  https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb
+
+# but filling in foo-bar with our entry structured like this:
+# {"type":"Feature",
+#   "properties":{"date":{"$numberDouble":"1678132376.867"},
+#   "icao":"ac9f65",
+#   "type":"MD52",
+#   "call":"GARDN2",
+#   "heading":{"$numberDouble":"163.3"},
+#   "squawk":"5142",
+#   "altitude_baro":{"$numberInt":"625"},
+#   "altitude_geo":{"$numberInt":"675"},
+#   "feeder":
 
 
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -104,7 +119,7 @@ CONF_FOLDERS = [
 # Readsb location: readsb
 
 
-def mongo_insert(mydict):
+def mongo_client_insert(mydict):
     """
     Insert one entry into Mongo db
     """
@@ -127,6 +142,20 @@ def mongo_insert(mydict):
     ret_val = mycol.insert_one(mydict)
 
     return ret_val
+
+
+def mongo_https_insert(mydict):
+    """
+    Insert into Mongo using HTTPS requests call
+    """
+    # url = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+
+    headers = {"api-key": MONGO_API_KEY, "Content-Type": "application/json"}
+
+    response = requests.post(MONGO_URL, headers=headers, json=mydict, timeout=7.5)
+    logger.info("Mongo Insert Status: %s", response.status_code)
+
+    return response.status_code
 
 
 def update_helidb():
@@ -164,14 +193,14 @@ def update_helidb():
                 raise SystemExit(e)
 
         else:
-            for AIRPLANES_FOLDER in AIRPLANES_FOLDERS:
-                if os.path.exists("/run/" + AIRPLANES_FOLDER + "/aircraft.json"):
+            for airplanes_folder in AIRPLANES_FOLDERS:
+                if os.path.exists("/run/" + airplanes_folder + "/aircraft.json"):
                     with open(
-                        "/run/" + AIRPLANES_FOLDER + "/aircraft.json"
+                        "/run/" + airplanes_folder + "/aircraft.json"
                     ) as json_file:
                         logger.debug(
                             "Loading data from file: %s ",
-                            "/run/" + AIRPLANES_FOLDER + "/aircraft.json",
+                            "/run/" + airplanes_folder + "/aircraft.json",
                         )
                         data = json.load(json_file)
                         planes = data["aircraft"]
@@ -181,7 +210,7 @@ def update_helidb():
                 else:
                     logger.info(
                         "File not Found: %s",
-                        "/run/" + AIRPLANES_FOLDER + "/aircraft.json",
+                        "/run/" + airplanes_folder + "/aircraft.json",
                     )
 
         if data == "" or data is None:
@@ -282,6 +311,7 @@ def update_helidb():
         except BaseException:
             lat = None
             lon = None
+            alt_geom = None
         try:
             squawk = str(plane["squawk"])
             output += " " + squawk
@@ -339,14 +369,40 @@ def find_helis(iaco_hex):
 
 
 def load_helis_from_url(bills_url):
+    """
+    Loads helis dictionary with bills_operators pulled from URL
+    """
     helis_dict = {}
 
-    # bills_age = os.path.getmtime(heli_file)
+    try:
+        bills = requests.get(bills_url, timeout=7.5)
+    except requests.exceptions.RequestException as e:
+        raise
 
-    bills = requests.get(bills_url)
+    logger.debug("Request returns Status_Code: %s", bills.status_code)
 
     if bills.status_code == 200:
-        bills_age = time()
+        tmp_bills_age = time()
+        # Saving Copy for subsequent operations
+        # Note: it would be best if we were in the right directory before we tried to write
+        with open("bills_operators_tmp.csv", "w", encoding="UTF-8") as tmpcsvfile:
+            try:
+                tmpcsvfile.write(bills.text)
+                tmpcsvfile.close()
+                old_bills_age = check_bills_age()
+                if old_bills_age > 0:
+                    os.rename(
+                        "bills_operators.csv",
+                        "bills_operators_" + strftime("%Y%m%d-%H%M%S") + ".csv",
+                    )
+                os.rename("bills_operators_tmp.csv", "bills_operators.csv")
+                logger.info(
+                    "Bills File Updated from web at %s",
+                    ctime(tmp_bills_age),
+                )
+            except Exception as err_except:
+                logger.error("Got error %s", err_except)
+                raise
 
         opsread = csv.DictReader(bills.text.splitlines())
         for row in opsread:
@@ -354,25 +410,33 @@ def load_helis_from_url(bills_url):
             helis_dict[row["hex"].lower()] = row["type"]
             logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"])
         return (helis_dict, bills_age)
+    # else:
+    logger.warning(
+        "Could not Download bills_operators - status_code: %s", bills.status_code
+    )
+    return (None, None)
 
 
-def load_helis_from_file(heli_file):
+def load_helis_from_file():
     """
     Read Bills catalog of DC Helicopters into array
     returns dictionary of helis and types
     """
     helis_dict = {}
 
-    bills_age = os.path.getmtime(heli_file)
+    bills_age = check_bills_age()
+
+    if bills_age == 0:
+        logger.warning("Warning: bills_operators.csv Not found")
 
     if datetime.datetime.now().timestamp() - bills_age > 86400:
-        logger.warn(
+        logger.warning(
             "Warning: bills_operators.csv more than 24hrs old: %s", ctime(bills_age)
         )
 
     logger.debug("Bills Age: %s", bills_age)
 
-    with open(heli_file, encoding="UTF-8") as csvfile:
+    with open(bills_operators, encoding="UTF-8") as csvfile:
         opsread = csv.DictReader(csvfile)
         for row in opsread:
             helis_dict[row["hex"].lower()] = row["type"]
@@ -380,13 +444,41 @@ def load_helis_from_file(heli_file):
         return (helis_dict, bills_age)
 
 
-def run_loop(interval):
+def check_bills_age():
+    """
+    Checks age of file - returns zero if File not Found
+    """
+    try:
+        bills_age = os.path.getmtime(bills_operators)
+
+    except FileNotFoundError:
+        bills_age = 0
+
+    return bills_age
+
+
+def run_loop(interval, h_types):
     """
     Run as loop and sleep specified interval
     """
 
     while True:
         logger.debug("Starting Update")
+
+        bills_age = check_bills_age()
+
+        if int(time() - bills_age) >= (BILLS_TIMEOUT - 60):  # Timeout - 1 minute
+            logger.debug(
+                "bills_operators.csv not found or older than timeout value: %s",
+                ctime(bills_age),
+            )
+            (h_types, bills_age) = load_helis_from_url(BILLS_URL)
+            logger.info("Updated bills_operators.csv at: %s", ctime(bills_age))
+        else:
+            logger.debug(
+                "bills_operators.csv less than timeout value old - last updated at: %s",
+                ctime(bills_age),
+            )
 
         update_helidb()
 
@@ -432,6 +524,14 @@ if __name__ == "__main__":
         help="File for logging reported rotorcraft",
         action="store",
         default=None,
+    )
+
+    parser.add_argument(
+        "-w",
+        "--web",
+        help="Download / Update Bills Operators from Web on startup (defaults to reading local file)",
+        action="store_true",
+        default=False,
     )
 
     parser.add_argument(
@@ -526,11 +626,41 @@ if __name__ == "__main__":
             break
 
     env_file = os.path.join(conf_folder, ".env")
+
     bills_operators = os.path.join(conf_folder, "bills_operators.csv")
-    logger.debug("Using bills_operators as : %s", bills_operators)
+
     config = dotenv_values(env_file)
 
     # Should be pulling these from env
+
+    if (
+        "API-KEY" in config
+        and config["API-KEY"] != "BigLongRandomStringOfLettersAndNumbers"
+    ):
+        logger.debug("Mongo API Key found - using https api ")
+        MONGO_API_KEY = config["API-KEY"]
+        mongo_insert = mongo_https_insert
+    else:
+        if args.mongopw:
+            MONGOPW = args.mongopw
+        elif "MONGOPW" in config:
+            MONGOPW = config["MONGOPW"]
+        else:
+            MONGOPW = None
+            logger.error("No Mongo PW Found - Exiting")
+            sys.exit()
+
+        if args.mongouser:
+            MONGOUSER = args.mongouser
+        elif "MONGOUSER" in config:
+            MONGOUSER = config["MONGOUSER"]
+        else:
+            MONGOUSER = None
+            logger.error("No Mongo User Found - Exiting")
+            sys.exit()
+
+        logger.debug("Mongo User and Password found - using MongoClient")
+        mongo_insert = mongo_client_insert
 
     if args.feederid:
         FEEDER_ID = args.feederid
@@ -570,31 +700,29 @@ if __name__ == "__main__":
         AIRCRAFT_URL = None
         logger.debug("AIRCRAFT_URL set to None")
 
-    if args.mongopw:
-        MONGOPW = args.mongopw
-    elif "MONGOPW" in config:
-        MONGOPW = config["MONGOPW"]
-    else:
-        MONGOPW = None
-        logger.error("No Mongo PW Found - Exiting")
-        sys.exit()
-
-    if args.mongouser:
-        MONGOUSER = args.mongouser
-    elif "MONGOUSER" in config:
-        MONGOUSER = config["MONGOUSER"]
-    else:
-        MONGOUSER = None
-        logger.error("No Mongo User Found - Exiting")
-        sys.exit()
-
     # probably need to have an option for different file names
 
     heli_types = {}
 
-    # (heli_types, bills_age) = load_helis_from_file(bills_operators)
+    logger.debug("Using bills_operators as : %s", bills_operators)
 
-    (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
+    bills_age = check_bills_age()
+
+    if args.web:
+        logger.debug("Loading bills_operators from URL: %s ", BILLS_URL)
+        (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
+        logger.info("Loaded bills_operators from URL: %s ", BILLS_URL)
+
+    elif bills_age > 0:
+        logger.debug("Loading bills_operators from file: %s ", bills_operators)
+        (heli_types, bills_age) = load_helis_from_file()
+        logger.info("Loaded bills_operators from file: %s ", bills_operators)
+
+    else:
+        logger.error("Bills Operators file not found at %s -- exiting", bills_operators)
+        raise FileNotFoundError
+
+    logger.info("Loaded %s helis from Bills", str(len(heli_types)))
 
     if args.once:
         update_helidb()
@@ -614,12 +742,12 @@ if __name__ == "__main__":
         #            log_handles += getLogFileHandles(logger.parent)
 
         with daemon.DaemonContext(files_preserve=log_handles):
-            run_loop(args.interval)
+            run_loop(args.interval, heli_types)
 
     else:
         try:
             logger.debug("Starting main processing loop")
-            run_loop(args.interval)
+            run_loop(args.interval, heli_types)
 
         except KeyboardInterrupt:
             logger.warning("Received Keyboard Interrupt -- Exiting...")
