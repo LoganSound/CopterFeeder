@@ -307,7 +307,7 @@ def update_helidb():
             lat = float(plane["lat"])
             lon = float(plane["lon"])
 
-            output += " Lat:" + str(lat) + ", Lon: " + str(lon)
+            output += " Lat: " + str(lat) + ", Lon: " + str(lon)
 
             geometry = [lon, lat]
 
@@ -326,7 +326,7 @@ def update_helidb():
             squawk = ""
             output += " no squawk"
 
-        logger.info("Heliopter Reported %s: %s", plane["hex"], output)
+        logger.info("Heli Reported %s: %s", plane["hex"], output)
 
         if heli_type != "":
             mydict = {
