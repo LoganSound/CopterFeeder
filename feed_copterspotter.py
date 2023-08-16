@@ -43,9 +43,7 @@ VERSION = "20230323_1300_001"
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
-BILLS_TIMEOUT = 86400   # Standard is 1 day
-
-
+BILLS_TIMEOUT = 86400  # Standard is 1 day
 
 
 # Mongo URL
@@ -380,7 +378,7 @@ def load_helis_from_url(bills_url):
     helis_dict = {}
 
     try:
-        bills = requests.get(bills_url)
+        bills = requests.get(bills_url, timeout=7.5)
     except requests.exceptions.RequestException as e:
         raise
 
