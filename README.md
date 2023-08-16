@@ -202,3 +202,47 @@ optional arguments:
 
 
 ```
+
+
+
+
+## Running as Docker
+
+
+This script can be run as a Docker container, using docker-compose which can simplify setup as a dameon, and may help simplify configs if you don't have Python3.10 or similar installed. This is a bit more advanced method, and detailing all of the tasks needed for Docker setup is out of the scope of this readme. There is plenty of documentation available elsewhere, from Docker, from OS maintainers and from other 3rd parties.
+
+To use this script with docker you will first need to install Docker and docker compose on your machine. If you need help for this step, search the web for your version of Linux, etc. It could be as simple as:
+
+```Shell
+sudo apt install docker docker-compose
+```
+
+There may be other setup steps required - such as adding yourself to the docker group to give yourself priveledges to run docker without needed root access. Again, out of scope for this readme.md file.
+
+
+
+Next - setup the .env file as outlined above, using the credentials you've been provided for copter-spotter.
+
+
+Run docker-compose to build your container:
+
+```Shell
+docker-compose build
+```
+
+
+And then run the container:
+
+```Shell
+docker-compose up -d
+```
+
+
+If you'd like to see debug and loogging use:
+
+
+```Shell
+docker-compose logs -f
+```
+
+If you're curious about what Docker is doing, see the Dockerfile and the docker-compose.yml file.
