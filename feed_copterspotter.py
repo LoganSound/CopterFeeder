@@ -307,7 +307,7 @@ def update_helidb():
             lat = float(plane["lat"])
             lon = float(plane["lon"])
 
-            output += " " + str(lat) + "," + str(lon)
+            output += " Lat:" + str(lat) + ", Lon: " + str(lon)
 
             geometry = [lon, lat]
 
@@ -316,7 +316,7 @@ def update_helidb():
             lon = None
             # this should cleanup null issue #9 for mongo
             geometry = None
-            output += " No Lat" + str(lat) + ", No Lon " + str(lon)
+            output += " Lat: " + str(lat) + ", Lon: " + str(lon)
 
         try:
             squawk = str(plane["squawk"])
