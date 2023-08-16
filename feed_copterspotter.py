@@ -311,6 +311,7 @@ def update_helidb():
         except BaseException:
             lat = None
             lon = None
+            alt_geom = None
         try:
             squawk = str(plane["squawk"])
             output += " " + squawk
