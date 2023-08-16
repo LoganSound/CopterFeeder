@@ -306,15 +306,22 @@ def update_helidb():
         try:
             lat = float(plane["lat"])
             lon = float(plane["lon"])
+
             output += " " + str(lat) + "," + str(lon)
+
+            geometry = [lon, lat]
 
         except BaseException:
             lat = None
             lon = None
-            alt_geom = None
+            # this should cleanup null issue #9 for mongo
+            geometry = None
+            output += " No Lat" + str(lat) + ", No Lon " + str(lon)
+
         try:
             squawk = str(plane["squawk"])
             output += " " + squawk
+
         except BaseException:
             squawk = ""
             output += " no squawk"
@@ -335,7 +342,7 @@ def update_helidb():
                     "altitude_geo": alt_geom,
                     "feeder": FEEDER_ID,
                 },
-                "geometry": {"type": "Point", "coordinates": [lon, lat]},
+                "geometry": {"type": "Point", "coordinates": geometry},
             }
             ret_val = mongo_insert(mydict)
             # if ret_val: ... do something
