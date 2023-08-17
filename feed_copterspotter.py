@@ -284,7 +284,7 @@ def update_helidb():
 
             # FR altitude
 
-            output += " " + str(alt_baro)
+            output += " altbaro " + str(alt_baro)
 
         except BaseException:
             alt_baro = None
@@ -292,7 +292,7 @@ def update_helidb():
         try:
             alt_geom = max(0, int(plane["alt_geom"]))
             # FR altitude
-            output += " " + str(alt_geom)
+            output += " altgeom " + str(alt_geom)
         except BaseException:
             alt_geom = None
 
