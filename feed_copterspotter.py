@@ -89,6 +89,7 @@ AIRPLANES_FOLDERS = [
     "readsb",
     "dump1090",
     "adbsfi-feed",
+    "adsb-feeder-ultrafeeder/readsb",
 ]
 
 
