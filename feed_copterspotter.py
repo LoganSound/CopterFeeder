@@ -241,6 +241,7 @@ def update_helidb():
         try:
             iaco_hex = str(plane["hex"]).lower()
             heli_type = find_helis(iaco_hex)
+            heli_callsign = find_call(iaco_hex)
             output += " " + heli_type
         except BaseException:
             output += " no type or reg"
@@ -256,10 +257,11 @@ def update_helidb():
                 )
             else:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s Maybe callsign: %s  type: %s",
                     iaco_hex,
                     plane["category"],
                     "no_call",
+                    heli_callsign,
                     heli_type or "Unknown",
                 )
 
@@ -371,6 +373,17 @@ def find_helis(iaco_hex):
     logger.debug("Checking for: %s", iaco_hex)
     if heli_types[iaco_hex]["type"]:
         return heli_types[iaco_hex]["type"]
+
+    return ""
+
+
+def find_callsign(iaco_hex):
+    """
+    check if iaco is known return callsign or empty string
+    """
+    logger.debug("Checking for: %s", iaco_hex)
+    if heli_types[iaco_hex]["callsign"]:
+        return heli_types[iaco_hex]["callsign"]
 
     return ""
 
