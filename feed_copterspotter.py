@@ -260,7 +260,7 @@ def update_helidb():
                 )
             else:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s Tail: %s  type: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
                     iaco_hex,
                     plane["category"],
                     "no_call",
