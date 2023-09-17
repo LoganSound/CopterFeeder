@@ -237,12 +237,13 @@ def update_helidb():
         output += str(dt_stamp)
         callsign = ""
         heli_type = ""
-        heli_callsign = ""
+        heli_tail = ""
 
         try:
             iaco_hex = str(plane["hex"]).lower()
-            heli_type = find_helis(iaco_hex)
-            heli_callsign = find_callsign(iaco_hex)
+            # heli_type = find_helis(iaco_hex)
+            heli_type = search_bills(iaco_hex, "type")
+            heli_tail = search_bills(iaco_hex, "tail")
             output += " " + heli_type
         except BaseException:
             output += " no type or reg"
@@ -259,11 +260,11 @@ def update_helidb():
                 )
             else:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s Maybe callsign: %s  type: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s Tail: %s  type: %s",
                     iaco_hex,
                     plane["category"],
                     "no_call",
-                    heli_callsign,
+                    heli_tail or "Unknown",
                     heli_type or "Unknown",
                 )
 
@@ -379,13 +380,13 @@ def find_helis(iaco_hex):
     return ""
 
 
-def find_callsign(iaco_hex):
+def search_bills(iaco_hex, column_name):
     """
     check if iaco is known return callsign or empty string
     """
     logger.debug("Checking for: %s", iaco_hex)
-    if heli_types[iaco_hex]["callsign"]:
-        return heli_types[iaco_hex]["callsign"]
+    if heli_types[iaco_hex][column_name]:
+        return heli_types[iaco_hex][column_name]
 
     return ""
 
