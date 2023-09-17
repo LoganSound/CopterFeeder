@@ -241,7 +241,7 @@ def update_helidb():
         try:
             iaco_hex = str(plane["hex"]).lower()
             heli_type = find_helis(iaco_hex)
-            heli_callsign = find_call(iaco_hex)
+            heli_callsign = find_callsign(iaco_hex)
             output += " " + heli_type
         except BaseException:
             output += " no type or reg"
