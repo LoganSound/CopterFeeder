@@ -369,8 +369,8 @@ def find_helis(iaco_hex):
     check if iaco is known and return type or empty string
     """
     logger.debug("Checking for: %s", iaco_hex)
-    if heli_types[iaco_hex]:
-        return heli_types[iaco_hex]
+    if heli_types[iaco_hex]["type"]:
+        return heli_types[iaco_hex]["type"]
 
     return ""
 
@@ -414,7 +414,8 @@ def load_helis_from_url(bills_url):
         opsread = csv.DictReader(bills.text.splitlines())
         for row in opsread:
             # print(row)
-            helis_dict[row["hex"].lower()] = row["type"]
+            # helis_dict[row["hex"].lower()] = row["type"]
+            helis_dict[row["hex"].lower()] = row
             logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"])
         return (helis_dict, bills_age)
     # else:
@@ -446,7 +447,8 @@ def load_helis_from_file():
     with open(bills_operators, encoding="UTF-8") as csvfile:
         opsread = csv.DictReader(csvfile)
         for row in opsread:
-            helis_dict[row["hex"].lower()] = row["type"]
+            # helis_dict[row["hex"].lower()] = row["type"]
+            helis_dict[row["hex"].lower()] = row
             logger.debug("Loaded %s :: %s", row["hex"].lower(), row["type"])
         return (helis_dict, bills_age)
 
