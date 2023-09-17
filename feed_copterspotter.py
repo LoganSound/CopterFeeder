@@ -279,7 +279,7 @@ def update_helidb():
             callsign = str(plane["flight"]).strip()
             output += " " + callsign
         except BaseException:
-            output += " no call"
+            output += " no call (" + heli_tail + ")"
 
         try:
             # Assumtion is made that negative altitude is unlikely
