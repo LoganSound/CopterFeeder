@@ -237,6 +237,7 @@ def update_helidb():
         output += str(dt_stamp)
         callsign = ""
         heli_type = ""
+        heli_callsign = ""
 
         try:
             iaco_hex = str(plane["hex"]).lower()
