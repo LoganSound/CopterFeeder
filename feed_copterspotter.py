@@ -268,7 +268,7 @@ def update_helidb():
 
         if heli_type == "" or heli_type is None:
             # This short circuits parsing of aircraft with unknown iaco_hex codes
-            logger.debug("%s Not a known rotorcraft ", iaco_hex)
+            logger.info("%s Not a known rotorcraft ", iaco_hex)
             continue
 
         logger.debug("Parsing Helicopter: %s", iaco_hex)
