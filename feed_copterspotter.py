@@ -247,6 +247,7 @@ def update_helidb():
         except BaseException:
             output += " no type or reg"
 
+        # Should identify anything reporting itself as Wake Category A7 / Rotorcraft
         if "category" in plane and plane["category"] == "A7":
             if "flight" in plane:
                 logger.info(
