@@ -412,7 +412,11 @@ def load_helis_from_url(bills_url):
             try:
                 tmpcsvfile.write(bills.text)
                 tmpcsvfile.close()
-                old_bills_age = check_bills_age()
+                if os.path.exists("bills_operators.csv"):
+                    old_bills_age = check_bills_age()
+                else:
+                    old_bills_age = 0
+
                 if old_bills_age > 0:
                     os.rename(
                         "bills_operators.csv",
