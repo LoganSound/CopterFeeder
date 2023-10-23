@@ -152,9 +152,14 @@ def mongo_https_insert(mydict):
 
     headers = {"api-key": MONGO_API_KEY, "Content-Type": "application/json"}
 
-    response = requests.post(MONGO_URL, headers=headers, json=mydict, timeout=7.5)
-    logger.debug("Response: %s", response)
-    logger.info("Mongo Insert Status: %s", response.status_code)
+    try:
+        response = requests.post(MONGO_URL, headers=headers, json=mydict, timeout=7.5)
+        response.raise_for_status()
+        logger.debug("Response: %s", response)
+        logger.info("Mongo Insert Status: %s", response.status_code)
+
+    except requests.exceptions.HTTPError as e:
+        logger.warning("Mongo Post Error: %s ", e.response.text)
 
     return response.status_code
 

@@ -43,9 +43,7 @@ BILLS_TIMEOUT = 86400  # Standard is 1 day
 
 
 # Mongo URL
-MONGO_URL = (
-    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
-)
+MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
 
 # curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers" \
 #  -H "Content-Type: application/json" \-d '{"foo":"bar"}' \
@@ -152,9 +150,14 @@ def mongo_https_insert(mydict):
 
     headers = {"api-key": MONGO_API_KEY, "Content-Type": "application/json"}
 
-    response = requests.post(MONGO_URL, headers=headers, json=mydict, timeout=7.5)
-    logger.debug("Response: %s", response)
-    logger.info("Mongo Insert Status: %s", response.status_code)
+    try:
+        response = requests.post(MONGO_URL, headers=headers, json=mydict, timeout=7.5)
+        response.raise_for_status()
+        logger.debug("Response: %s", response)
+        logger.info("Mongo Insert Status: %s", response.status_code)
+
+    except requests.exceptions.HTTPError as e:
+        logger.warning("Mongo Post Error: %s ", e.response.text)
 
     return response.status_code
 
