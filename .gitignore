@@ -10,7 +10,9 @@ bills_operators*.csv
 
 Releasable*
 
+# Logfiles
 
+*logfile*
 
 # C extensions
 *.so

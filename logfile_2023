@@ -914,3 +914,7 @@
 2023-10-23 12:43:36,685 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
 2023-10-23 12:43:36,687 - __main__ - INFO - Heli Reported a33332: 1698079415.4 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
 2023-10-23 12:43:37,566 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:44:37,578 - __main__ - INFO - Updating Helidb at 2023-10-23 12:44:37.578256
+2023-10-23 12:44:37,648 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 12:44:37,651 - __main__ - INFO - Heli Reported a09a04: 1698079476.6 EC35 N138MH altbaro 600 altgeom 775 no heading Lat: 38.672759, Lon: -77.039856 no squawk
+2023-10-23 12:44:38,525 - __main__ - INFO - Mongo Insert Status: 500
