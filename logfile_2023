@@ -1,0 +1,916 @@
+2023-10-23 06:41:47,202 - __main__ - WARNING - Warning: bills_operators.csv more than 24hrs old: Fri Oct 20 10:58:16 2023
+2023-10-23 06:41:47,348 - __main__ - INFO - Loaded bills_operators from file: /home/brown/github/LoganSound/CopterFeeder/bills_operators.csv 
+2023-10-23 06:41:47,350 - __main__ - INFO - Loaded 112 helis from Bills
+2023-10-23 06:41:50,949 - __main__ - INFO - Bills File Updated from web at Mon Oct 23 06:41:50 2023
+2023-10-23 06:41:51,153 - __main__ - INFO - Updated bills_operators.csv at: Fri Oct 20 10:58:16 2023
+2023-10-23 06:41:51,154 - __main__ - INFO - Updating Helidb at 2023-10-23 06:41:51.154467
+2023-10-23 06:42:51,436 - __main__ - INFO - Updating Helidb at 2023-10-23 06:42:51.436179
+2023-10-23 06:43:51,603 - __main__ - INFO - Updating Helidb at 2023-10-23 06:43:51.603277
+2023-10-23 06:44:51,751 - __main__ - INFO - Updating Helidb at 2023-10-23 06:44:51.751161
+2023-10-23 06:45:51,926 - __main__ - INFO - Updating Helidb at 2023-10-23 06:45:51.926256
+2023-10-23 06:46:52,086 - __main__ - INFO - Updating Helidb at 2023-10-23 06:46:52.086815
+2023-10-23 06:47:52,244 - __main__ - INFO - Updating Helidb at 2023-10-23 06:47:52.244797
+2023-10-23 06:48:52,392 - __main__ - INFO - Updating Helidb at 2023-10-23 06:48:52.392151
+2023-10-23 06:49:52,562 - __main__ - INFO - Updating Helidb at 2023-10-23 06:49:52.561928
+2023-10-23 06:50:52,722 - __main__ - INFO - Updating Helidb at 2023-10-23 06:50:52.722436
+2023-10-23 06:51:52,897 - __main__ - INFO - Updating Helidb at 2023-10-23 06:51:52.897760
+2023-10-23 06:52:53,097 - __main__ - INFO - Updating Helidb at 2023-10-23 06:52:53.097014
+2023-10-23 06:53:53,312 - __main__ - INFO - Updating Helidb at 2023-10-23 06:53:53.312377
+2023-10-23 06:54:53,490 - __main__ - INFO - Updating Helidb at 2023-10-23 06:54:53.490537
+2023-10-23 06:55:53,727 - __main__ - INFO - Updating Helidb at 2023-10-23 06:55:53.727792
+2023-10-23 06:56:53,946 - __main__ - INFO - Updating Helidb at 2023-10-23 06:56:53.946368
+2023-10-23 06:57:54,196 - __main__ - INFO - Updating Helidb at 2023-10-23 06:57:54.196399
+2023-10-23 06:58:54,423 - __main__ - INFO - Updating Helidb at 2023-10-23 06:58:54.423242
+2023-10-23 06:59:54,616 - __main__ - INFO - Updating Helidb at 2023-10-23 06:59:54.616024
+2023-10-23 07:00:54,808 - __main__ - INFO - Updating Helidb at 2023-10-23 07:00:54.807996
+2023-10-23 07:01:55,080 - __main__ - INFO - Updating Helidb at 2023-10-23 07:01:55.080563
+2023-10-23 07:02:55,309 - __main__ - INFO - Updating Helidb at 2023-10-23 07:02:55.309551
+2023-10-23 07:03:55,551 - __main__ - INFO - Updating Helidb at 2023-10-23 07:03:55.551353
+2023-10-23 07:04:55,778 - __main__ - INFO - Updating Helidb at 2023-10-23 07:04:55.778652
+2023-10-23 07:05:56,054 - __main__ - INFO - Updating Helidb at 2023-10-23 07:05:56.054568
+2023-10-23 07:06:56,324 - __main__ - INFO - Updating Helidb at 2023-10-23 07:06:56.324382
+2023-10-23 07:07:56,548 - __main__ - INFO - Updating Helidb at 2023-10-23 07:07:56.548056
+2023-10-23 07:08:56,805 - __main__ - INFO - Updating Helidb at 2023-10-23 07:08:56.805750
+2023-10-23 07:09:57,044 - __main__ - INFO - Updating Helidb at 2023-10-23 07:09:57.044451
+2023-10-23 07:10:57,280 - __main__ - INFO - Updating Helidb at 2023-10-23 07:10:57.280612
+2023-10-23 07:11:57,560 - __main__ - INFO - Updating Helidb at 2023-10-23 07:11:57.560918
+2023-10-23 07:12:57,852 - __main__ - INFO - Updating Helidb at 2023-10-23 07:12:57.852810
+2023-10-23 07:12:57,911 - __main__ - INFO - Heli Reported a0aef0: 1698059577.0 EC35 no call (N143MH) altbaro 275 no heading Lat: None, Lon: None no squawk
+2023-10-23 07:12:58,901 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:13:59,061 - __main__ - INFO - Updating Helidb at 2023-10-23 07:13:59.061810
+2023-10-23 07:13:59,125 - __main__ - INFO - Heli Reported a0aef0: 1698059638.2 EC35 no call (N143MH) altbaro 800 no heading Lat: None, Lon: None 5221
+2023-10-23 07:14:00,105 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:15:00,261 - __main__ - INFO - Updating Helidb at 2023-10-23 07:15:00.260994
+2023-10-23 07:15:00,337 - __main__ - INFO - Heli Reported a0aef0: 1698059699.4 EC35 N143MH altbaro 975 no heading Lat: None, Lon: None 5221
+2023-10-23 07:15:01,260 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:16:01,441 - __main__ - INFO - Updating Helidb at 2023-10-23 07:16:01.441328
+2023-10-23 07:16:01,551 - __main__ - INFO - Heli Reported a0aef0: 1698059760.6 EC35 no call (N143MH) altbaro 975 no heading Lat: None, Lon: None 5221
+2023-10-23 07:16:02,569 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:17:02,886 - __main__ - INFO - Updating Helidb at 2023-10-23 07:17:02.886040
+2023-10-23 07:17:02,993 - __main__ - INFO - Heli Reported a0aef0: 1698059822.9 EC35 no call (N143MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 07:17:03,970 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:18:04,121 - __main__ - INFO - Updating Helidb at 2023-10-23 07:18:04.121458
+2023-10-23 07:18:04,205 - __main__ - INFO - Heli Reported a0aef0: 1698059884.1 EC35 no call (N143MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 07:18:05,155 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:19:05,307 - __main__ - INFO - Updating Helidb at 2023-10-23 07:19:05.307477
+2023-10-23 07:19:05,425 - __main__ - INFO - Heli Reported a0aef0: 1698059945.3 EC35 no call (N143MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 07:19:06,326 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:20:06,508 - __main__ - INFO - Updating Helidb at 2023-10-23 07:20:06.508039
+2023-10-23 07:20:06,603 - __main__ - INFO - Heli Reported a0aef0: 1698060005.5 EC35 no call (N143MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 07:20:07,512 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:21:07,655 - __main__ - INFO - Updating Helidb at 2023-10-23 07:21:07.655555
+2023-10-23 07:22:07,920 - __main__ - INFO - Updating Helidb at 2023-10-23 07:22:07.919882
+2023-10-23 07:23:08,227 - __main__ - INFO - Updating Helidb at 2023-10-23 07:23:08.227035
+2023-10-23 07:24:08,468 - __main__ - INFO - Updating Helidb at 2023-10-23 07:24:08.468646
+2023-10-23 07:25:08,724 - __main__ - INFO - Updating Helidb at 2023-10-23 07:25:08.723969
+2023-10-23 07:26:08,965 - __main__ - INFO - Updating Helidb at 2023-10-23 07:26:08.964881
+2023-10-23 07:27:09,190 - __main__ - INFO - Updating Helidb at 2023-10-23 07:27:09.189979
+2023-10-23 07:28:09,428 - __main__ - INFO - Updating Helidb at 2023-10-23 07:28:09.428889
+2023-10-23 07:29:09,629 - __main__ - INFO - Updating Helidb at 2023-10-23 07:29:09.629132
+2023-10-23 07:30:09,850 - __main__ - INFO - Updating Helidb at 2023-10-23 07:30:09.849960
+2023-10-23 07:31:10,088 - __main__ - INFO - Updating Helidb at 2023-10-23 07:31:10.088147
+2023-10-23 07:32:10,326 - __main__ - INFO - Updating Helidb at 2023-10-23 07:32:10.326813
+2023-10-23 07:33:10,581 - __main__ - INFO - Updating Helidb at 2023-10-23 07:33:10.581789
+2023-10-23 07:34:10,804 - __main__ - INFO - Updating Helidb at 2023-10-23 07:34:10.804451
+2023-10-23 07:35:11,056 - __main__ - INFO - Updating Helidb at 2023-10-23 07:35:11.055894
+2023-10-23 07:36:11,282 - __main__ - INFO - Updating Helidb at 2023-10-23 07:36:11.282551
+2023-10-23 07:37:11,483 - __main__ - INFO - Updating Helidb at 2023-10-23 07:37:11.483318
+2023-10-23 07:38:11,687 - __main__ - INFO - Updating Helidb at 2023-10-23 07:38:11.686917
+2023-10-23 07:39:11,888 - __main__ - INFO - Updating Helidb at 2023-10-23 07:39:11.888049
+2023-10-23 07:40:12,066 - __main__ - INFO - Updating Helidb at 2023-10-23 07:40:12.066270
+2023-10-23 07:41:12,284 - __main__ - INFO - Updating Helidb at 2023-10-23 07:41:12.283873
+2023-10-23 07:42:12,479 - __main__ - INFO - Updating Helidb at 2023-10-23 07:42:12.479801
+2023-10-23 07:43:12,704 - __main__ - INFO - Updating Helidb at 2023-10-23 07:43:12.704040
+2023-10-23 07:44:12,900 - __main__ - INFO - Updating Helidb at 2023-10-23 07:44:12.900724
+2023-10-23 07:45:13,104 - __main__ - INFO - Updating Helidb at 2023-10-23 07:45:13.104309
+2023-10-23 07:46:13,355 - __main__ - INFO - Updating Helidb at 2023-10-23 07:46:13.355846
+2023-10-23 07:47:13,582 - __main__ - INFO - Updating Helidb at 2023-10-23 07:47:13.582420
+2023-10-23 07:48:13,762 - __main__ - INFO - Updating Helidb at 2023-10-23 07:48:13.762770
+2023-10-23 07:49:13,984 - __main__ - INFO - Updating Helidb at 2023-10-23 07:49:13.984712
+2023-10-23 07:50:14,205 - __main__ - INFO - Updating Helidb at 2023-10-23 07:50:14.205512
+2023-10-23 07:51:14,395 - __main__ - INFO - Updating Helidb at 2023-10-23 07:51:14.395804
+2023-10-23 07:52:14,671 - __main__ - INFO - Updating Helidb at 2023-10-23 07:52:14.671424
+2023-10-23 07:53:14,901 - __main__ - INFO - Updating Helidb at 2023-10-23 07:53:14.901214
+2023-10-23 07:54:15,142 - __main__ - INFO - Updating Helidb at 2023-10-23 07:54:15.142172
+2023-10-23 07:55:15,304 - __main__ - INFO - Updating Helidb at 2023-10-23 07:55:15.304276
+2023-10-23 07:56:15,560 - __main__ - INFO - Updating Helidb at 2023-10-23 07:56:15.559797
+2023-10-23 07:57:15,752 - __main__ - INFO - Updating Helidb at 2023-10-23 07:57:15.752759
+2023-10-23 07:57:15,804 - __main__ - INFO - Heli Reported a9f3a5: 1698062235.3 EC35 no call (N740MH) altbaro 1150 no heading Lat: None, Lon: None no squawk
+2023-10-23 07:57:16,761 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:58:16,904 - __main__ - INFO - Updating Helidb at 2023-10-23 07:58:16.904815
+2023-10-23 07:58:16,970 - __main__ - INFO - Heli Reported a9f3a5: 1698062296.5 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 07:58:17,963 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 07:59:18,116 - __main__ - INFO - Updating Helidb at 2023-10-23 07:59:18.116389
+2023-10-23 07:59:18,202 - __main__ - INFO - Heli Reported a9f3a5: 1698062357.7 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 07:59:19,128 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:00:19,228 - __main__ - INFO - Updating Helidb at 2023-10-23 08:00:19.228498
+2023-10-23 08:00:19,317 - __main__ - INFO - Heli Reported a9f3a5: 1698062418.9 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 08:00:20,292 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:01:20,393 - __main__ - INFO - Updating Helidb at 2023-10-23 08:01:20.393461
+2023-10-23 08:01:20,488 - __main__ - INFO - Heli Reported a9f3a5: 1698062480.1 EC35 no call (N740MH) altbaro 800 no heading Lat: None, Lon: None no squawk
+2023-10-23 08:01:21,398 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:02:21,479 - __main__ - INFO - Updating Helidb at 2023-10-23 08:02:21.479793
+2023-10-23 08:02:21,556 - __main__ - INFO - Heli Reported a9f3a5: 1698062541.4 EC35 no call (N740MH) altbaro 800 no heading Lat: None, Lon: None no squawk
+2023-10-23 08:02:22,578 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:03:22,695 - __main__ - INFO - Updating Helidb at 2023-10-23 08:03:22.695567
+2023-10-23 08:03:22,827 - __main__ - INFO - Heli Reported a9f3a5: 1698062602.6 EC35 no call (N740MH) altbaro 775 no heading Lat: None, Lon: None no squawk
+2023-10-23 08:03:23,776 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:04:23,895 - __main__ - INFO - Updating Helidb at 2023-10-23 08:04:23.895244
+2023-10-23 08:04:23,999 - __main__ - INFO - Heli Reported a9f3a5: 1698062663.8 EC35 no call (N740MH) altbaro 750 no heading Lat: None, Lon: None no squawk
+2023-10-23 08:04:24,888 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:05:24,975 - __main__ - INFO - Updating Helidb at 2023-10-23 08:05:24.975348
+2023-10-23 08:05:25,087 - __main__ - INFO - Heli Reported a9f3a5: 1698062724.0 EC35 no call (N740MH) altbaro 675 no heading Lat: None, Lon: None no squawk
+2023-10-23 08:05:26,039 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:06:26,132 - __main__ - INFO - Updating Helidb at 2023-10-23 08:06:26.131889
+2023-10-23 08:06:26,268 - __main__ - INFO - Heli Reported a9f3a5: 1698062785.2 EC35 N740MH altbaro 700 no heading Lat: None, Lon: None 5223
+2023-10-23 08:06:27,172 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:07:27,317 - __main__ - INFO - Updating Helidb at 2023-10-23 08:07:27.317416
+2023-10-23 08:07:27,439 - __main__ - INFO - Heli Reported a9f3a5: 1698062846.4 EC35 no call (N740MH) altbaro 725 no heading Lat: None, Lon: None 5223
+2023-10-23 08:07:28,335 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:08:28,408 - __main__ - INFO - Updating Helidb at 2023-10-23 08:08:28.408476
+2023-10-23 08:08:28,536 - __main__ - INFO - Heli Reported a9f3a5: 1698062907.6 EC35 no call (N740MH) altbaro 700 no heading Lat: None, Lon: None 5223
+2023-10-23 08:08:29,488 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:09:29,561 - __main__ - INFO - Updating Helidb at 2023-10-23 08:09:29.561352
+2023-10-23 08:09:29,704 - __main__ - INFO - Heli Reported a9f3a5: 1698062968.9 EC35 no call (N740MH) altbaro 700 no heading Lat: None, Lon: None 5223
+2023-10-23 08:09:30,683 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:10:30,741 - __main__ - INFO - Updating Helidb at 2023-10-23 08:10:30.741263
+2023-10-23 08:10:30,938 - __main__ - INFO - Heli Reported a9f3a5: 1698063030.1 EC35 N740MH altbaro 700 no heading Lat: None, Lon: None 5223
+2023-10-23 08:10:31,907 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:11:31,958 - __main__ - INFO - Updating Helidb at 2023-10-23 08:11:31.958525
+2023-10-23 08:11:32,188 - __main__ - INFO - Heli Reported a9f3a5: 1698063091.3 EC35 N740MH altbaro 425 no heading Lat: None, Lon: None 5223
+2023-10-23 08:11:33,203 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:12:33,249 - __main__ - INFO - Updating Helidb at 2023-10-23 08:12:33.248883
+2023-10-23 08:12:33,425 - __main__ - INFO - Heli Reported a9f3a5: 1698063152.5 EC35 N740MH altbaro 250 no heading Lat: None, Lon: None 5223
+2023-10-23 08:12:34,337 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:13:34,384 - __main__ - INFO - Updating Helidb at 2023-10-23 08:13:34.384448
+2023-10-23 08:13:34,555 - __main__ - INFO - Heli Reported a9f3a5: 1698063213.7 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 08:13:35,483 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:14:35,545 - __main__ - INFO - Updating Helidb at 2023-10-23 08:14:35.545023
+2023-10-23 08:14:35,724 - __main__ - INFO - Heli Reported a9f3a5: 1698063274.9 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 08:14:36,687 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:15:36,806 - __main__ - INFO - Updating Helidb at 2023-10-23 08:15:36.806558
+2023-10-23 08:15:36,975 - __main__ - INFO - Heli Reported a9f3a5: 1698063336.1 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 08:15:37,876 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:16:37,913 - __main__ - INFO - Updating Helidb at 2023-10-23 08:16:37.913432
+2023-10-23 08:16:38,168 - __main__ - INFO - Heli Reported a9f3a5: 1698063397.4 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 08:16:39,094 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:17:39,125 - __main__ - INFO - Updating Helidb at 2023-10-23 08:17:39.125003
+2023-10-23 08:18:39,358 - __main__ - INFO - Updating Helidb at 2023-10-23 08:18:39.357905
+2023-10-23 08:19:39,594 - __main__ - INFO - Updating Helidb at 2023-10-23 08:19:39.594532
+2023-10-23 08:20:39,812 - __main__ - INFO - Updating Helidb at 2023-10-23 08:20:39.812100
+2023-10-23 08:21:40,064 - __main__ - INFO - Updating Helidb at 2023-10-23 08:21:40.064518
+2023-10-23 08:22:40,274 - __main__ - INFO - Updating Helidb at 2023-10-23 08:22:40.273887
+2023-10-23 08:23:40,516 - __main__ - INFO - Updating Helidb at 2023-10-23 08:23:40.516426
+2023-10-23 08:24:40,803 - __main__ - INFO - Updating Helidb at 2023-10-23 08:24:40.803699
+2023-10-23 08:25:41,032 - __main__ - INFO - Updating Helidb at 2023-10-23 08:25:41.032317
+2023-10-23 08:26:41,320 - __main__ - INFO - Updating Helidb at 2023-10-23 08:26:41.320302
+2023-10-23 08:27:41,551 - __main__ - INFO - Updating Helidb at 2023-10-23 08:27:41.550910
+2023-10-23 08:28:41,861 - __main__ - INFO - Updating Helidb at 2023-10-23 08:28:41.861731
+2023-10-23 08:29:42,079 - __main__ - INFO - Updating Helidb at 2023-10-23 08:29:42.079366
+2023-10-23 08:30:42,353 - __main__ - INFO - Updating Helidb at 2023-10-23 08:30:42.352968
+2023-10-23 08:31:42,620 - __main__ - INFO - Updating Helidb at 2023-10-23 08:31:42.620797
+2023-10-23 08:32:42,837 - __main__ - INFO - Updating Helidb at 2023-10-23 08:32:42.837524
+2023-10-23 08:33:43,089 - __main__ - INFO - Updating Helidb at 2023-10-23 08:33:43.089331
+2023-10-23 08:34:43,300 - __main__ - INFO - Updating Helidb at 2023-10-23 08:34:43.300270
+2023-10-23 08:35:43,575 - __main__ - INFO - Updating Helidb at 2023-10-23 08:35:43.575352
+2023-10-23 08:36:43,847 - __main__ - INFO - Updating Helidb at 2023-10-23 08:36:43.847769
+2023-10-23 08:37:44,095 - __main__ - INFO - Updating Helidb at 2023-10-23 08:37:44.095204
+2023-10-23 08:38:44,380 - __main__ - INFO - Updating Helidb at 2023-10-23 08:38:44.380367
+2023-10-23 08:39:44,628 - __main__ - INFO - Updating Helidb at 2023-10-23 08:39:44.628026
+2023-10-23 08:40:44,896 - __main__ - INFO - Updating Helidb at 2023-10-23 08:40:44.896375
+2023-10-23 08:41:45,186 - __main__ - INFO - Updating Helidb at 2023-10-23 08:41:45.186044
+2023-10-23 08:42:45,493 - __main__ - INFO - Updating Helidb at 2023-10-23 08:42:45.493604
+2023-10-23 08:43:45,810 - __main__ - INFO - Updating Helidb at 2023-10-23 08:43:45.810103
+2023-10-23 08:44:46,237 - __main__ - INFO - Updating Helidb at 2023-10-23 08:44:46.236990
+2023-10-23 08:45:46,534 - __main__ - INFO - Updating Helidb at 2023-10-23 08:45:46.534726
+2023-10-23 08:46:46,802 - __main__ - INFO - Updating Helidb at 2023-10-23 08:46:46.801909
+2023-10-23 08:47:47,219 - __main__ - INFO - Updating Helidb at 2023-10-23 08:47:47.219331
+2023-10-23 08:48:47,608 - __main__ - INFO - Updating Helidb at 2023-10-23 08:48:47.608085
+2023-10-23 08:49:17,315 - __main__ - WARNING - Received Keyboard Interrupt -- Exiting...
+2023-10-23 08:50:52,758 - __main__ - INFO - Loaded bills_operators from file: /home/brown/github/LoganSound/CopterFeeder/bills_operators.csv 
+2023-10-23 08:50:52,760 - __main__ - INFO - Loaded 112 helis from Bills
+2023-10-23 08:50:52,762 - __main__ - INFO - Updating Helidb at 2023-10-23 08:50:52.762396
+2023-10-23 08:51:53,143 - __main__ - INFO - Updating Helidb at 2023-10-23 08:51:53.143325
+2023-10-23 08:52:53,214 - __main__ - INFO - Updating Helidb at 2023-10-23 08:52:53.214248
+2023-10-23 08:53:53,290 - __main__ - INFO - Updating Helidb at 2023-10-23 08:53:53.290809
+2023-10-23 08:53:53,367 - __main__ - INFO - Heli Reported a9f3a5: 1698065632.4 EC35 no call (N740MH) altbaro 450 no heading Lat: None, Lon: None no squawk
+2023-10-23 08:53:54,264 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:54:54,283 - __main__ - INFO - Updating Helidb at 2023-10-23 08:54:54.283606
+2023-10-23 08:54:54,373 - __main__ - INFO - Heli Reported a9f3a5: 1698065693.6 EC35 N740MH altbaro 750 no heading Lat: None, Lon: None 5223
+2023-10-23 08:54:55,259 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:55:55,276 - __main__ - INFO - Updating Helidb at 2023-10-23 08:55:55.276339
+2023-10-23 08:55:55,355 - __main__ - INFO - Heli Reported a9f3a5: 1698065754.9 EC35 no call (N740MH) altbaro 775 no heading Lat: None, Lon: None 5223
+2023-10-23 08:55:56,214 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:56:56,231 - __main__ - INFO - Updating Helidb at 2023-10-23 08:56:56.231063
+2023-10-23 08:56:56,300 - __main__ - INFO - Heli Reported a9f3a5: 1698065816.0 EC35 no call (N740MH) altbaro 750 no heading Lat: None, Lon: None 5223
+2023-10-23 08:56:57,222 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:57:57,238 - __main__ - INFO - Updating Helidb at 2023-10-23 08:57:57.238621
+2023-10-23 08:57:57,305 - __main__ - INFO - Heli Reported a9f3a5: 1698065876.2 EC35 no call (N740MH) altbaro 750 no heading Lat: None, Lon: None no squawk
+2023-10-23 08:57:58,174 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:58:58,198 - __main__ - INFO - Updating Helidb at 2023-10-23 08:58:58.198433
+2023-10-23 08:58:58,262 - __main__ - INFO - Heli Reported a9f3a5: 1698065937.4 EC35 no call (N740MH) altbaro 725 no heading Lat: None, Lon: None no squawk
+2023-10-23 08:58:59,207 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 08:59:59,224 - __main__ - INFO - Updating Helidb at 2023-10-23 08:59:59.224356
+2023-10-23 08:59:59,311 - __main__ - INFO - Heli Reported a9f3a5: 1698065998.7 EC35 no call (N740MH) altbaro 725 no heading Lat: None, Lon: None no squawk
+2023-10-23 09:00:00,208 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:01:00,221 - __main__ - INFO - Updating Helidb at 2023-10-23 09:01:00.221673
+2023-10-23 09:01:00,289 - __main__ - INFO - Heli Reported a9f3a5: 1698066059.9 EC35 no call (N740MH) altbaro 750 no heading Lat: None, Lon: None no squawk
+2023-10-23 09:01:01,148 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:02:01,161 - __main__ - INFO - Updating Helidb at 2023-10-23 09:02:01.161113
+2023-10-23 09:02:01,222 - __main__ - INFO - Heli Reported a9f3a5: 1698066121.1 EC35 no call (N740MH) altbaro 750 no heading Lat: None, Lon: None no squawk
+2023-10-23 09:02:02,080 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:03:02,094 - __main__ - INFO - Updating Helidb at 2023-10-23 09:03:02.094379
+2023-10-23 09:03:02,157 - __main__ - INFO - Heli Reported a9f3a5: 1698066181.2 EC35 no call (N740MH) altbaro 750 no heading Lat: None, Lon: None no squawk
+2023-10-23 09:03:03,061 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:04:03,073 - __main__ - INFO - Updating Helidb at 2023-10-23 09:04:03.073259
+2023-10-23 09:04:03,144 - __main__ - INFO - Heli Reported a33a6b: 1698066242.5 EC45 no call (N307ME) altbaro 825 altgeom 950 no heading Lat: None, Lon: None no squawk
+2023-10-23 09:04:04,138 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:04:04,150 - __main__ - INFO - Heli Reported a9f3a5: 1698066242.5 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:04:05,053 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:05:05,067 - __main__ - INFO - Updating Helidb at 2023-10-23 09:05:05.067612
+2023-10-23 09:05:05,138 - __main__ - INFO - Heli Reported a33a6b: 1698066304.7 EC45 no call (N307ME) altbaro 825 no heading Lat: None, Lon: None no squawk
+2023-10-23 09:05:06,096 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:05:06,105 - __main__ - INFO - Heli Reported a9f3a5: 1698066304.7 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:05:06,976 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:06:06,987 - __main__ - INFO - Updating Helidb at 2023-10-23 09:06:06.987657
+2023-10-23 09:06:07,051 - __main__ - INFO - Heli Reported a33a6b: 1698066367.0 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:06:08,028 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:06:08,037 - __main__ - INFO - Heli Reported a9f3a5: 1698066367.0 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:06:08,920 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:07:08,937 - __main__ - INFO - Updating Helidb at 2023-10-23 09:07:08.936914
+2023-10-23 09:07:09,002 - __main__ - INFO - Heli Reported a33a6b: 1698066428.2 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:07:09,937 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:07:09,946 - __main__ - INFO - Heli Reported a9f3a5: 1698066428.2 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:07:10,824 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:08:10,835 - __main__ - INFO - Updating Helidb at 2023-10-23 09:08:10.834999
+2023-10-23 09:08:10,908 - __main__ - INFO - Heli Reported a33a6b: 1698066490.5 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:08:11,790 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:08:11,799 - __main__ - INFO - Heli Reported a9f3a5: 1698066490.5 EC35 no call (N740MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:08:12,711 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:09:12,721 - __main__ - INFO - Updating Helidb at 2023-10-23 09:09:12.721559
+2023-10-23 09:09:12,797 - __main__ - INFO - Heli Reported a33a6b: 1698066552.7 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 09:09:13,753 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 09:10:13,766 - __main__ - INFO - Updating Helidb at 2023-10-23 09:10:13.766786
+2023-10-23 09:11:13,835 - __main__ - INFO - Updating Helidb at 2023-10-23 09:11:13.835438
+2023-10-23 09:12:13,919 - __main__ - INFO - Updating Helidb at 2023-10-23 09:12:13.919524
+2023-10-23 09:13:13,992 - __main__ - INFO - Updating Helidb at 2023-10-23 09:13:13.992311
+2023-10-23 09:14:14,067 - __main__ - INFO - Updating Helidb at 2023-10-23 09:14:14.067089
+2023-10-23 09:15:14,139 - __main__ - INFO - Updating Helidb at 2023-10-23 09:15:14.138907
+2023-10-23 09:16:14,220 - __main__ - INFO - Updating Helidb at 2023-10-23 09:16:14.220197
+2023-10-23 09:17:14,303 - __main__ - INFO - Updating Helidb at 2023-10-23 09:17:14.303351
+2023-10-23 09:18:14,374 - __main__ - INFO - Updating Helidb at 2023-10-23 09:18:14.374162
+2023-10-23 09:19:14,446 - __main__ - INFO - Updating Helidb at 2023-10-23 09:19:14.446060
+2023-10-23 09:20:14,520 - __main__ - INFO - Updating Helidb at 2023-10-23 09:20:14.520607
+2023-10-23 09:21:14,598 - __main__ - INFO - Updating Helidb at 2023-10-23 09:21:14.598379
+2023-10-23 09:22:14,678 - __main__ - INFO - Updating Helidb at 2023-10-23 09:22:14.678338
+2023-10-23 09:23:14,768 - __main__ - INFO - Updating Helidb at 2023-10-23 09:23:14.768327
+2023-10-23 09:24:14,845 - __main__ - INFO - Updating Helidb at 2023-10-23 09:24:14.845694
+2023-10-23 09:25:14,913 - __main__ - INFO - Updating Helidb at 2023-10-23 09:25:14.913496
+2023-10-23 09:26:14,989 - __main__ - INFO - Updating Helidb at 2023-10-23 09:26:14.989359
+2023-10-23 09:27:15,057 - __main__ - INFO - Updating Helidb at 2023-10-23 09:27:15.057771
+2023-10-23 09:28:15,134 - __main__ - INFO - Updating Helidb at 2023-10-23 09:28:15.134200
+2023-10-23 09:29:15,212 - __main__ - INFO - Updating Helidb at 2023-10-23 09:29:15.211939
+2023-10-23 09:30:15,291 - __main__ - INFO - Updating Helidb at 2023-10-23 09:30:15.291741
+2023-10-23 09:31:15,378 - __main__ - INFO - Updating Helidb at 2023-10-23 09:31:15.378174
+2023-10-23 09:32:15,453 - __main__ - INFO - Updating Helidb at 2023-10-23 09:32:15.453008
+2023-10-23 09:33:15,515 - __main__ - INFO - Updating Helidb at 2023-10-23 09:33:15.515095
+2023-10-23 09:34:15,584 - __main__ - INFO - Updating Helidb at 2023-10-23 09:34:15.584733
+2023-10-23 09:35:15,654 - __main__ - INFO - Updating Helidb at 2023-10-23 09:35:15.654825
+2023-10-23 09:36:15,719 - __main__ - INFO - Updating Helidb at 2023-10-23 09:36:15.719761
+2023-10-23 09:37:15,781 - __main__ - INFO - Updating Helidb at 2023-10-23 09:37:15.781562
+2023-10-23 09:38:15,848 - __main__ - INFO - Updating Helidb at 2023-10-23 09:38:15.848496
+2023-10-23 09:39:15,927 - __main__ - INFO - Updating Helidb at 2023-10-23 09:39:15.926956
+2023-10-23 09:40:15,991 - __main__ - INFO - Updating Helidb at 2023-10-23 09:40:15.991445
+2023-10-23 09:41:16,059 - __main__ - INFO - Updating Helidb at 2023-10-23 09:41:16.059118
+2023-10-23 09:42:16,127 - __main__ - INFO - Updating Helidb at 2023-10-23 09:42:16.127039
+2023-10-23 09:43:16,186 - __main__ - INFO - Updating Helidb at 2023-10-23 09:43:16.186235
+2023-10-23 09:44:16,255 - __main__ - INFO - Updating Helidb at 2023-10-23 09:44:16.255233
+2023-10-23 09:45:16,315 - __main__ - INFO - Updating Helidb at 2023-10-23 09:45:16.315173
+2023-10-23 09:46:16,380 - __main__ - INFO - Updating Helidb at 2023-10-23 09:46:16.380014
+2023-10-23 09:47:16,440 - __main__ - INFO - Updating Helidb at 2023-10-23 09:47:16.439953
+2023-10-23 09:48:16,502 - __main__ - INFO - Updating Helidb at 2023-10-23 09:48:16.502829
+2023-10-23 09:49:16,558 - __main__ - INFO - Updating Helidb at 2023-10-23 09:49:16.558398
+2023-10-23 09:50:16,617 - __main__ - INFO - Updating Helidb at 2023-10-23 09:50:16.617450
+2023-10-23 09:51:16,673 - __main__ - INFO - Updating Helidb at 2023-10-23 09:51:16.673803
+2023-10-23 09:52:16,729 - __main__ - INFO - Updating Helidb at 2023-10-23 09:52:16.729519
+2023-10-23 09:53:16,788 - __main__ - INFO - Updating Helidb at 2023-10-23 09:53:16.788231
+2023-10-23 09:54:16,848 - __main__ - INFO - Updating Helidb at 2023-10-23 09:54:16.848407
+2023-10-23 09:55:16,907 - __main__ - INFO - Updating Helidb at 2023-10-23 09:55:16.907368
+2023-10-23 09:56:16,979 - __main__ - INFO - Updating Helidb at 2023-10-23 09:56:16.979752
+2023-10-23 09:57:17,036 - __main__ - INFO - Updating Helidb at 2023-10-23 09:57:17.036516
+2023-10-23 09:58:17,107 - __main__ - INFO - Updating Helidb at 2023-10-23 09:58:17.107310
+2023-10-23 09:59:17,165 - __main__ - INFO - Updating Helidb at 2023-10-23 09:59:17.165451
+2023-10-23 10:00:17,217 - __main__ - INFO - Updating Helidb at 2023-10-23 10:00:17.217107
+2023-10-23 10:00:17,266 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:01:17,276 - __main__ - INFO - Updating Helidb at 2023-10-23 10:01:17.276451
+2023-10-23 10:01:17,325 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:02:17,333 - __main__ - INFO - Updating Helidb at 2023-10-23 10:02:17.333190
+2023-10-23 10:02:17,382 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:03:17,392 - __main__ - INFO - Updating Helidb at 2023-10-23 10:03:17.392369
+2023-10-23 10:03:17,441 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:04:17,450 - __main__ - INFO - Updating Helidb at 2023-10-23 10:04:17.450049
+2023-10-23 10:04:17,501 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:05:17,510 - __main__ - INFO - Updating Helidb at 2023-10-23 10:05:17.510003
+2023-10-23 10:05:17,557 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:06:17,564 - __main__ - INFO - Updating Helidb at 2023-10-23 10:06:17.564140
+2023-10-23 10:06:17,611 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:07:17,618 - __main__ - INFO - Updating Helidb at 2023-10-23 10:07:17.618410
+2023-10-23 10:07:17,677 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:08:17,683 - __main__ - INFO - Updating Helidb at 2023-10-23 10:08:17.683335
+2023-10-23 10:08:17,730 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:09:17,737 - __main__ - INFO - Updating Helidb at 2023-10-23 10:09:17.737704
+2023-10-23 10:09:17,783 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:10:17,789 - __main__ - INFO - Updating Helidb at 2023-10-23 10:10:17.789431
+2023-10-23 10:10:17,845 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: N307ME type: EC45
+2023-10-23 10:10:17,847 - __main__ - INFO - Heli Reported a33a6b: 1698070217.6 EC45 N307ME altbaro 1025 altgeom 1150 no heading Lat: 39.013092, Lon: -76.894385 no squawk
+2023-10-23 10:10:18,710 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:10:18,718 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:11:18,724 - __main__ - INFO - Updating Helidb at 2023-10-23 10:11:18.723926
+2023-10-23 10:11:18,772 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 10:11:18,773 - __main__ - INFO - Heli Reported a33a6b: 1698070277.8 EC45 no call (N307ME) altbaro 1025 altgeom 1175 no heading Lat: 38.993644, Lon: -76.921814 no squawk
+2023-10-23 10:11:19,668 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:11:19,675 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:12:19,681 - __main__ - INFO - Updating Helidb at 2023-10-23 10:12:19.681329
+2023-10-23 10:12:19,742 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: N307ME type: EC45
+2023-10-23 10:12:19,743 - __main__ - INFO - Heli Reported a33a6b: 1698070339.0 EC45 N307ME altbaro 1025 altgeom 1175 no heading Lat: 38.963562, Lon: -76.963826 5214
+2023-10-23 10:12:20,638 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:12:20,646 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:13:20,651 - __main__ - INFO - Updating Helidb at 2023-10-23 10:13:20.651293
+2023-10-23 10:13:20,698 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: N307ME type: EC45
+2023-10-23 10:13:20,700 - __main__ - INFO - Heli Reported a33a6b: 1698070400.2 EC45 N307ME altbaro 925 altgeom 1075 no heading Lat: 38.946813, Lon: -76.98761 5524
+2023-10-23 10:13:21,592 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:13:21,601 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:14:21,606 - __main__ - INFO - Updating Helidb at 2023-10-23 10:14:21.606364
+2023-10-23 10:14:21,653 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 10:14:21,654 - __main__ - INFO - Heli Reported a33a6b: 1698070461.4 EC45 no call (N307ME) altbaro 425 altgeom 600 no heading Lat: 38.930145, Lon: -77.011175 5214
+2023-10-23 10:14:22,520 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:14:22,529 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:15:22,533 - __main__ - INFO - Updating Helidb at 2023-10-23 10:15:22.533757
+2023-10-23 10:15:22,582 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 10:15:22,584 - __main__ - INFO - Heli Reported a33a6b: 1698070521.6 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 10:15:23,441 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:15:23,449 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:16:23,454 - __main__ - INFO - Updating Helidb at 2023-10-23 10:16:23.454781
+2023-10-23 10:16:23,511 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 10:16:23,513 - __main__ - INFO - Heli Reported a33a6b: 1698070582.8 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 10:16:24,405 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:16:24,412 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:17:24,416 - __main__ - INFO - Updating Helidb at 2023-10-23 10:17:24.416490
+2023-10-23 10:17:24,475 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 10:17:24,476 - __main__ - INFO - Heli Reported a33a6b: 1698070644.0 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 10:17:25,377 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:17:25,385 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:18:25,388 - __main__ - INFO - Updating Helidb at 2023-10-23 10:18:25.388725
+2023-10-23 10:18:25,438 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 10:18:25,440 - __main__ - INFO - Heli Reported a33a6b: 1698070705.2 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 10:18:26,382 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:18:26,391 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:19:26,395 - __main__ - INFO - Updating Helidb at 2023-10-23 10:19:26.395816
+2023-10-23 10:19:26,462 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 10:19:26,464 - __main__ - INFO - Heli Reported a33a6b: 1698070765.4 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 10:19:27,385 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:19:27,392 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:20:27,396 - __main__ - INFO - Updating Helidb at 2023-10-23 10:20:27.396665
+2023-10-23 10:20:27,450 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 10:20:27,451 - __main__ - INFO - Heli Reported a33a6b: 1698070826.5 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 10:20:28,381 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 10:20:28,390 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:21:28,393 - __main__ - INFO - Updating Helidb at 2023-10-23 10:21:28.393383
+2023-10-23 10:21:28,448 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:22:28,452 - __main__ - INFO - Updating Helidb at 2023-10-23 10:22:28.452164
+2023-10-23 10:22:28,505 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:23:28,509 - __main__ - INFO - Updating Helidb at 2023-10-23 10:23:28.508972
+2023-10-23 10:23:28,565 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:24:28,569 - __main__ - INFO - Updating Helidb at 2023-10-23 10:24:28.569132
+2023-10-23 10:25:28,636 - __main__ - INFO - Updating Helidb at 2023-10-23 10:25:28.636503
+2023-10-23 10:26:28,698 - __main__ - INFO - Updating Helidb at 2023-10-23 10:26:28.698493
+2023-10-23 10:27:28,774 - __main__ - INFO - Updating Helidb at 2023-10-23 10:27:28.774132
+2023-10-23 10:28:28,835 - __main__ - INFO - Updating Helidb at 2023-10-23 10:28:28.834943
+2023-10-23 10:29:28,907 - __main__ - INFO - Updating Helidb at 2023-10-23 10:29:28.907811
+2023-10-23 10:30:28,971 - __main__ - INFO - Updating Helidb at 2023-10-23 10:30:28.971282
+2023-10-23 10:31:29,042 - __main__ - INFO - Updating Helidb at 2023-10-23 10:31:29.042213
+2023-10-23 10:32:29,104 - __main__ - INFO - Updating Helidb at 2023-10-23 10:32:29.104436
+2023-10-23 10:33:29,170 - __main__ - INFO - Updating Helidb at 2023-10-23 10:33:29.169999
+2023-10-23 10:34:29,244 - __main__ - INFO - Updating Helidb at 2023-10-23 10:34:29.243925
+2023-10-23 10:35:29,331 - __main__ - INFO - Updating Helidb at 2023-10-23 10:35:29.331195
+2023-10-23 10:36:29,395 - __main__ - INFO - Updating Helidb at 2023-10-23 10:36:29.395222
+2023-10-23 10:37:29,480 - __main__ - INFO - Updating Helidb at 2023-10-23 10:37:29.480010
+2023-10-23 10:38:29,549 - __main__ - INFO - Updating Helidb at 2023-10-23 10:38:29.549513
+2023-10-23 10:39:29,636 - __main__ - INFO - Updating Helidb at 2023-10-23 10:39:29.636073
+2023-10-23 10:40:29,708 - __main__ - INFO - Updating Helidb at 2023-10-23 10:40:29.708742
+2023-10-23 10:41:29,789 - __main__ - INFO - Updating Helidb at 2023-10-23 10:41:29.789661
+2023-10-23 10:42:29,864 - __main__ - INFO - Updating Helidb at 2023-10-23 10:42:29.864629
+2023-10-23 10:43:29,926 - __main__ - INFO - Updating Helidb at 2023-10-23 10:43:29.926809
+2023-10-23 10:44:29,998 - __main__ - INFO - Updating Helidb at 2023-10-23 10:44:29.998151
+2023-10-23 10:45:30,063 - __main__ - INFO - Updating Helidb at 2023-10-23 10:45:30.063767
+2023-10-23 10:46:30,129 - __main__ - INFO - Updating Helidb at 2023-10-23 10:46:30.129302
+2023-10-23 10:47:30,204 - __main__ - INFO - Updating Helidb at 2023-10-23 10:47:30.204472
+2023-10-23 10:48:30,266 - __main__ - INFO - Updating Helidb at 2023-10-23 10:48:30.266481
+2023-10-23 10:49:30,338 - __main__ - INFO - Updating Helidb at 2023-10-23 10:49:30.338158
+2023-10-23 10:50:30,409 - __main__ - INFO - Updating Helidb at 2023-10-23 10:50:30.409501
+2023-10-23 10:51:30,470 - __main__ - INFO - Updating Helidb at 2023-10-23 10:51:30.470835
+2023-10-23 10:51:30,531 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:52:30,539 - __main__ - INFO - Updating Helidb at 2023-10-23 10:52:30.539111
+2023-10-23 10:52:30,603 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:53:30,611 - __main__ - INFO - Updating Helidb at 2023-10-23 10:53:30.611689
+2023-10-23 10:53:30,677 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:54:30,683 - __main__ - INFO - Updating Helidb at 2023-10-23 10:54:30.683514
+2023-10-23 10:54:30,747 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: OSPRY73 type: Unknown
+2023-10-23 10:55:30,753 - __main__ - INFO - Updating Helidb at 2023-10-23 10:55:30.753810
+2023-10-23 10:55:30,815 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:56:30,820 - __main__ - INFO - Updating Helidb at 2023-10-23 10:56:30.820626
+2023-10-23 10:56:30,885 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:57:30,889 - __main__ - INFO - Updating Helidb at 2023-10-23 10:57:30.889616
+2023-10-23 10:57:30,946 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:58:30,951 - __main__ - INFO - Updating Helidb at 2023-10-23 10:58:30.950845
+2023-10-23 10:58:31,019 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 10:59:31,025 - __main__ - INFO - Updating Helidb at 2023-10-23 10:59:31.024981
+2023-10-23 10:59:31,090 - __main__ - INFO - Aircraft: ae4ef4 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:00:31,095 - __main__ - INFO - Updating Helidb at 2023-10-23 11:00:31.095200
+2023-10-23 11:00:31,158 - __main__ - INFO - Heli Reported a1dffb: 1698073230.7 B412 no call (N22PP) altbaro 0 no heading Lat: 38.867111, Lon: -77.002756 no squawk
+2023-10-23 11:00:32,155 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:01:32,169 - __main__ - INFO - Updating Helidb at 2023-10-23 11:01:32.168908
+2023-10-23 11:01:32,230 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:01:32,232 - __main__ - INFO - Heli Reported a1dffb: 1698073291.8 B412 N22PP altbaro 0 altgeom 75 no heading Lat: 38.866975, Lon: -77.019714 no squawk
+2023-10-23 11:01:33,163 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:02:33,176 - __main__ - INFO - Updating Helidb at 2023-10-23 11:02:33.176649
+2023-10-23 11:02:33,241 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:02:33,243 - __main__ - INFO - Heli Reported a1dffb: 1698073353.0 B412 no call (N22PP) altbaro 0 altgeom 100 no heading Lat: 38.883362, Lon: -77.033625 5132
+2023-10-23 11:02:34,179 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:03:34,193 - __main__ - INFO - Updating Helidb at 2023-10-23 11:03:34.193378
+2023-10-23 11:03:34,250 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:03:34,252 - __main__ - INFO - Heli Reported a1dffb: 1698073414.2 B412 N22PP altbaro 225 altgeom 500 no heading Lat: 38.902084, Lon: -77.027595 5132
+2023-10-23 11:03:35,207 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:04:35,221 - __main__ - INFO - Updating Helidb at 2023-10-23 11:04:35.221672
+2023-10-23 11:04:35,303 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:04:35,305 - __main__ - INFO - Heli Reported a1dffb: 1698073474.2 B412 N22PP altbaro 125 altgeom 375 no heading Lat: 38.901306, Lon: -77.046224 5132
+2023-10-23 11:04:36,271 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:05:36,283 - __main__ - INFO - Updating Helidb at 2023-10-23 11:05:36.283513
+2023-10-23 11:05:36,356 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:05:36,357 - __main__ - INFO - Heli Reported a1dffb: 1698073535.5 B412 N22PP altbaro 0 altgeom 175 no heading Lat: 38.887115, Lon: -77.039059 5132
+2023-10-23 11:05:37,276 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:06:37,291 - __main__ - INFO - Updating Helidb at 2023-10-23 11:06:37.291725
+2023-10-23 11:06:37,347 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:06:37,348 - __main__ - INFO - Heli Reported a1dffb: 1698073596.7 B412 N22PP altbaro 75 altgeom 350 no heading Lat: 38.879358, Lon: -77.007629 5132
+2023-10-23 11:06:38,291 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:07:38,304 - __main__ - INFO - Updating Helidb at 2023-10-23 11:07:38.304531
+2023-10-23 11:07:38,361 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:07:38,362 - __main__ - INFO - Heli Reported a1dffb: 1698073657.9 B412 N22PP altbaro 25 altgeom 325 no heading Lat: 38.870234, Lon: -77.014221 5132
+2023-10-23 11:07:39,290 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:08:39,300 - __main__ - INFO - Updating Helidb at 2023-10-23 11:08:39.300735
+2023-10-23 11:08:39,359 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:08:39,361 - __main__ - INFO - Heli Reported a1dffb: 1698073719.1 B412 N22PP altbaro 150 altgeom 425 no heading Lat: 38.881119, Lon: -77.009622 5132
+2023-10-23 11:08:40,310 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:09:40,324 - __main__ - INFO - Updating Helidb at 2023-10-23 11:09:40.324277
+2023-10-23 11:09:40,383 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:09:40,385 - __main__ - INFO - Heli Reported a1dffb: 1698073779.3 B412 N22PP altbaro 75 altgeom 350 no heading Lat: 38.877636, Lon: -77.021545 5132
+2023-10-23 11:09:41,291 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:10:41,302 - __main__ - INFO - Updating Helidb at 2023-10-23 11:10:41.302144
+2023-10-23 11:10:41,370 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:10:41,371 - __main__ - INFO - Heli Reported a09a04: 1698073840.5 EC35 N138MH altbaro 900 altgeom 1075 no heading Lat: 38.63768, Lon: -77.031894 5222
+2023-10-23 11:10:42,287 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:10:42,295 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:10:42,296 - __main__ - INFO - Heli Reported a1dffb: 1698073840.5 B412 N22PP altbaro 0 altgeom 175 no heading Lat: 38.864594, Lon: -77.014996 5132
+2023-10-23 11:10:43,168 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:11:43,183 - __main__ - INFO - Updating Helidb at 2023-10-23 11:11:43.183439
+2023-10-23 11:11:43,245 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:11:43,246 - __main__ - INFO - Heli Reported a09a04: 1698073902.7 EC35 N138MH altbaro 900 altgeom 1075 no heading Lat: 38.661163, Lon: -76.99989 5222
+2023-10-23 11:11:44,156 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:11:44,164 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:11:44,165 - __main__ - INFO - Heli Reported a1dffb: 1698073902.7 B412 no call (N22PP) altbaro 0 altgeom 50 no heading Lat: 38.870094, Lon: -77.020325 5132
+2023-10-23 11:11:45,061 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:12:45,072 - __main__ - INFO - Updating Helidb at 2023-10-23 11:12:45.072783
+2023-10-23 11:12:45,128 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:12:45,129 - __main__ - INFO - Heli Reported a09a04: 1698073965.0 EC35 N138MH altbaro 925 altgeom 1075 no heading Lat: 38.685189, Lon: -76.966003 5222
+2023-10-23 11:12:46,038 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:12:46,046 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:12:46,048 - __main__ - INFO - Heli Reported a1dffb: 1698073965.0 B412 no call (N22PP) altbaro 0 altgeom 75 no heading Lat: 38.884369, Lon: -77.035297 no squawk
+2023-10-23 11:12:46,888 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:13:46,898 - __main__ - INFO - Updating Helidb at 2023-10-23 11:13:46.898676
+2023-10-23 11:13:46,967 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:13:46,968 - __main__ - INFO - Heli Reported a09a04: 1698074026.2 EC35 N138MH altbaro 900 altgeom 1075 no heading Lat: 38.709163, Lon: -76.932007 5222
+2023-10-23 11:13:47,914 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:13:47,923 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:13:47,924 - __main__ - INFO - Heli Reported a1dffb: 1698074026.2 B412 no call (N22PP) altbaro 0 altgeom 25 no heading Lat: None, Lon: None no squawk
+2023-10-23 11:13:48,850 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:14:48,861 - __main__ - INFO - Updating Helidb at 2023-10-23 11:14:48.861063
+2023-10-23 11:14:48,918 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:14:48,919 - __main__ - INFO - Heli Reported a09a04: 1698074088.5 EC35 N138MH altbaro 775 altgeom 975 no heading Lat: 38.730377, Lon: -76.89349 5222
+2023-10-23 11:14:49,848 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:14:49,856 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:14:49,857 - __main__ - INFO - Heli Reported a1dffb: 1698074088.5 B412 N22PP altbaro 0 altgeom 100 no heading Lat: 38.864694, Lon: -77.021423 5132
+2023-10-23 11:14:50,691 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:15:50,700 - __main__ - INFO - Updating Helidb at 2023-10-23 11:15:50.700494
+2023-10-23 11:15:50,759 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:15:50,760 - __main__ - INFO - Heli Reported a09a04: 1698074149.7 EC35 N138MH altbaro 225 altgeom 475 no heading Lat: 38.744729, Lon: -76.876587 5222
+2023-10-23 11:15:51,740 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:15:51,749 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:15:51,751 - __main__ - INFO - Heli Reported a1dffb: 1698074149.7 B412 N22PP altbaro 0 altgeom 225 no heading Lat: 38.874657, Lon: -76.990601 5132
+2023-10-23 11:15:52,631 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:16:52,642 - __main__ - INFO - Updating Helidb at 2023-10-23 11:16:52.642289
+2023-10-23 11:16:52,714 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:16:52,716 - __main__ - INFO - Heli Reported a09a04: 1698074212.0 EC35 no call (N138MH) altbaro 225 altgeom 475 no heading Lat: 38.744729, Lon: -76.876587 no squawk
+2023-10-23 11:16:53,684 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:16:53,692 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:16:53,693 - __main__ - INFO - Heli Reported a1dffb: 1698074212.0 B412 N22PP altbaro 100 altgeom 375 no heading Lat: 38.882245, Lon: -77.010437 5132
+2023-10-23 11:16:54,588 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:17:54,597 - __main__ - INFO - Updating Helidb at 2023-10-23 11:17:54.597594
+2023-10-23 11:17:54,656 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:17:54,657 - __main__ - INFO - Heli Reported a09a04: 1698074274.2 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:17:55,584 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:17:55,592 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:17:55,593 - __main__ - INFO - Heli Reported a1dffb: 1698074274.2 B412 N22PP altbaro 325 altgeom 575 no heading Lat: 38.89351, Lon: -77.025513 5132
+2023-10-23 11:17:56,455 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:18:56,464 - __main__ - INFO - Updating Helidb at 2023-10-23 11:18:56.464047
+2023-10-23 11:18:56,525 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:18:56,526 - __main__ - INFO - Heli Reported a09a04: 1698074335.4 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:18:57,429 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:18:57,436 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:18:57,438 - __main__ - INFO - Heli Reported a1dffb: 1698074335.4 B412 N22PP altbaro 300 altgeom 550 no heading Lat: 38.90566, Lon: -77.039795 5132
+2023-10-23 11:18:58,316 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:19:58,325 - __main__ - INFO - Updating Helidb at 2023-10-23 11:19:58.324856
+2023-10-23 11:19:58,394 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:19:58,396 - __main__ - INFO - Heli Reported a09a04: 1698074397.7 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:19:59,300 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:19:59,308 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:19:59,309 - __main__ - INFO - Heli Reported a1dffb: 1698074397.7 B412 N22PP altbaro 0 altgeom 200 no heading Lat: 38.886341, Lon: -77.039246 5132
+2023-10-23 11:20:00,247 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:21:00,255 - __main__ - INFO - Updating Helidb at 2023-10-23 11:21:00.254971
+2023-10-23 11:21:00,314 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:21:00,316 - __main__ - INFO - Heli Reported a1dffb: 1698074459.9 B412 no call (N22PP) altbaro 0 altgeom 150 no heading Lat: 38.885364, Lon: -77.03656 5132
+2023-10-23 11:21:01,281 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:22:01,289 - __main__ - INFO - Updating Helidb at 2023-10-23 11:22:01.288926
+2023-10-23 11:22:01,354 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:22:01,356 - __main__ - INFO - Heli Reported a1dffb: 1698074521.1 B412 N22PP altbaro 50 altgeom 300 no heading Lat: 38.86203, Lon: -76.994576 5132
+2023-10-23 11:22:02,273 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:23:02,281 - __main__ - INFO - Updating Helidb at 2023-10-23 11:23:02.281431
+2023-10-23 11:23:02,356 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:23:02,357 - __main__ - INFO - Heli Reported a1dffb: 1698074581.3 B412 N22PP altbaro 125 altgeom 375 no heading Lat: 38.879883, Lon: -76.974275 5132
+2023-10-23 11:23:03,280 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:24:03,287 - __main__ - INFO - Updating Helidb at 2023-10-23 11:24:03.287591
+2023-10-23 11:24:03,351 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:24:03,353 - __main__ - INFO - Heli Reported a1dffb: 1698074642.5 B412 N22PP altbaro 125 altgeom 400 no heading Lat: 38.882263, Lon: -76.973797 5132
+2023-10-23 11:24:04,284 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:25:04,291 - __main__ - INFO - Updating Helidb at 2023-10-23 11:25:04.291284
+2023-10-23 11:25:04,353 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:25:04,354 - __main__ - INFO - Heli Reported a1dffb: 1698074703.7 B412 N22PP altbaro 150 altgeom 425 no heading Lat: 38.877496, Lon: -76.979431 5132
+2023-10-23 11:25:05,261 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:26:05,273 - __main__ - INFO - Updating Helidb at 2023-10-23 11:26:05.273282
+2023-10-23 11:26:05,343 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:26:05,346 - __main__ - INFO - Heli Reported a1dffb: 1698074764.9 B412 N22PP altbaro 125 altgeom 375 no heading Lat: 38.867249, Lon: -76.990456 5132
+2023-10-23 11:26:06,353 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:27:06,360 - __main__ - INFO - Updating Helidb at 2023-10-23 11:27:06.360024
+2023-10-23 11:27:06,427 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:27:06,428 - __main__ - INFO - Heli Reported a1dffb: 1698074826.1 B412 N22PP altbaro 75 altgeom 350 no heading Lat: 38.875122, Lon: -77.007592 5132
+2023-10-23 11:27:07,367 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:28:07,374 - __main__ - INFO - Updating Helidb at 2023-10-23 11:28:07.374541
+2023-10-23 11:28:07,447 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:28:07,448 - __main__ - INFO - Heli Reported a1dffb: 1698074887.3 B412 N22PP altbaro 0 altgeom 250 no heading Lat: 38.882803, Lon: -77.02356 5132
+2023-10-23 11:28:08,411 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:29:08,420 - __main__ - INFO - Updating Helidb at 2023-10-23 11:29:08.420679
+2023-10-23 11:29:08,491 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:29:08,493 - __main__ - INFO - Heli Reported a1dffb: 1698074947.5 B412 N22PP altbaro 0 altgeom 100 no heading Lat: 38.866333, Lon: -77.023355 5132
+2023-10-23 11:29:09,410 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:30:09,419 - __main__ - INFO - Updating Helidb at 2023-10-23 11:30:09.418874
+2023-10-23 11:30:09,480 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:30:09,482 - __main__ - INFO - Heli Reported a1dffb: 1698075008.7 B412 no call (N22PP) altbaro 0 altgeom 175 no heading Lat: 38.865738, Lon: -77.004189 5132
+2023-10-23 11:30:10,443 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:31:10,449 - __main__ - INFO - Updating Helidb at 2023-10-23 11:31:10.449587
+2023-10-23 11:31:10,502 - __main__ - INFO - Heli Reported a09a04: 1698075069.9 EC35 no call (N138MH) altbaro 650 altgeom 850 no heading Lat: None, Lon: None no squawk
+2023-10-23 11:31:11,458 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:31:11,471 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:31:11,472 - __main__ - INFO - Heli Reported a1dffb: 1698075069.9 B412 N22PP altbaro 25 altgeom 300 no heading Lat: 38.878555, Lon: -76.993859 5132
+2023-10-23 11:31:12,352 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:32:12,360 - __main__ - INFO - Updating Helidb at 2023-10-23 11:32:12.360384
+2023-10-23 11:32:12,413 - __main__ - INFO - Heli Reported a09a04: 1698075132.2 EC35 no call (N138MH) altbaro 1025 altgeom 1225 no heading Lat: 38.775055, Lon: -76.907342 no squawk
+2023-10-23 11:32:13,358 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:32:13,370 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:32:13,372 - __main__ - INFO - Heli Reported a1dffb: 1698075132.2 B412 N22PP altbaro 100 altgeom 350 no heading Lat: 38.876175, Lon: -77.01016 5132
+2023-10-23 11:32:14,334 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:33:14,341 - __main__ - INFO - Updating Helidb at 2023-10-23 11:33:14.341814
+2023-10-23 11:33:14,411 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:33:14,413 - __main__ - INFO - Heli Reported a09a04: 1698075193.4 EC35 N138MH altbaro 1225 altgeom 1400 no heading Lat: 38.795285, Lon: -76.93219 5222
+2023-10-23 11:33:15,353 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:33:15,365 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:33:15,368 - __main__ - INFO - Heli Reported a1dffb: 1698075193.4 B412 N22PP altbaro 150 altgeom 400 no heading Lat: 38.878281, Lon: -77.000009 5132
+2023-10-23 11:33:16,247 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:34:16,256 - __main__ - INFO - Updating Helidb at 2023-10-23 11:34:16.255979
+2023-10-23 11:34:16,316 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:34:16,319 - __main__ - INFO - Heli Reported a09a04: 1698075255.7 EC35 no call (N138MH) altbaro 1225 altgeom 1375 no heading Lat: 38.824194, Lon: -76.96875 5222
+2023-10-23 11:34:17,267 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:34:17,281 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:34:17,283 - __main__ - INFO - Heli Reported a1dffb: 1698075255.7 B412 N22PP altbaro 50 no heading Lat: None, Lon: None 5132
+2023-10-23 11:34:18,138 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:35:18,144 - __main__ - INFO - Updating Helidb at 2023-10-23 11:35:18.144598
+2023-10-23 11:35:18,202 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:35:18,204 - __main__ - INFO - Heli Reported a09a04: 1698075317.9 EC35 N138MH altbaro 1225 altgeom 1375 no heading Lat: 38.845276, Lon: -77.002816 5222
+2023-10-23 11:35:19,158 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:35:19,168 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:35:19,169 - __main__ - INFO - Heli Reported a1dffb: 1698075317.9 B412 N22PP altbaro 0 altgeom 175 no heading Lat: 38.88002, Lon: -77.028311 5132
+2023-10-23 11:35:20,049 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:36:20,056 - __main__ - INFO - Updating Helidb at 2023-10-23 11:36:20.055895
+2023-10-23 11:36:20,125 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:36:20,126 - __main__ - INFO - Heli Reported a09a04: 1698075379.2 EC35 N138MH altbaro 1200 altgeom 1350 no heading Lat: 38.850589, Lon: -77.045288 5222
+2023-10-23 11:36:21,086 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:36:21,097 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:36:21,098 - __main__ - INFO - Heli Reported a1dffb: 1698075379.2 B412 N22PP altbaro 50 altgeom 300 no heading Lat: 38.870234, Lon: -77.00531 no squawk
+2023-10-23 11:36:21,966 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:37:21,972 - __main__ - INFO - Updating Helidb at 2023-10-23 11:37:21.972247
+2023-10-23 11:37:22,036 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:37:22,038 - __main__ - INFO - Heli Reported a09a04: 1698075441.4 EC35 N138MH altbaro 900 altgeom 1100 no heading Lat: 38.869263, Lon: -77.079003 5222
+2023-10-23 11:37:22,990 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:37:23,003 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:37:23,004 - __main__ - INFO - Heli Reported a1dffb: 1698075441.4 B412 N22PP altbaro 50 altgeom 300 no heading Lat: 38.882943, Lon: -77.016785 5132
+2023-10-23 11:37:23,875 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:38:23,881 - __main__ - INFO - Updating Helidb at 2023-10-23 11:38:23.881516
+2023-10-23 11:38:23,940 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:38:23,941 - __main__ - INFO - Heli Reported a09a04: 1698075503.7 EC35 N138MH altbaro 375 altgeom 600 no heading Lat: 38.900959, Lon: -77.077759 5222
+2023-10-23 11:38:24,840 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:38:24,850 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:38:24,851 - __main__ - INFO - Heli Reported a1dffb: 1698075503.7 B412 N22PP altbaro 0 altgeom 100 no heading Lat: 38.884293, Lon: -77.034302 5132
+2023-10-23 11:38:25,782 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:39:25,788 - __main__ - INFO - Updating Helidb at 2023-10-23 11:39:25.788082
+2023-10-23 11:39:25,842 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 11:39:25,843 - __main__ - INFO - Heli Reported a09a04: 1698075564.9 EC35 N138MH altbaro 125 altgeom 350 no heading Lat: 38.907197, Lon: -77.077637 5222
+2023-10-23 11:39:26,807 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:39:26,818 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:39:26,821 - __main__ - INFO - Heli Reported a1dffb: 1698075564.9 B412 N22PP altbaro 0 altgeom 150 no heading Lat: 38.887039, Lon: -77.033875 5132
+2023-10-23 11:39:27,734 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:40:27,741 - __main__ - INFO - Updating Helidb at 2023-10-23 11:40:27.740905
+2023-10-23 11:40:27,810 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:40:27,813 - __main__ - INFO - Heli Reported a09a04: 1698075627.2 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:40:28,757 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:40:28,766 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:40:28,767 - __main__ - INFO - Heli Reported a1dffb: 1698075627.2 B412 N22PP altbaro 225 altgeom 475 no heading Lat: 38.896683, Lon: -77.027774 5132
+2023-10-23 11:40:29,625 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:41:29,631 - __main__ - INFO - Updating Helidb at 2023-10-23 11:41:29.631319
+2023-10-23 11:41:29,695 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:41:29,697 - __main__ - INFO - Heli Reported a09a04: 1698075689.4 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:41:30,638 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:41:30,647 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:41:30,648 - __main__ - INFO - Heli Reported a1dffb: 1698075689.4 B412 N22PP altbaro 175 altgeom 425 no heading Lat: 38.905428, Lon: -77.041199 5132
+2023-10-23 11:41:31,518 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:42:31,524 - __main__ - INFO - Updating Helidb at 2023-10-23 11:42:31.524031
+2023-10-23 11:42:31,579 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:42:31,581 - __main__ - INFO - Heli Reported a09a04: 1698075750.6 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:42:32,524 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:42:32,532 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: N22PP type: B412
+2023-10-23 11:42:32,534 - __main__ - INFO - Heli Reported a1dffb: 1698075750.6 B412 N22PP altbaro 0 altgeom 175 no heading Lat: 38.890686, Lon: -77.045806 5132
+2023-10-23 11:42:33,409 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:43:33,416 - __main__ - INFO - Updating Helidb at 2023-10-23 11:43:33.416236
+2023-10-23 11:43:33,485 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: no_call (N138MH) type: EC35
+2023-10-23 11:43:33,486 - __main__ - INFO - Heli Reported a09a04: 1698075812.9 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:43:34,399 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:43:34,407 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:43:34,409 - __main__ - INFO - Heli Reported a1dffb: 1698075812.9 B412 no call (N22PP) altbaro 0 altgeom 175 no heading Lat: 38.875169, Lon: -77.024658 5132
+2023-10-23 11:43:35,327 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:44:35,334 - __main__ - INFO - Updating Helidb at 2023-10-23 11:44:35.334233
+2023-10-23 11:44:35,412 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:44:35,415 - __main__ - INFO - Heli Reported a1dffb: 1698075875.2 B412 no call (N22PP) altbaro 0 no heading Lat: None, Lon: None no squawk
+2023-10-23 11:44:36,331 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:45:36,337 - __main__ - INFO - Updating Helidb at 2023-10-23 11:45:36.337401
+2023-10-23 11:45:36,400 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:45:36,402 - __main__ - INFO - Heli Reported a1dffb: 1698075935.3 B412 no call (N22PP) altbaro 0 altgeom 100 no heading Lat: 38.863129, Lon: -76.999591 no squawk
+2023-10-23 11:45:37,364 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:46:37,371 - __main__ - INFO - Updating Helidb at 2023-10-23 11:46:37.371044
+2023-10-23 11:46:37,430 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:46:37,432 - __main__ - INFO - Heli Reported a1dffb: 1698075996.6 B412 no call (N22PP) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:46:38,366 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:47:38,373 - __main__ - INFO - Updating Helidb at 2023-10-23 11:47:38.373642
+2023-10-23 11:47:38,434 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:47:38,436 - __main__ - INFO - Heli Reported a1dffb: 1698076057.8 B412 no call (N22PP) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:47:39,327 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:48:39,334 - __main__ - INFO - Updating Helidb at 2023-10-23 11:48:39.333934
+2023-10-23 11:48:39,388 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: N34UT type: Unknown
+2023-10-23 11:48:39,397 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:48:39,400 - __main__ - INFO - Heli Reported a1dffb: 1698076119.0 B412 no call (N22PP) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:48:40,352 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:49:40,360 - __main__ - INFO - Updating Helidb at 2023-10-23 11:49:40.360067
+2023-10-23 11:49:40,421 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:49:40,430 - __main__ - INFO - Aircraft: a1dffb is rotorcraft - Category: A7 flight: no_call (N22PP) type: B412
+2023-10-23 11:49:40,433 - __main__ - INFO - Heli Reported a1dffb: 1698076180.2 B412 no call (N22PP) no heading Lat: None, Lon: None no squawk
+2023-10-23 11:49:41,341 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 11:50:41,347 - __main__ - INFO - Updating Helidb at 2023-10-23 11:50:41.346880
+2023-10-23 11:50:41,405 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:51:41,413 - __main__ - INFO - Updating Helidb at 2023-10-23 11:51:41.413816
+2023-10-23 11:51:41,474 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:52:41,484 - __main__ - INFO - Updating Helidb at 2023-10-23 11:52:41.484419
+2023-10-23 11:52:41,534 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:53:41,544 - __main__ - INFO - Updating Helidb at 2023-10-23 11:53:41.544029
+2023-10-23 11:53:41,609 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:54:41,619 - __main__ - INFO - Updating Helidb at 2023-10-23 11:54:41.618900
+2023-10-23 11:54:41,686 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: N34UT type: Unknown
+2023-10-23 11:55:41,697 - __main__ - INFO - Updating Helidb at 2023-10-23 11:55:41.697842
+2023-10-23 11:55:41,749 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: N34UT type: Unknown
+2023-10-23 11:56:41,756 - __main__ - INFO - Updating Helidb at 2023-10-23 11:56:41.756448
+2023-10-23 11:56:41,823 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:57:41,831 - __main__ - INFO - Updating Helidb at 2023-10-23 11:57:41.831104
+2023-10-23 11:57:41,884 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:58:41,891 - __main__ - INFO - Updating Helidb at 2023-10-23 11:58:41.890965
+2023-10-23 11:58:41,949 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 11:59:41,956 - __main__ - INFO - Updating Helidb at 2023-10-23 11:59:41.956666
+2023-10-23 11:59:42,034 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 12:00:42,040 - __main__ - INFO - Updating Helidb at 2023-10-23 12:00:42.040573
+2023-10-23 12:00:42,109 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 12:01:42,118 - __main__ - INFO - Updating Helidb at 2023-10-23 12:01:42.118141
+2023-10-23 12:01:42,189 - __main__ - INFO - Aircraft: a3bcc9 is rotorcraft - Category: A7 flight: no_call (Unknown) type: Unknown
+2023-10-23 12:02:42,196 - __main__ - INFO - Updating Helidb at 2023-10-23 12:02:42.195856
+2023-10-23 12:03:42,272 - __main__ - INFO - Updating Helidb at 2023-10-23 12:03:42.272119
+2023-10-23 12:03:42,326 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:03:42,328 - __main__ - INFO - Heli Reported a33332: 1698077021.7 EC35 N305PH altbaro 750 altgeom 925 no heading Lat: 38.783554, Lon: -77.271729 no squawk
+2023-10-23 12:03:43,282 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:04:43,303 - __main__ - INFO - Updating Helidb at 2023-10-23 12:04:43.303107
+2023-10-23 12:04:43,359 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:04:43,361 - __main__ - INFO - Heli Reported a33332: 1698077082.9 EC35 N305PH altbaro 775 altgeom 950 no heading Lat: 38.793045, Lon: -77.2312 5201
+2023-10-23 12:04:44,375 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:05:44,390 - __main__ - INFO - Updating Helidb at 2023-10-23 12:05:44.389936
+2023-10-23 12:05:44,454 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:05:44,456 - __main__ - INFO - Heli Reported a33332: 1698077144.1 EC35 N305PH altbaro 775 altgeom 950 no heading Lat: 38.804077, Lon: -77.183314 5201
+2023-10-23 12:05:45,446 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:06:45,459 - __main__ - INFO - Updating Helidb at 2023-10-23 12:06:45.459624
+2023-10-23 12:06:45,510 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:06:45,511 - __main__ - INFO - Heli Reported a33332: 1698077205.3 EC35 N305PH altbaro 775 altgeom 950 no heading Lat: 38.814418, Lon: -77.138916 5201
+2023-10-23 12:06:46,422 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:07:46,435 - __main__ - INFO - Updating Helidb at 2023-10-23 12:07:46.435215
+2023-10-23 12:07:46,489 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:07:46,491 - __main__ - INFO - Heli Reported a33332: 1698077265.5 EC35 N305PH altbaro 525 altgeom 725 no heading Lat: 38.823915, Lon: -77.09906 5201
+2023-10-23 12:07:47,410 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:08:47,423 - __main__ - INFO - Updating Helidb at 2023-10-23 12:08:47.423102
+2023-10-23 12:08:47,475 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:08:47,476 - __main__ - INFO - Heli Reported a33332: 1698077326.7 EC35 N305PH altbaro 100 altgeom 300 no heading Lat: 38.821381, Lon: -77.103663 5201
+2023-10-23 12:08:48,424 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:09:48,435 - __main__ - INFO - Updating Helidb at 2023-10-23 12:09:48.435499
+2023-10-23 12:09:48,495 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:09:48,497 - __main__ - INFO - Heli Reported a33332: 1698077387.9 EC35 N305PH altbaro 25 altgeom 225 no heading Lat: 38.822296, Lon: -77.10426 5201
+2023-10-23 12:09:49,452 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:10:49,465 - __main__ - INFO - Updating Helidb at 2023-10-23 12:10:49.465727
+2023-10-23 12:10:49,530 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
+2023-10-23 12:10:49,532 - __main__ - INFO - Heli Reported a33332: 1698077449.2 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:10:50,498 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:11:50,510 - __main__ - INFO - Updating Helidb at 2023-10-23 12:11:50.510170
+2023-10-23 12:11:50,580 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
+2023-10-23 12:11:50,583 - __main__ - INFO - Heli Reported a33332: 1698077510.4 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:11:51,468 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:12:51,480 - __main__ - INFO - Updating Helidb at 2023-10-23 12:12:51.480090
+2023-10-23 12:12:51,545 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
+2023-10-23 12:12:51,547 - __main__ - INFO - Heli Reported a33332: 1698077570.6 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:12:52,489 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:13:52,503 - __main__ - INFO - Updating Helidb at 2023-10-23 12:13:52.503798
+2023-10-23 12:13:52,563 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
+2023-10-23 12:13:52,565 - __main__ - INFO - Heli Reported a33332: 1698077631.8 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:13:53,588 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:14:53,598 - __main__ - INFO - Updating Helidb at 2023-10-23 12:14:53.598777
+2023-10-23 12:15:53,655 - __main__ - INFO - Updating Helidb at 2023-10-23 12:15:53.655719
+2023-10-23 12:16:53,718 - __main__ - INFO - Updating Helidb at 2023-10-23 12:16:53.718044
+2023-10-23 12:17:53,777 - __main__ - INFO - Updating Helidb at 2023-10-23 12:17:53.777752
+2023-10-23 12:18:53,842 - __main__ - INFO - Updating Helidb at 2023-10-23 12:18:53.842160
+2023-10-23 12:19:53,902 - __main__ - INFO - Updating Helidb at 2023-10-23 12:19:53.902617
+2023-10-23 12:19:53,956 - __main__ - INFO - Heli Reported a09a04: 1698077992.9 EC35 no call (N138MH) altbaro 350 altgeom 550 no heading Lat: 38.909571, Lon: -77.056702 5222
+2023-10-23 12:19:54,945 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:20:54,957 - __main__ - INFO - Updating Helidb at 2023-10-23 12:20:54.957620
+2023-10-23 12:20:55,017 - __main__ - INFO - Heli Reported a09a04: 1698078054.1 EC35 no call (N138MH) altbaro 475 altgeom 675 no heading Lat: 38.917997, Lon: -77.030518 5222
+2023-10-23 12:20:55,959 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:21:55,971 - __main__ - INFO - Updating Helidb at 2023-10-23 12:21:55.971808
+2023-10-23 12:21:56,033 - __main__ - INFO - Heli Reported a09a04: 1698078115.3 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:21:57,008 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:22:57,021 - __main__ - INFO - Updating Helidb at 2023-10-23 12:22:57.021846
+2023-10-23 12:22:57,087 - __main__ - INFO - Heli Reported a09a04: 1698078176.6 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:22:58,009 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:23:58,021 - __main__ - INFO - Updating Helidb at 2023-10-23 12:23:58.021043
+2023-10-23 12:23:58,070 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: N307ME type: EC45
+2023-10-23 12:23:58,071 - __main__ - INFO - Heli Reported a33a6b: 1698078237.8 EC45 N307ME altbaro 825 altgeom 1025 no heading Lat: 38.945835, Lon: -77.034912 5214
+2023-10-23 12:23:58,964 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:23:58,970 - __main__ - INFO - Heli Reported a09a04: 1698078237.8 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:23:59,846 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:24:59,858 - __main__ - INFO - Updating Helidb at 2023-10-23 12:24:59.858246
+2023-10-23 12:24:59,914 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: N307ME type: EC45
+2023-10-23 12:24:59,916 - __main__ - INFO - Heli Reported a33a6b: 1698078299.0 EC45 N307ME altbaro 900 altgeom 1075 no heading Lat: 38.96846, Lon: -77.053687 5214
+2023-10-23 12:25:00,800 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:25:00,806 - __main__ - INFO - Heli Reported a09a04: 1698078299.0 EC35 no call (N138MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:25:01,742 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:26:01,753 - __main__ - INFO - Updating Helidb at 2023-10-23 12:26:01.753865
+2023-10-23 12:26:01,799 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 12:26:01,800 - __main__ - INFO - Heli Reported a33a6b: 1698078361.3 EC45 no call (N307ME) altbaro 900 no heading Lat: 38.96846, Lon: -77.053687 no squawk
+2023-10-23 12:26:02,694 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:27:02,707 - __main__ - INFO - Updating Helidb at 2023-10-23 12:27:02.707412
+2023-10-23 12:27:02,764 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 12:27:02,766 - __main__ - INFO - Heli Reported a33a6b: 1698078422.4 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:27:03,748 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:28:03,759 - __main__ - INFO - Updating Helidb at 2023-10-23 12:28:03.759534
+2023-10-23 12:28:03,809 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 12:28:03,810 - __main__ - INFO - Heli Reported a33a6b: 1698078483.7 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:28:04,810 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:29:04,822 - __main__ - INFO - Updating Helidb at 2023-10-23 12:29:04.822079
+2023-10-23 12:29:04,875 - __main__ - INFO - Aircraft: a33a6b is rotorcraft - Category: A7 flight: no_call (N307ME) type: EC45
+2023-10-23 12:29:04,877 - __main__ - INFO - Heli Reported a33a6b: 1698078543.8 EC45 no call (N307ME) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:29:05,773 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:30:05,784 - __main__ - INFO - Updating Helidb at 2023-10-23 12:30:05.784561
+2023-10-23 12:31:05,847 - __main__ - INFO - Updating Helidb at 2023-10-23 12:31:05.847022
+2023-10-23 12:31:05,911 - __main__ - INFO - Heli Reported a46786: 1698078665.2 A139 no call (N383MD) altbaro 350 altgeom 525 no heading Lat: 38.809297, Lon: -76.853088 5102
+2023-10-23 12:31:06,747 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:32:06,760 - __main__ - INFO - Updating Helidb at 2023-10-23 12:32:06.760512
+2023-10-23 12:32:06,808 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: TRP2 type: A139
+2023-10-23 12:32:06,809 - __main__ - INFO - Heli Reported a46786: 1698078726.5 A139 TRP2 altbaro 725 altgeom 900 no heading Lat: 38.835972, Lon: -76.830017 5102
+2023-10-23 12:32:07,658 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:33:07,670 - __main__ - INFO - Updating Helidb at 2023-10-23 12:33:07.670667
+2023-10-23 12:33:07,723 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: TRP2 type: A139
+2023-10-23 12:33:07,725 - __main__ - INFO - Heli Reported a46786: 1698078786.7 A139 TRP2 altbaro 700 altgeom 875 no heading Lat: 38.868791, Lon: -76.80426 5102
+2023-10-23 12:33:08,604 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:34:08,619 - __main__ - INFO - Updating Helidb at 2023-10-23 12:34:08.618874
+2023-10-23 12:34:08,670 - __main__ - INFO - Heli Reported a0aef0: 1698078847.9 EC35 no call (N143MH) altbaro 675 no heading Lat: None, Lon: None no squawk
+2023-10-23 12:34:09,536 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:34:09,541 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: TRP2 type: A139
+2023-10-23 12:34:09,542 - __main__ - INFO - Heli Reported a46786: 1698078847.9 A139 TRP2 altbaro 725 altgeom 850 no heading Lat: 38.905518, Lon: -76.775446 5102
+2023-10-23 12:34:10,388 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:35:10,400 - __main__ - INFO - Updating Helidb at 2023-10-23 12:35:10.400833
+2023-10-23 12:35:10,469 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:35:10,471 - __main__ - INFO - Heli Reported a33332: 1698078910.1 EC35 N305PH altbaro 75 altgeom 225 no heading Lat: 38.822342, Lon: -77.10426 no squawk
+2023-10-23 12:35:11,339 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:35:11,344 - __main__ - INFO - Heli Reported a0aef0: 1698078910.1 EC35 no call (N143MH) altbaro 675 no heading Lat: None, Lon: None no squawk
+2023-10-23 12:35:12,233 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:35:12,239 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: TRP2 type: A139
+2023-10-23 12:35:12,248 - __main__ - INFO - Heli Reported a46786: 1698078910.1 A139 TRP2 altbaro 675 altgeom 875 no heading Lat: 38.93173, Lon: -76.7547 5102
+2023-10-23 12:35:13,136 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:36:13,147 - __main__ - INFO - Updating Helidb at 2023-10-23 12:36:13.147631
+2023-10-23 12:36:13,212 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:36:13,213 - __main__ - INFO - Heli Reported a33332: 1698078972.4 EC35 N305PH altbaro 525 altgeom 700 no heading Lat: 38.826141, Lon: -77.127248 5201
+2023-10-23 12:36:14,066 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:36:14,072 - __main__ - INFO - Heli Reported a0aef0: 1698078972.4 EC35 no call (N143MH) altbaro 675 no heading Lat: None, Lon: None no squawk
+2023-10-23 12:36:14,998 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:36:15,005 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: no_call (N383MD) type: A139
+2023-10-23 12:36:15,006 - __main__ - INFO - Heli Reported a46786: 1698078972.4 A139 no call (N383MD) altbaro 700 altgeom 875 no heading Lat: 38.956329, Lon: -76.736815 no squawk
+2023-10-23 12:36:15,841 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:37:15,852 - __main__ - INFO - Updating Helidb at 2023-10-23 12:37:15.852701
+2023-10-23 12:37:15,907 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 12:37:15,908 - __main__ - INFO - Heli Reported a09a04: 1698079035.7 EC35 N138MH altbaro 575 altgeom 750 no heading Lat: 38.91037, Lon: -76.999054 no squawk
+2023-10-23 12:37:16,807 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:37:16,812 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:37:16,813 - __main__ - INFO - Heli Reported a33332: 1698079035.7 EC35 N305PH altbaro 775 altgeom 950 no heading Lat: 38.837089, Lon: -77.167603 5201
+2023-10-23 12:37:17,670 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:37:17,675 - __main__ - INFO - Heli Reported a0aef0: 1698079035.7 EC35 no call (N143MH) altbaro 675 no heading Lat: None, Lon: None no squawk
+2023-10-23 12:37:18,536 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:37:18,543 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: no_call (N383MD) type: A139
+2023-10-23 12:37:18,545 - __main__ - INFO - Heli Reported a46786: 1698079035.7 A139 no call (N383MD) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:37:19,454 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:38:19,465 - __main__ - INFO - Updating Helidb at 2023-10-23 12:38:19.465535
+2023-10-23 12:38:19,525 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 12:38:19,527 - __main__ - INFO - Heli Reported a09a04: 1698079099.0 EC35 N138MH altbaro 825 altgeom 975 no heading Lat: 38.885742, Lon: -76.986515 no squawk
+2023-10-23 12:38:20,453 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:38:20,458 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:38:20,460 - __main__ - INFO - Heli Reported a33332: 1698079099.0 EC35 N305PH altbaro 850 altgeom 1025 no heading Lat: 38.844677, Lon: -77.20874 5201
+2023-10-23 12:38:21,316 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:38:21,321 - __main__ - INFO - Heli Reported a0aef0: 1698079099.0 EC35 no call (N143MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:38:22,182 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:38:22,188 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: no_call (N383MD) type: A139
+2023-10-23 12:38:22,189 - __main__ - INFO - Heli Reported a46786: 1698079099.0 A139 no call (N383MD) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:38:23,149 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:39:23,161 - __main__ - INFO - Updating Helidb at 2023-10-23 12:39:23.161004
+2023-10-23 12:39:23,228 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 12:39:23,230 - __main__ - INFO - Heli Reported a09a04: 1698079162.2 EC35 N138MH altbaro 825 altgeom 975 no heading Lat: 38.842303, Lon: -76.989807 5222
+2023-10-23 12:39:24,135 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:39:24,141 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: N305PH type: EC35
+2023-10-23 12:39:24,143 - __main__ - INFO - Heli Reported a33332: 1698079162.2 EC35 N305PH altbaro 475 altgeom 675 no heading Lat: 38.852963, Lon: -77.226929 5201
+2023-10-23 12:39:24,953 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:39:24,958 - __main__ - INFO - Heli Reported a0aef0: 1698079162.2 EC35 no call (N143MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:39:25,822 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:39:25,828 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: no_call (N383MD) type: A139
+2023-10-23 12:39:25,829 - __main__ - INFO - Heli Reported a46786: 1698079162.2 A139 no call (N383MD) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:39:26,696 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:40:26,711 - __main__ - INFO - Updating Helidb at 2023-10-23 12:40:26.711105
+2023-10-23 12:40:26,765 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 12:40:26,768 - __main__ - INFO - Heli Reported a09a04: 1698079226.5 EC35 N138MH altbaro 825 altgeom 1000 no heading Lat: 38.803528, Lon: -76.994098 5222
+2023-10-23 12:40:27,677 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:40:27,683 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
+2023-10-23 12:40:27,684 - __main__ - INFO - Heli Reported a33332: 1698079226.5 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:40:28,618 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:40:28,623 - __main__ - INFO - Heli Reported a0aef0: 1698079226.5 EC35 no call (N143MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:40:29,464 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:40:29,469 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: no_call (N383MD) type: A139
+2023-10-23 12:40:29,470 - __main__ - INFO - Heli Reported a46786: 1698079226.5 A139 no call (N383MD) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:40:30,323 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:41:30,333 - __main__ - INFO - Updating Helidb at 2023-10-23 12:41:30.333502
+2023-10-23 12:41:30,390 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 12:41:30,392 - __main__ - INFO - Heli Reported a09a04: 1698079289.8 EC35 N138MH altbaro 825 altgeom 1000 no heading Lat: 38.766283, Lon: -76.998718 5222
+2023-10-23 12:41:31,287 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:41:31,292 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
+2023-10-23 12:41:31,297 - __main__ - INFO - Heli Reported a33332: 1698079289.8 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:41:32,205 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:41:32,212 - __main__ - INFO - Heli Reported a0aef0: 1698079289.8 EC35 no call (N143MH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:41:33,063 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:41:33,081 - __main__ - INFO - Aircraft: a46786 is rotorcraft - Category: A7 flight: no_call (N383MD) type: A139
+2023-10-23 12:41:33,083 - __main__ - INFO - Heli Reported a46786: 1698079289.8 A139 no call (N383MD) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:41:33,915 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:42:33,925 - __main__ - INFO - Updating Helidb at 2023-10-23 12:42:33.925389
+2023-10-23 12:42:33,992 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 12:42:33,994 - __main__ - INFO - Heli Reported a09a04: 1698079353.1 EC35 N138MH altbaro 625 altgeom 800 no heading Lat: 38.729833, Lon: -77.015015 5222
+2023-10-23 12:42:34,858 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:42:34,864 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
+2023-10-23 12:42:34,866 - __main__ - INFO - Heli Reported a33332: 1698079353.1 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:42:35,733 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:43:35,745 - __main__ - INFO - Updating Helidb at 2023-10-23 12:43:35.745481
+2023-10-23 12:43:35,798 - __main__ - INFO - Aircraft: a09a04 is rotorcraft - Category: A7 flight: N138MH type: EC35
+2023-10-23 12:43:35,800 - __main__ - INFO - Heli Reported a09a04: 1698079415.4 EC35 N138MH altbaro 625 altgeom 800 no heading Lat: 38.692932, Lon: -77.030998 5222
+2023-10-23 12:43:36,679 - __main__ - INFO - Mongo Insert Status: 500
+2023-10-23 12:43:36,685 - __main__ - INFO - Aircraft: a33332 is rotorcraft - Category: A7 flight: no_call (N305PH) type: EC35
+2023-10-23 12:43:36,687 - __main__ - INFO - Heli Reported a33332: 1698079415.4 EC35 no call (N305PH) no heading Lat: None, Lon: None no squawk
+2023-10-23 12:43:37,566 - __main__ - INFO - Mongo Insert Status: 500
