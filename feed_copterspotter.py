@@ -256,22 +256,26 @@ def update_helidb():
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft
         if "category" in plane and plane["category"] == "A7":
             if "flight" in plane:
-                logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s",
-                    iaco_hex,
-                    plane["category"],
-                    str(plane["flight"]).strip(),
-                    heli_type or "Unknown",
-                )
-            else:
-                logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
-                    iaco_hex,
-                    plane["category"],
-                    "no_call",
-                    heli_tail or "Unknown",
-                    heli_type or "Unknown",
-                )
+                recent_flights[iaco_hex] = str(plane["flight"]).strip()
+
+            logger.info(
+                "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
+                iaco_hex,
+                plane["category"],
+                recent_flights[iaco_hex] or "no_call",
+                heli_tail or "Unknown",
+                heli_type or "Unknown",
+            )
+
+            # else:
+            #     logger.info(
+            #         "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
+            #         iaco_hex,
+            #         plane["category"],
+            #         "no_call",
+            #         heli_tail or "Unknown",
+            #         heli_type or "Unknown",
+            #     )
 
         if heli_type == "" or heli_type is None:
             # This short circuits parsing of aircraft with unknown iaco_hex codes
@@ -522,6 +526,7 @@ def run_loop(interval, h_types):
 
 
 if __name__ == "__main__":
+
     # Read Environment
     # Need to be smarter about where this is located.
 
@@ -755,6 +760,7 @@ if __name__ == "__main__":
     # probably need to have an option for different file names
 
     heli_types = {}
+    recent_flights = {}
 
     logger.debug("Using bills_operators as : %s", bills_operators)
 
