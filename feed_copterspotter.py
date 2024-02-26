@@ -261,8 +261,8 @@ def update_helidb():
                 if iaco_hex not in recent_flights:
                     recent_flights[iaco_hex] = callsign
                     logger.info("Added %s to recents as %s", iaco_hex, callsign)
-                elif (
-                    iaco_hex in recent_flights and recent_flights[iaco_hex] != callsign
+                elif (iaco_hex in recent_flights) and (
+                    recent_flights[iaco_hex] != callsign
                 ):
 
                     logger.info(
