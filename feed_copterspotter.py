@@ -258,24 +258,26 @@ def update_helidb():
             if "flight" in plane:
                 recent_flights[iaco_hex] = str(plane["flight"]).strip()
 
-            logger.info(
-                "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
-                iaco_hex,
-                plane["category"],
-                recent_flights[iaco_hex] or "no_call",
-                heli_tail or "Unknown",
-                heli_type or "Unknown",
-            )
+            if iaco_hex in recent_flights:
 
-            # else:
-            #     logger.info(
-            #         "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
-            #         iaco_hex,
-            #         plane["category"],
-            #         "no_call",
-            #         heli_tail or "Unknown",
-            #         heli_type or "Unknown",
-            #     )
+                logger.info(
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
+                    iaco_hex,
+                    plane["category"],
+                    recent_flights[iaco_hex],
+                    heli_tail or "Unknown",
+                    heli_type or "Unknown",
+                )
+
+            else:
+                logger.info(
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
+                    iaco_hex,
+                    plane["category"],
+                    "no_call",
+                    heli_tail or "Unknown",
+                    heli_type or "Unknown",
+                )
 
         if heli_type == "" or heli_type is None:
             # This short circuits parsing of aircraft with unknown iaco_hex codes
