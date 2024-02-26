@@ -42,9 +42,9 @@ BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy
 BILLS_TIMEOUT = 86400  # Standard is 1 day
 
 
-# Mongo URL
+# Default Mongo URL
 MONGO_URL = (
-#    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+    #    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
     "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
 )
 
