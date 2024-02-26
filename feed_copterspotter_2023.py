@@ -672,8 +672,6 @@ if __name__ == "__main__":
 
     config = dotenv_values(env_file)
 
-    # Should be pulling these from env
-
     if args.mongourl:
         MONGO_URL = args.mongourl
     elif "MONGOURL" in config:
@@ -682,6 +680,8 @@ if __name__ == "__main__":
         MONGO_URL = None
         logger.error("No Mongo Endpoint URL Found - Exiting")
         sys.exit()
+
+    # Should be pulling these from env
 
     if (
         "API-KEY" in config
