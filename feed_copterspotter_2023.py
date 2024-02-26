@@ -42,7 +42,7 @@ BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy
 BILLS_TIMEOUT = 86400  # Standard is 1 day
 
 
-# Mongo URL
+# Default Mongo URL
 MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
 
 # curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers" \
@@ -595,11 +595,19 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        "-M",
+        "--mongourl",
+        help="MONGO DB Endpoint URL",
+        action="store",
+        default=MONGO_URL,
+    )
+    parser.add_argument(
         "-u", "--mongouser", help="MONGO DB User", action="store", default=None
     )
     parser.add_argument(
         "-P", "--mongopw", help="Mongo DB Password", action="store", default=None
     )
+
     parser.add_argument(
         "-f", "--feederid", help="Feeder ID", action="store", default=None
     )
@@ -666,6 +674,15 @@ if __name__ == "__main__":
 
     # Should be pulling these from env
 
+    if args.mongourl:
+        MONGO_URL = args.mongourl
+    elif "MONGOURL" in config:
+        MONGO_URL = config["MONGO"]
+    else:
+        MONGO_URL = None
+        logger.error("No Mongo Endpoint URL Found - Exiting")
+        sys.exit()
+
     if (
         "API-KEY" in config
         and config["API-KEY"] != "BigLongRandomStringOfLettersAndNumbers"
@@ -674,6 +691,7 @@ if __name__ == "__main__":
         MONGO_API_KEY = config["API-KEY"]
         mongo_insert = mongo_https_insert
     else:
+
         if args.mongopw:
             MONGOPW = args.mongopw
         elif "MONGOPW" in config:
