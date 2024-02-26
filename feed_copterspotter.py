@@ -44,7 +44,8 @@ BILLS_TIMEOUT = 86400  # Standard is 1 day
 
 # Mongo URL
 MONGO_URL = (
-    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+#    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
 )
 
 # curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers" \
