@@ -257,6 +257,9 @@ def update_helidb():
         if "category" in plane and plane["category"] == "A7":
             if "flight" in plane:
                 recent_flights[iaco_hex] = str(plane["flight"]).strip()
+                logger.info(
+                    "Added %s to recents as %s", iaco_hex, recent_flights[iaco_hex]
+                )
 
             if iaco_hex in recent_flights:
 
