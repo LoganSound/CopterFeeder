@@ -245,10 +245,10 @@ def update_helidb():
         heli_tail = ""
 
         try:
-            iaco_hex = str(plane["hex"]).lower()
-            # heli_type = find_helis(iaco_hex)
-            heli_type = search_bills(iaco_hex, "type")
-            heli_tail = search_bills(iaco_hex, "tail")
+            icao_hex = str(plane["hex"]).lower()
+            # heli_type = find_helis(icao_hex)
+            heli_type = search_bills(icao_hex, "type")
+            heli_tail = search_bills(icao_hex, "tail")
             output += " " + heli_type
         except BaseException:
             output += " no type or reg"
@@ -258,28 +258,28 @@ def update_helidb():
             if "flight" in plane:
                 callsign = str(plane["flight"]).strip()
 
-                if iaco_hex not in recent_flights:
-                    recent_flights[iaco_hex] = callsign
-                    logger.info("Added %s to recents as %s", iaco_hex, callsign)
-                elif (iaco_hex in recent_flights) and (
-                    recent_flights[iaco_hex] != callsign
+                if icao_hex not in recent_flights:
+                    recent_flights[icao_hex] = callsign
+                    logger.info("Added %s to recents as %s", icao_hex, callsign)
+                elif (icao_hex in recent_flights) and (
+                    recent_flights[icao_hex] != callsign
                 ):
 
                     logger.info(
                         "Updating %s in recents as: %s - was:  %s",
-                        iaco_hex,
+                        icao_hex,
                         callsign,
-                        recent_flights[iaco_hex],
+                        recent_flights[icao_hex],
                     )
-                    recent_flights[iaco_hex] = callsign
+                    recent_flights[icao_hex] = callsign
 
-            if iaco_hex in recent_flights:
+            if icao_hex in recent_flights:
 
                 logger.info(
                     "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
-                    iaco_hex,
+                    icao_hex,
                     plane["category"],
-                    recent_flights[iaco_hex],
+                    recent_flights[icao_hex],
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
                 )
@@ -287,7 +287,7 @@ def update_helidb():
             else:
                 logger.info(
                     "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
-                    iaco_hex,
+                    icao_hex,
                     plane["category"],
                     "no_call",
                     heli_tail or "Unknown",
@@ -295,11 +295,11 @@ def update_helidb():
                 )
 
         if heli_type == "" or heli_type is None:
-            # This short circuits parsing of aircraft with unknown iaco_hex codes
-            logger.debug("%s Not a known rotorcraft ", iaco_hex)
+            # This short circuits parsing of aircraft with unknown icao_hex codes
+            logger.debug("%s Not a known rotorcraft ", icao_hex)
             continue
 
-        logger.debug("Parsing Helicopter: %s", iaco_hex)
+        logger.debug("Parsing Helicopter: %s", icao_hex)
 
         try:
             callsign = str(plane["flight"]).strip()
@@ -364,7 +364,7 @@ def update_helidb():
                 "type": "Feature",
                 "properties": {
                     "date": dt_stamp,
-                    "icao": iaco_hex,
+                    "icao": icao_hex,
                     "type": heli_type,
                     "call": callsign,
                     "heading": head,
@@ -379,10 +379,10 @@ def update_helidb():
             # if ret_val: ... do something
 
 
-def find_helis_old(iaco_hex):
+def find_helis_old(icao_hex):
     """
     Deprecated
-    Check if an iaco hex code is in Bills catalog of DC Helicopters
+    Check if an icao hex code is in Bills catalog of DC Helicopters
     returns the type of helicopter if known
     """
 
@@ -390,29 +390,29 @@ def find_helis_old(iaco_hex):
         opsread = csv.DictReader(csvfile)
         heli_type = ""
         for row in opsread:
-            if iaco_hex.upper() == row["hex"]:
+            if icao_hex.upper() == row["hex"]:
                 heli_type = row["type"]
         return heli_type
 
 
-def find_helis(iaco_hex):
+def find_helis(icao_hex):
     """
-    check if iaco is known and return type or empty string
+    check if icao is known and return type or empty string
     """
-    logger.debug("Checking for: %s", iaco_hex)
-    if heli_types[iaco_hex]["type"]:
-        return heli_types[iaco_hex]["type"]
+    logger.debug("Checking for: %s", icao_hex)
+    if heli_types[icao_hex]["type"]:
+        return heli_types[icao_hex]["type"]
 
     return ""
 
 
-def search_bills(iaco_hex, column_name):
+def search_bills(icao_hex, column_name):
     """
-    check if iaco is known return callsign or empty string
+    check if icao is known return callsign or empty string
     """
-    logger.debug("Checking for: %s", iaco_hex)
-    if heli_types[iaco_hex][column_name]:
-        return heli_types[iaco_hex][column_name]
+    logger.debug("Checking for: %s", icao_hex)
+    if heli_types[icao_hex][column_name]:
+        return heli_types[icao_hex][column_name]
 
     return ""
 
