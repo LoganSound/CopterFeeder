@@ -266,7 +266,7 @@ def update_helidb():
                 ):
 
                     logger.info(
-                        "Updating %s in recents as %s - was ",
+                        "Updating %s in recents as: %s - was:  %s",
                         iaco_hex,
                         callsign,
                         recent_flights[iaco_hex],
