@@ -260,7 +260,12 @@ def update_helidb():
 
                 if icao_hex not in recent_flights:
                     recent_flights[icao_hex] = callsign
-                    logger.info("Added %s to recents as %s", icao_hex, callsign)
+                    logger.info(
+                        "Added %s to recents (%d) as %s",
+                        icao_hex,
+                        len(recent_flights),
+                        callsign,
+                    )
                 elif (icao_hex in recent_flights) and (
                     recent_flights[icao_hex] != callsign
                 ):
@@ -276,7 +281,7 @@ def update_helidb():
             if icao_hex in recent_flights:
 
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s",
                     icao_hex,
                     plane["category"],
                     recent_flights[icao_hex],
@@ -286,7 +291,7 @@ def update_helidb():
 
             else:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s",
                     icao_hex,
                     plane["category"],
                     "no_call",
