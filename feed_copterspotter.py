@@ -169,6 +169,8 @@ def dump_recents(signum, frame):
     signame = signal.Signals(signum).name
     logger.info(f"Signal handler dump_recents called with signal {signame} ({signum})")
 
+    logger.info("Dumping %d entries...", len(recent_flights))
+
     for hex_icao in sorted(recent_flights):
         logger.info("hex_icao: %s flight: %s", hex_icao, recent_flights[hex_icao])
 
