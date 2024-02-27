@@ -164,7 +164,7 @@ def mongo_https_insert(mydict):
     return response.status_code
 
 
-def dump_recents(signum):
+def dump_recents(signum, frame):
     """Dump recents if we get a sigusr1"""
     signame = signal.Signals(signum).name
     logger.info(f"Signal handler dump_recents called with signal {signame} ({signum})")
