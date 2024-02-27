@@ -17,6 +17,7 @@ import argparse
 import sys
 import os
 from time import sleep, ctime, time, strftime
+import signal
 
 import requests
 import daemon
@@ -163,10 +164,23 @@ def mongo_https_insert(mydict):
     return response.status_code
 
 
+def dump_recents(signum, flights):
+    """Dump recents if we get a sigusr1"""
+    signame = signal.Signals(signum).name
+    logger.info(f"Signal handler dump_recents called with signal {signame} ({signum})")
+
+    for hex_icao in sorted(flights):
+        logger.info("hex_icao: %s flight: %s", hex_icao, flights[hex_icao])
+
+
 def update_helidb():
     """Main"""
 
     logger.info("Updating Helidb at %s", datetime.datetime.now())
+
+    # Set the signal handler to dump recents
+
+    signal.signal(signal.SIGUSR1, dump_recents(recent_flights))
 
     try:
         #        with open("/run/" + AIRPLANES_FOLDER + "/aircraft.json") as json_file:
