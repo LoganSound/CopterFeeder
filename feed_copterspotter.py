@@ -180,7 +180,7 @@ def update_helidb():
 
     # Set the signal handler to dump recents
 
-    signal.signal(signal.SIGUSR1, dump_recents())
+    signal.signal(signal.SIGUSR1, dump_recents)
 
     try:
         #        with open("/run/" + AIRPLANES_FOLDER + "/aircraft.json") as json_file:
