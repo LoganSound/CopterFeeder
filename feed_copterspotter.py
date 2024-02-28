@@ -367,7 +367,9 @@ def update_helidb():
             lat = None
             lon = None
             # this should cleanup null issue #9 for mongo
-            geometry = None
+            # updated 20240228 per discussion with SR
+            # geometry = None
+            geometry = [None, None]
             output += " Lat: " + str(lat) + ", Lon: " + str(lon)
 
         try:
