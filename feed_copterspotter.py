@@ -372,6 +372,8 @@ def update_helidb():
             # geometry = None
             geometry = [None, None]
             output += " Lat: " + str(lat) + ", Lon: " + str(lon)
+            logger.info("No Lat/Lon - Not reported: %s: %s", plane["hex"], output)
+            continue
 
         try:
             squawk = str(plane["squawk"])
