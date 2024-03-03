@@ -250,7 +250,9 @@ def update_helidb():
 
     for plane in planes:
         output = ""
-
+        # aircrafts.json documented here (and elsewhere):
+        # https://github.com/flightaware/dump1090/blob/master/README-json.md
+        #
         # There is a ts in the json output - should we use that?
         #        dt = ts = datetime.datetime.now().timestamp()
         # dt_stamp = datetime.datetime.now().timestamp()
@@ -349,7 +351,8 @@ def update_helidb():
             alt_geom = None
 
         try:
-            head = float(plane["r_dir"])
+            # head = float(plane["r_dir"])
+            head = float(plane["track"])
             # readsb/FR "track"
             output += " " + str(head)
         except BaseException:
