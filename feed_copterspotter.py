@@ -355,6 +355,7 @@ def update_helidb():
         except BaseException:
             head = None
             output += " no heading"
+
         try:
             lat = float(plane["lat"])
             lon = float(plane["lon"])
