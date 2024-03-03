@@ -347,6 +347,7 @@ def update_helidb():
             alt_geom = max(0, int(plane["alt_geom"]))
             # FR altitude
             output += " altgeom " + str(alt_geom)
+
         except BaseException:
             alt_geom = None
 
@@ -354,7 +355,8 @@ def update_helidb():
             # head = float(plane["r_dir"])
             head = float(plane["track"])
             # readsb/FR "track"
-            output += " " + str(head)
+            output += " head " + str(head)
+
         except BaseException:
             head = None
             output += " no heading"
