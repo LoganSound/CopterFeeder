@@ -390,6 +390,7 @@ def update_helidb():
                     "date": dt_stamp,
                     "icao": icao_hex,
                     "type": heli_type,
+                    "tail": heli_tail,
                     "call": callsign,
                     "heading": head,
                     "squawk": squawk,
