@@ -265,7 +265,7 @@ def update_helidb():
             # heli_type = find_helis(icao_hex)
             heli_type = search_bills(icao_hex, "type")
             heli_tail = search_bills(icao_hex, "tail")
-            output += " " + heli_type
+            output += " " + heli_type + " " + heli_tail
         except BaseException:
             output += " no type or reg"
 
