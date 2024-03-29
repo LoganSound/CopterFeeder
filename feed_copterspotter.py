@@ -286,41 +286,43 @@ def update_helidb():
         else:
             category = "Unk"
 
+        if "flight" in plane:
+            callsign = str(plane["flight"]).strip()
+        else:
+            callsign = "no_call"
+
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
 
-            if "flight" in plane:
-                callsign = str(plane["flight"]).strip()
+            if icao_hex not in recent_flights:
+                recent_flights[icao_hex] = [callsign, 1]
+                logger.info(
+                    "Added %s to recents (%d) as %s",
+                    icao_hex,
+                    len(recent_flights),
+                    callsign,
+                )
+            elif (icao_hex in recent_flights) and (
+                recent_flights[icao_hex][0] != callsign
+            ):
+                logger.info(
+                    "Updating %s in recents as: %s - was:  %s",
+                    icao_hex,
+                    callsign,
+                    recent_flights[icao_hex][0],
+                )
+                recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
 
-                if icao_hex not in recent_flights:
-                    recent_flights[icao_hex] = [callsign, 1]
-                    logger.info(
-                        "Added %s to recents (%d) as %s",
-                        icao_hex,
-                        len(recent_flights),
-                        callsign,
-                    )
-                elif (icao_hex in recent_flights) and (
-                    recent_flights[icao_hex][0] != callsign
-                ):
-                    logger.info(
-                        "Updating %s in recents as: %s - was:  %s",
-                        icao_hex,
-                        callsign,
-                        recent_flights[icao_hex][0],
-                    )
-                    recent_flights[icao_hex] = [callsign, 1]
+            else:
+                # increment the count
+                recent_flights[icao_hex][1] += 1
 
-                else:
-                    # increment the count
-                    recent_flights[icao_hex][1] += 1
-
-                    logger.info(
-                        "Incrmenting %s callsign %s to %d",
-                        icao_hex,
-                        recent_flights[icao_hex][0],
-                        recent_flights[icao_hex][1],
-                    )
+                logger.info(
+                    "Incrmenting %s callsign %s to %d",
+                    icao_hex,
+                    recent_flights[icao_hex][0],
+                    recent_flights[icao_hex][1],
+                )
 
             if icao_hex in recent_flights:
 
