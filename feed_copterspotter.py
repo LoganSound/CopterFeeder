@@ -267,6 +267,11 @@ def update_helidb():
         heli_type = ""
         heli_tail = ""
 
+        if search_bills(icao_hex, "hex") != None:
+            logger.info("%s found in Bills", icao_hex)
+        else:
+            logger.info("%s not found in Bills")
+
         try:
             icao_hex = str(plane["hex"]).lower()
             # heli_type = find_helis(icao_hex)
@@ -281,8 +286,11 @@ def update_helidb():
         else:
             category = "Unk"
 
+        if search_bills(icao_hex, "hex") != None:
+            logger.info("%s Found in Bills", icao_hex)
+
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
-        if search_bills(icao_hex, "hex") != None or category == "A7":
+        if (search_bills(icao_hex, "hex") != None) or category == "A7":
 
             if "flight" in plane:
                 callsign = str(plane["flight"]).strip()
