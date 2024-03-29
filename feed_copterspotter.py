@@ -267,11 +267,6 @@ def update_helidb():
         heli_type = ""
         heli_tail = ""
 
-        if search_bills(icao_hex, "hex") != None:
-            logger.info("%s found in Bills", icao_hex)
-        else:
-            logger.info("%s not found in Bills")
-
         try:
             icao_hex = str(plane["hex"]).lower()
             # heli_type = find_helis(icao_hex)
@@ -280,6 +275,11 @@ def update_helidb():
             output += " " + heli_type + " " + heli_tail
         except BaseException:
             output += " no type or reg"
+
+        if search_bills(icao_hex, "hex") != None:
+            logger.info("%s found in Bills", icao_hex)
+        else:
+            logger.info("%s not found in Bills")
 
         if "category" in plane:
             category = plane["category"]
