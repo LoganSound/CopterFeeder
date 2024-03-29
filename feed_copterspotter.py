@@ -302,8 +302,10 @@ def update_helidb():
                     len(recent_flights),
                     callsign,
                 )
-            elif (icao_hex in recent_flights) and (
-                recent_flights[icao_hex][0] != callsign
+            elif (
+                icao_hex in recent_flights
+                and recent_flights[icao_hex][0] != callsign
+                and callsign != "no_call"
             ):
                 logger.info(
                     "Updating %s in recents as: %s - was:  %s",
