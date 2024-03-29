@@ -277,7 +277,7 @@ def update_helidb():
             output += " no type or reg"
 
         if search_bills(icao_hex, "hex") != None:
-            logger.debug("%s found in Bills", icao_hex)
+            logger.info("%s found in Bills", icao_hex)
         else:
             logger.debug("%s not found in Bills", icao_hex)
 
