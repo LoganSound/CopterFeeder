@@ -172,7 +172,12 @@ def dump_recents(signum, frame):
     logger.info("Dumping %d entries...", len(recent_flights))
 
     for hex_icao in sorted(recent_flights):
-        logger.info("hex_icao: %s flight: %s", hex_icao, recent_flights[hex_icao])
+        logger.info(
+            "hex_icao: %s flight: %s seen: %d",
+            hex_icao,
+            recent_flights[hex_icao][0],
+            recent_flights[hex_icao][1],
+        )
 
 
 def update_helidb():
@@ -277,7 +282,7 @@ def update_helidb():
                 callsign = str(plane["flight"]).strip()
 
                 if icao_hex not in recent_flights:
-                    recent_flights[icao_hex] = callsign
+                    recent_flights[icao_hex] = [callsign, 1]
                     logger.info(
                         "Added %s to recents (%d) as %s",
                         icao_hex,
@@ -285,26 +290,37 @@ def update_helidb():
                         callsign,
                     )
                 elif (icao_hex in recent_flights) and (
-                    recent_flights[icao_hex] != callsign
+                    recent_flights[icao_hex][0] != callsign
                 ):
-
                     logger.info(
                         "Updating %s in recents as: %s - was:  %s",
                         icao_hex,
                         callsign,
-                        recent_flights[icao_hex],
+                        recent_flights[icao_hex][0],
                     )
-                    recent_flights[icao_hex] = callsign
+                    recent_flights[icao_hex] = [callsign, 1]
+
+                # else:
+                # increment the count
+
+                # logger.info(
+                #     "Incrmenting %s callsign %s to %d",
+                #     icao_hex,
+                #     recent_flights[icao_hex][0],
+                #     recent_flights[icao_hex][1],
+                # )
 
             if icao_hex in recent_flights:
+                recent_flights[icao_hex][1] += 1
 
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s seen: %d times",
                     icao_hex,
                     plane["category"],
-                    recent_flights[icao_hex],
+                    recent_flights[icao_hex][0],
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
+                    recent_flights[icao_hex][1],
                 )
 
             else:
