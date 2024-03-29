@@ -278,7 +278,7 @@ def update_helidb():
 
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if "category" in plane and (
-            plane["category"] == "A7" or search_bills(icao_hex, "hex") != ""
+            plane["category"] == "A7" or search_bills(icao_hex, "hex") != None
         ):
             if "flight" in plane:
                 callsign = str(plane["flight"]).strip()
