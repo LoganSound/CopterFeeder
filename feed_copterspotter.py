@@ -276,10 +276,14 @@ def update_helidb():
         except BaseException:
             output += " no type or reg"
 
+        if "category" in plane:
+            category = plane["category"]
+        else:
+            category = "Unk"
+
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
-        if search_bills(icao_hex, "hex") != None or (
-            "category" in plane and plane["category"] == "A7"
-        ):
+        if search_bills(icao_hex, "hex") != None or category == "A7":
+
             if "flight" in plane:
                 callsign = str(plane["flight"]).strip()
 
@@ -318,7 +322,7 @@ def update_helidb():
                 logger.info(
                     "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s seen: %d times",
                     icao_hex,
-                    plane["category"],
+                    category,
                     recent_flights[icao_hex][0],
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
@@ -329,7 +333,7 @@ def update_helidb():
                 logger.info(
                     "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s",
                     icao_hex,
-                    plane["category"],
+                    category,
                     "no_call",
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
