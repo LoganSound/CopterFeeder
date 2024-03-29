@@ -277,17 +277,14 @@ def update_helidb():
             output += " no type or reg"
 
         if search_bills(icao_hex, "hex") != None:
-            logger.info("%s found in Bills", icao_hex)
+            logger.debug("%s found in Bills", icao_hex)
         else:
-            logger.info("%s not found in Bills")
+            logger.debug("%s not found in Bills")
 
         if "category" in plane:
             category = plane["category"]
         else:
             category = "Unk"
-
-        if search_bills(icao_hex, "hex") != None:
-            logger.info("%s Found in Bills", icao_hex)
 
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
