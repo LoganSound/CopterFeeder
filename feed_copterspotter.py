@@ -277,7 +277,7 @@ def update_helidb():
             output += " no type or reg"
 
         if search_bills(icao_hex, "hex") != None:
-            logger.info("%s found in Bills", icao_hex)
+            logger.debug("%s found in Bills", icao_hex)
         else:
             logger.debug("%s not found in Bills", icao_hex)
 
@@ -296,7 +296,7 @@ def update_helidb():
 
             if icao_hex not in recent_flights:
                 recent_flights[icao_hex] = [callsign, 1]
-                logger.info(
+                logger.debug(
                     "Added %s to recents (%d) as %s",
                     icao_hex,
                     len(recent_flights),
@@ -307,7 +307,7 @@ def update_helidb():
                 and recent_flights[icao_hex][0] != callsign
                 and callsign != "no_call"
             ):
-                logger.info(
+                logger.debug(
                     "Updating %s in recents as: %s - was:  %s",
                     icao_hex,
                     callsign,
@@ -319,7 +319,7 @@ def update_helidb():
                 # increment the count
                 recent_flights[icao_hex][1] += 1
 
-                logger.info(
+                logger.debug(
                     "Incrmenting %s callsign %s to %d",
                     icao_hex,
                     recent_flights[icao_hex][0],
