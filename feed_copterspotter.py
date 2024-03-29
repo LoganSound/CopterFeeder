@@ -279,7 +279,7 @@ def update_helidb():
         if search_bills(icao_hex, "hex") != None:
             logger.debug("%s found in Bills", icao_hex)
         else:
-            logger.debug("%s not found in Bills")
+            logger.debug("%s not found in Bills", icao_hex)
 
         if "category" in plane:
             category = plane["category"]
