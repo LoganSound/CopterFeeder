@@ -461,10 +461,13 @@ def search_bills(icao_hex, column_name):
     check if icao is known return callsign or empty string
     """
     logger.debug("Checking for: %s", icao_hex)
-    if heli_types[icao_hex][column_name]:
-        return heli_types[icao_hex][column_name]
-
-    return ""
+    if icao_hex in heli_types:
+        if heli_types[icao_hex][column_name]:
+            return heli_types[icao_hex][column_name]
+        else:
+            return ""
+    else:
+        return None
 
 
 def load_helis_from_url(bills_url):
