@@ -300,18 +300,18 @@ def update_helidb():
                     )
                     recent_flights[icao_hex] = [callsign, 1]
 
-                # else:
-                # increment the count
+                else:
+                    # increment the count
+                    recent_flights[icao_hex][1] += 1
 
-                # logger.info(
-                #     "Incrmenting %s callsign %s to %d",
-                #     icao_hex,
-                #     recent_flights[icao_hex][0],
-                #     recent_flights[icao_hex][1],
-                # )
+                logger.info(
+                    "Incrmenting %s callsign %s to %d",
+                    icao_hex,
+                    recent_flights[icao_hex][0],
+                    recent_flights[icao_hex][1],
+                )
 
             if icao_hex in recent_flights:
-                recent_flights[icao_hex][1] += 1
 
                 logger.info(
                     "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s seen: %d times",
