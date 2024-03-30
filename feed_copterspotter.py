@@ -582,6 +582,7 @@ def run_loop(interval, h_types):
     """
     Run as loop and sleep specified interval
     """
+    dump_clock = 0
 
     while True:
         logger.debug("Starting Update")
@@ -602,6 +603,12 @@ def run_loop(interval, h_types):
             )
 
         update_helidb()
+
+        if dump_clock >= 60 * interval:
+            dump_recents()
+            dump_clock = 0
+        else:
+            dump_clock += 1
 
         logger.debug("sleeping %s...", interval)
 
