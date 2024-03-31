@@ -44,6 +44,7 @@ BILLS_TIMEOUT = 86400  # Standard is 1 day
 
 
 # Default Mongo URL
+# See -M option in arg parse section
 #    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
 MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
 
