@@ -16,7 +16,7 @@ import logging
 import argparse
 import sys
 import os
-from time import sleep, ctime, time, strftime
+from time import sleep, ctime, time, strftime, gmtime
 import signal
 
 import requests
@@ -436,6 +436,7 @@ def update_helidb():
                     "altitude_baro": alt_baro,
                     "altitude_geo": alt_geom,
                     "feeder": FEEDER_ID,
+                    "readableTime": strftime("%Y-%m-%d %H:%M:%S", gmtime(dt_stamp)),
                 },
                 "geometry": {"type": "Point", "coordinates": geometry},
             }
