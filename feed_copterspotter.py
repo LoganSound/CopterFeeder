@@ -606,7 +606,7 @@ def run_loop(interval, h_types):
 
         update_helidb()
 
-        if dump_clock >= (60 * interval):
+        if dump_clock >= 60:
             dump_recents()
             dump_clock = 0
         else:
