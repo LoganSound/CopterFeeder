@@ -165,7 +165,7 @@ def mongo_https_insert(mydict):
     return response.status_code
 
 
-def dump_recents(signum, frame):
+def dump_recents(signum=signal.SIGUSR1, frame=""):
     """Dump recents if we get a sigusr1"""
     signame = signal.Signals(signum).name
     logger.info(f"Signal handler dump_recents called with signal {signame} ({signum})")
@@ -607,7 +607,7 @@ def run_loop(interval, h_types):
         update_helidb()
 
         if dump_clock >= 60:
-            dump_recents()
+            dump_recents(signal.SIGUSR1, "")
             dump_clock = 0
         else:
             logger.debug("dump_clock = %d ", dump_clock)
