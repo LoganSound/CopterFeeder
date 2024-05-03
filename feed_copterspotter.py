@@ -771,10 +771,12 @@ if __name__ == "__main__":
 
     config = dotenv_values(env_file)
 
-    if args.mongourl:
+    if "MONGO_URL" in config:
+        MONGO_URL = config["MONGO_URL"]
+
+    elif args.mongourl:
         MONGO_URL = args.mongourl
-    elif "MONGOURL" in config:
-        MONGO_URL = config["MONGO"]
+
     else:
         MONGO_URL = None
         logger.error("No Mongo Endpoint URL Found - Exiting")
