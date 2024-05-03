@@ -11,7 +11,7 @@ import csv
 
 # from datetime import timezone
 
-import datetime
+# import datetime
 import logging
 import argparse
 import sys
@@ -23,7 +23,7 @@ import requests
 import daemon
 
 from datetime import datetime, timezone
-from zoneinfo import ZoneInfo  
+from zoneinfo import ZoneInfo
 
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
@@ -186,7 +186,7 @@ def dump_recents(signum=signal.SIGUSR1, frame=""):
 def update_helidb():
     """Main"""
 
-    logger.info("Updating Helidb at %s", datetime.datetime.now())
+    logger.info("Updating Helidb at %s", datetime.now())
 
     # Set the signal handler to dump recents
 
@@ -556,7 +556,7 @@ def load_helis_from_file():
     if bills_age == 0:
         logger.warning("Warning: bills_operators.csv Not found")
 
-    if datetime.datetime.now().timestamp() - bills_age > 86400:
+    if datetime.now().timestamp() - bills_age > 86400:
         logger.warning(
             "Warning: bills_operators.csv more than 24hrs old: %s", ctime(bills_age)
         )
