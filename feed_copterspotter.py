@@ -22,6 +22,8 @@ import signal
 import requests
 import daemon
 
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo  
 
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
@@ -423,6 +425,9 @@ def update_helidb():
         logger.info("Heli Reported %s: %s", plane["hex"], output)
 
         if heli_type != "":
+            utc_time = datetime.fromtimestamp(dt_stamp, tz=timezone.utc)
+            est_time = utc_time.astimezone(ZoneInfo("America/New_York"))
+
             mydict = {
                 "type": "Feature",
                 "properties": {
@@ -436,7 +441,7 @@ def update_helidb():
                     "altitude_baro": alt_baro,
                     "altitude_geo": alt_geom,
                     "feeder": FEEDER_ID,
-                    "readableTime": strftime("%Y-%m-%d %H:%M:%S", gmtime(dt_stamp)),
+                    "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
                 "geometry": {"type": "Point", "coordinates": geometry},
             }
