@@ -292,7 +292,8 @@ def update_helidb():
         if "flight" in plane:
             callsign = str(plane["flight"]).strip()
         else:
-            callsign = "no_call"
+            # callsign = "no_call"
+            callsign = ""
 
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
@@ -308,7 +309,8 @@ def update_helidb():
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
-                and callsign != "no_call"
+                # and callsign != "no_call"
+                and callsign != ""
             ):
                 logger.debug(
                     "Updating %s in recents as: %s - was:  %s",
@@ -346,7 +348,7 @@ def update_helidb():
                     "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s",
                     icao_hex,
                     category,
-                    "no_call",
+                    "(null)",
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
                 )
