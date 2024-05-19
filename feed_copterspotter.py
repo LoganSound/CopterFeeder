@@ -423,7 +423,8 @@ def update_helidb():
             output += " " + squawk
 
         except BaseException:
-            squawk = ""
+            # squawk = ""
+            squawk = None
             output += " no squawk"
 
         logger.info("Heli Reported %s: %s", plane["hex"], output)
