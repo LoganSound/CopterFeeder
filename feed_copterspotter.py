@@ -419,7 +419,7 @@ def update_helidb():
             continue
 
         try:
-            groundspeed = int(plane["gs"])
+            groundspeed = float(plane["gs"])
             output += " gs " + str(groundspeed)
 
         except BaseException:
