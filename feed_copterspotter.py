@@ -423,9 +423,14 @@ def update_helidb():
             output += " gs " + str(groundspeed)
 
         except BaseException:
-            # callsign = "no_call"
-            # callsign = ""
             groundspeed = None
+
+        try:
+            rssi = float(plane["rssi"])
+            output += " rssi " + str(rssi)
+
+        except BaseException:
+            rssi = None
 
         try:
             squawk = str(plane["squawk"])
@@ -455,6 +460,7 @@ def update_helidb():
                     "altitude_baro": alt_baro,
                     "altitude_geo": alt_geom,
                     "groundspeed": groundspeed,
+                    "rssi": rssi,
                     "feeder": FEEDER_ID,
                     "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
