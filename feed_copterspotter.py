@@ -218,8 +218,12 @@ def update_helidb():
                     planes = data.json()["aircraft"]
 
             except requests.exceptions.RequestException as e:
-                logger.error("Got ConnectionError trying to request URL %s", e)
-                raise SystemExit(e)
+                logger.error(
+                    "Got ConnectionError trying to request URL %s - sleeping 30", e
+                )
+                # raise SystemExit(e)
+                sleep(30)
+                return e
 
         else:
             for airplanes_folder in AIRPLANES_FOLDERS:
@@ -244,7 +248,8 @@ def update_helidb():
 
         if data == "" or data is None:
             logger.error("No aircraft data read")
-            sys.exit()
+            return None
+            # sys.exit()
 
         # dt_stamp = data.json()["now"]
         # logger.debug("Found TimeStamp %s", dt_stamp)
@@ -252,7 +257,8 @@ def update_helidb():
 
     except (ValueError, UnboundLocalError, AttributeError) as err:
         logger.error("JSON Decode Error: %s", err)
-        sys.exit()
+        return err
+        # sys.exit()
 
     logger.debug("Aircraft to check: %d", len(planes))
 
@@ -467,6 +473,7 @@ def update_helidb():
                 "geometry": {"type": "Point", "coordinates": geometry},
             }
             ret_val = mongo_insert(mydict)
+            return ret_val
             # if ret_val: ... do something
 
 
