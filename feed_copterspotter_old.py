@@ -11,19 +11,16 @@ import csv
 
 # from datetime import timezone
 
-# import datetime
+import datetime
 import logging
 import argparse
 import sys
 import os
-from time import sleep, ctime, time, strftime, gmtime
-import signal
+from time import sleep, ctime, time, strftime
 
 import requests
 import daemon
 
-from datetime import datetime, timezone
-from zoneinfo import ZoneInfo
 
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
@@ -36,7 +33,7 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202403031400_001"
+VERSION = "20230323_1300_001"
 
 # Bills
 
@@ -46,9 +43,10 @@ BILLS_TIMEOUT = 86400  # Standard is 1 day
 
 
 # Default Mongo URL
-# See -M option in arg parse section
-#    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
-MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
+MONGO_URL = (
+    #    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
+)
 
 # curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers" \
 #  -H "Content-Type: application/json" \-d '{"foo":"bar"}' \
@@ -92,7 +90,6 @@ AIRPLANES_FOLDERS = [
     "readsb",
     "dump1090",
     "adbsfi-feed",
-    "adsb-feeder-ultrafeeder/readsb",
 ]
 
 
@@ -168,30 +165,10 @@ def mongo_https_insert(mydict):
     return response.status_code
 
 
-def dump_recents(signum=signal.SIGUSR1, frame=""):
-    """Dump recents if we get a sigusr1"""
-    signame = signal.Signals(signum).name
-    logger.info(f"Signal handler dump_recents called with signal {signame} ({signum})")
-
-    logger.info("Dumping %d entries...", len(recent_flights))
-
-    for hex_icao in sorted(recent_flights):
-        logger.info(
-            "hex_icao: %s flight: %s seen: %d",
-            hex_icao,
-            recent_flights[hex_icao][0],
-            recent_flights[hex_icao][1],
-        )
-
-
 def update_helidb():
     """Main"""
 
-    logger.info("Updating Helidb at %s", datetime.now())
-
-    # Set the signal handler to dump recents
-
-    signal.signal(signal.SIGUSR1, dump_recents)
+    logger.info("Updating Helidb at %s", datetime.datetime.now())
 
     try:
         #        with open("/run/" + AIRPLANES_FOLDER + "/aircraft.json") as json_file:
@@ -219,12 +196,8 @@ def update_helidb():
                     planes = data.json()["aircraft"]
 
             except requests.exceptions.RequestException as e:
-                logger.error(
-                    "Got ConnectionError trying to request URL %s - sleeping 30", e
-                )
-                # raise SystemExit(e)
-                sleep(30)
-                return e
+                logger.error("Got ConnectionError trying to request URL %s", e)
+                raise SystemExit(e)
 
         else:
             for airplanes_folder in AIRPLANES_FOLDERS:
@@ -249,8 +222,7 @@ def update_helidb():
 
         if data == "" or data is None:
             logger.error("No aircraft data read")
-            return None
-            # sys.exit()
+            sys.exit()
 
         # dt_stamp = data.json()["now"]
         # logger.debug("Found TimeStamp %s", dt_stamp)
@@ -258,16 +230,13 @@ def update_helidb():
 
     except (ValueError, UnboundLocalError, AttributeError) as err:
         logger.error("JSON Decode Error: %s", err)
-        return err
-        # sys.exit()
+        sys.exit()
 
     logger.debug("Aircraft to check: %d", len(planes))
 
     for plane in planes:
         output = ""
-        # aircrafts.json documented here (and elsewhere):
-        # https://github.com/flightaware/dump1090/blob/master/README-json.md
-        #
+
         # There is a ts in the json output - should we use that?
         #        dt = ts = datetime.datetime.now().timestamp()
         # dt_stamp = datetime.datetime.now().timestamp()
@@ -278,96 +247,40 @@ def update_helidb():
         heli_tail = ""
 
         try:
-            icao_hex = str(plane["hex"]).lower()
-            # heli_type = find_helis(icao_hex)
-            heli_type = search_bills(icao_hex, "type")
-            heli_tail = search_bills(icao_hex, "tail")
-            output += " " + heli_type + " " + heli_tail
+            iaco_hex = str(plane["hex"]).lower()
+            # heli_type = find_helis(iaco_hex)
+            heli_type = search_bills(iaco_hex, "type")
+            heli_tail = search_bills(iaco_hex, "tail")
+            output += " " + heli_type
         except BaseException:
             output += " no type or reg"
 
-        if search_bills(icao_hex, "hex") != None:
-            logger.debug("%s found in Bills", icao_hex)
-        else:
-            logger.debug("%s not found in Bills", icao_hex)
-
-        if "category" in plane:
-            category = plane["category"]
-        else:
-            category = "Unk"
-
-        if "flight" in plane:
-            callsign = str(plane["flight"]).strip()
-        else:
-            # callsign = "no_call"
-            # callsign = ""
-            callsign = None
-
-        # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
-        if (search_bills(icao_hex, "hex") != None) or category == "A7":
-
-            if icao_hex not in recent_flights:
-                recent_flights[icao_hex] = [callsign, 1]
-                logger.debug(
-                    "Added %s to recents (%d) as %s",
-                    icao_hex,
-                    len(recent_flights),
-                    callsign,
-                )
-            elif (
-                icao_hex in recent_flights
-                and recent_flights[icao_hex][0] != callsign
-                # and callsign != "no_call"
-                # and callsign != ""
-                and callsign != None
-            ):
-                logger.debug(
-                    "Updating %s in recents as: %s - was:  %s",
-                    icao_hex,
-                    callsign,
-                    recent_flights[icao_hex][0],
-                )
-                recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
-
-            else:
-                # increment the count
-                recent_flights[icao_hex][1] += 1
-
-                logger.debug(
-                    "Incrmenting %s callsign %s to %d",
-                    icao_hex,
-                    recent_flights[icao_hex][0],
-                    recent_flights[icao_hex][1],
-                )
-
-            if icao_hex in recent_flights:
-
+        # Should identify anything reporting itself as Wake Category A7 / Rotorcraft
+        if "category" in plane and plane["category"] == "A7":
+            if "flight" in plane:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s seen: %d times",
-                    icao_hex,
-                    category,
-                    recent_flights[icao_hex][0],
-                    heli_tail or "Unknown",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s type: %s",
+                    iaco_hex,
+                    plane["category"],
+                    str(plane["flight"]).strip(),
                     heli_type or "Unknown",
-                    recent_flights[icao_hex][1],
                 )
-
             else:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s",
-                    icao_hex,
-                    category,
-                    "(null)",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s (%s) type: %s",
+                    iaco_hex,
+                    plane["category"],
+                    "no_call",
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
                 )
 
         if heli_type == "" or heli_type is None:
-            # This short circuits parsing of aircraft with unknown icao_hex codes
-            logger.debug("%s Not a known rotorcraft ", icao_hex)
+            # This short circuits parsing of aircraft with unknown iaco_hex codes
+            logger.debug("%s Not a known rotorcraft ", iaco_hex)
             continue
 
-        logger.debug("Parsing Helicopter: %s", icao_hex)
+        logger.debug("Parsing Helicopter: %s", iaco_hex)
 
         try:
             callsign = str(plane["flight"]).strip()
@@ -392,20 +305,16 @@ def update_helidb():
             alt_geom = max(0, int(plane["alt_geom"]))
             # FR altitude
             output += " altgeom " + str(alt_geom)
-
         except BaseException:
             alt_geom = None
 
         try:
-            # head = float(plane["r_dir"])
-            head = float(plane["track"])
+            head = float(plane["r_dir"])
             # readsb/FR "track"
-            output += " head " + str(head)
-
+            output += " " + str(head)
         except BaseException:
             head = None
             output += " no heading"
-
         try:
             lat = float(plane["lat"])
             lon = float(plane["lon"])
@@ -418,70 +327,43 @@ def update_helidb():
             lat = None
             lon = None
             # this should cleanup null issue #9 for mongo
-            # updated 20240228 per discussion with SR
-            # geometry = None
-            geometry = [None, None]
+            geometry = None
             output += " Lat: " + str(lat) + ", Lon: " + str(lon)
-            logger.info("No Lat/Lon - Not reported: %s: %s", plane["hex"], output)
-            continue
-
-        try:
-            groundspeed = float(plane["gs"])
-            output += " gs " + str(groundspeed)
-
-        except BaseException:
-            groundspeed = None
-
-        try:
-            rssi = float(plane["rssi"])
-            output += " rssi " + str(rssi)
-
-        except BaseException:
-            rssi = None
 
         try:
             squawk = str(plane["squawk"])
             output += " " + squawk
 
         except BaseException:
-            # squawk = ""
-            squawk = None
+            squawk = ""
             output += " no squawk"
 
         logger.info("Heli Reported %s: %s", plane["hex"], output)
 
         if heli_type != "":
-            utc_time = datetime.fromtimestamp(dt_stamp, tz=timezone.utc)
-            est_time = utc_time.astimezone(ZoneInfo("America/New_York"))
-
             mydict = {
                 "type": "Feature",
                 "properties": {
                     "date": dt_stamp,
-                    "icao": icao_hex,
+                    "icao": iaco_hex,
                     "type": heli_type,
-                    "tail": heli_tail,
                     "call": callsign,
                     "heading": head,
                     "squawk": squawk,
                     "altitude_baro": alt_baro,
                     "altitude_geo": alt_geom,
-                    "groundspeed": groundspeed,
-                    "rssi": rssi,
                     "feeder": FEEDER_ID,
-                    "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
                 "geometry": {"type": "Point", "coordinates": geometry},
             }
             ret_val = mongo_insert(mydict)
-            return ret_val
             # if ret_val: ... do something
 
 
-def find_helis_old(icao_hex):
+def find_helis_old(iaco_hex):
     """
     Deprecated
-    Check if an icao hex code is in Bills catalog of DC Helicopters
+    Check if an iaco hex code is in Bills catalog of DC Helicopters
     returns the type of helicopter if known
     """
 
@@ -489,34 +371,31 @@ def find_helis_old(icao_hex):
         opsread = csv.DictReader(csvfile)
         heli_type = ""
         for row in opsread:
-            if icao_hex.upper() == row["hex"]:
+            if iaco_hex.upper() == row["hex"]:
                 heli_type = row["type"]
         return heli_type
 
 
-def find_helis(icao_hex):
+def find_helis(iaco_hex):
     """
-    check if icao is known and return type or empty string
+    check if iaco is known and return type or empty string
     """
-    logger.debug("Checking for: %s", icao_hex)
-    if heli_types[icao_hex]["type"]:
-        return heli_types[icao_hex]["type"]
+    logger.debug("Checking for: %s", iaco_hex)
+    if heli_types[iaco_hex]["type"]:
+        return heli_types[iaco_hex]["type"]
 
     return ""
 
 
-def search_bills(icao_hex, column_name):
+def search_bills(iaco_hex, column_name):
     """
-    check if icao is known return callsign or empty string
+    check if iaco is known return callsign or empty string
     """
-    logger.debug("Checking for: %s", icao_hex)
-    if icao_hex in heli_types:
-        if heli_types[icao_hex][column_name]:
-            return heli_types[icao_hex][column_name]
-        else:
-            return ""
-    else:
-        return None
+    logger.debug("Checking for: %s", iaco_hex)
+    if heli_types[iaco_hex][column_name]:
+        return heli_types[iaco_hex][column_name]
+
+    return ""
 
 
 def load_helis_from_url(bills_url):
@@ -585,7 +464,7 @@ def load_helis_from_file():
     if bills_age == 0:
         logger.warning("Warning: bills_operators.csv Not found")
 
-    if datetime.now().timestamp() - bills_age > 86400:
+    if datetime.datetime.now().timestamp() - bills_age > 86400:
         logger.warning(
             "Warning: bills_operators.csv more than 24hrs old: %s", ctime(bills_age)
         )
@@ -618,7 +497,6 @@ def run_loop(interval, h_types):
     """
     Run as loop and sleep specified interval
     """
-    dump_clock = 0
 
     while True:
         logger.debug("Starting Update")
@@ -640,20 +518,12 @@ def run_loop(interval, h_types):
 
         update_helidb()
 
-        if dump_clock >= 60:
-            dump_recents(signal.SIGUSR1, "")
-            dump_clock = 0
-        else:
-            logger.debug("dump_clock = %d ", dump_clock)
-            dump_clock += 1
-
         logger.debug("sleeping %s...", interval)
 
         sleep(interval)
 
 
 if __name__ == "__main__":
-
     # Read Environment
     # Need to be smarter about where this is located.
 
@@ -728,19 +598,11 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "-M",
-        "--mongourl",
-        help="MONGO DB Endpoint URL",
-        action="store",
-        default=MONGO_URL,
-    )
-    parser.add_argument(
         "-u", "--mongouser", help="MONGO DB User", action="store", default=None
     )
     parser.add_argument(
         "-P", "--mongopw", help="Mongo DB Password", action="store", default=None
     )
-
     parser.add_argument(
         "-f", "--feederid", help="Feeder ID", action="store", default=None
     )
@@ -805,17 +667,6 @@ if __name__ == "__main__":
 
     config = dotenv_values(env_file)
 
-    if "MONGO_URL" in config:
-        MONGO_URL = config["MONGO_URL"]
-
-    elif args.mongourl:
-        MONGO_URL = args.mongourl
-
-    else:
-        MONGO_URL = None
-        logger.error("No Mongo Endpoint URL Found - Exiting")
-        sys.exit()
-
     # Should be pulling these from env
 
     if (
@@ -826,7 +677,6 @@ if __name__ == "__main__":
         MONGO_API_KEY = config["API-KEY"]
         mongo_insert = mongo_https_insert
     else:
-
         if args.mongopw:
             MONGOPW = args.mongopw
         elif "MONGOPW" in config:
@@ -889,7 +739,6 @@ if __name__ == "__main__":
     # probably need to have an option for different file names
 
     heli_types = {}
-    recent_flights = {}
 
     logger.debug("Using bills_operators as : %s", bills_operators)
 
