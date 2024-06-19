@@ -47,20 +47,33 @@ def get_bills_operators(bills_url):
             tmpcsvfile.write(bills.text)
             tmpcsvfile.close()
             bills_age = os.path.getmtime("bills_operators_tmp.csv")
-            os.rename(
-                "bills_operators.csv",
-                "bills_operators" + time.strftime("%Y%m%d-%H%M%S") + ".csv",
-            )
+            if os.path.exists("bills_operators.csv"):
+                # Save previous version
+                os.rename(
+                    "bills_operators.csv",
+                    "bills_operators" + time.strftime("%Y%m%d-%H%M%S") + ".csv",
+                )
             os.rename("bills_operators_tmp.csv", "bills_operators.csv")
         return bills_age
 
 
 if __name__ == "__main__":
-    bills_age = os.path.getmtime("bills_operators.csv")
+
+    if os.path.exists("bills_operators.csv"):
+        try:
+            bills_age = os.path.getmtime("bills_operators.csv")
+
+        except FileNotFoundError:
+            # should never see this
+            logger.info(f"File not found: bills_operators.csv")
+            bills_age = 0
+    else:
+        bills_age = 0
 
     if int(time.time() - bills_age) >= 86340:  # 24hrs - 1 minute
         logger.info(
-            "bills_operators.csv more than 24hrs old: %s", time.ctime(bills_age)
+            "bills_operators.csv not found or more than 24hrs old: %s",
+            time.ctime(bills_age),
         )
         bills_age = get_bills_operators(BILLS_URL)
         logger.info(f"Updated bills_operators.csv at: %s", time.ctime(bills_age))
