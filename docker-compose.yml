@@ -10,5 +10,5 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     extra_hosts:
-      - host.docker.internal
+      - host.docker.internal:172.17.0.1
     command: ["python3", "feed_copterspotter.py", "-i", "30", "-w", "-v"]
