@@ -231,7 +231,9 @@ sudo apt install docker.io docker-compose
 There may be other setup steps required - such as adding yourself to the docker group to give yourself priveledges to run docker without needed root access. Again, out of scope for this readme.md file. Depending on which version of docker you have installed, it may already include "compose" -- as such, you may not need to install docker-compose. If this is the case, just use "docker compose" instead of "docker-compose"
 
 
-
+```Shell
+git clone https://github.com/LoganSound/CopterFeeder.git
+```
 
 
 Next - setup the .env file as outlined above, using the credentials you've been provided for copter-spotter.
