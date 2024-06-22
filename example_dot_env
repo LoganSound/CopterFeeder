@@ -1,10 +1,21 @@
 
-# Update this line if you have an API-Key
+# Update this line when you have an API-Key
 API-KEY = "BigLongRandomStringOfLettersAndNumbers"
-
 FEEDER_ID = "MyFeederID"
-MONGOUSER = "MyMONGOUSER"
-MONGOPW = "SuperSecretPassword"
 
-SERVER = localhost
+# Mongo URL
+# See -M option in arg parse section
+#
+#MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
+
+# Aircraft.json URL -  http://my.adsb.receiver/data/aircraft.json
+# hostname or ip of your ADSB Receiver
+SERVER = my.adsb.receiver
+# Port
 PORT = 8080
+
+#
+# user and password have been deprecated in favor of API key 20240619
+#MONGOUSER = "MyMONGOUSER"
+#MONGOPW = "SuperSecretPassword"

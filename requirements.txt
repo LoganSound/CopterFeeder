@@ -2,4 +2,4 @@ pymongo
 python-daemon
 python-dotenv
 requests
-
+prometheus-client

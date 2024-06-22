@@ -25,6 +25,8 @@ import daemon
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
+from prometheus_client import start_http_server, Gauge, Summary
+
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
 
@@ -36,7 +38,7 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202403031400_001"
+VERSION = "202406191500_001"
 
 # Bills
 
@@ -65,6 +67,15 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 #   "altitude_baro":{"$numberInt":"625"},
 #   "altitude_geo":{"$numberInt":"675"},
 #   "feeder":
+
+
+# Prometheus
+
+PROM_PORT = 8999
+
+update_heli_time = Summary(
+    "update_heli_processing_seconds", "Time spent updating heli db"
+)
 
 
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -184,6 +195,7 @@ def dump_recents(signum=signal.SIGUSR1, frame=""):
         )
 
 
+@update_heli_time.time()
 def update_helidb():
     """Main"""
 
@@ -614,12 +626,35 @@ def check_bills_age():
     return bills_age
 
 
+def init_prometheus():
+    global tx
+    global update_heli_time
+
+    tx = Gauge(
+        f"switch_interface_tx_packets",
+        "Total transmitted packets on interface",
+        ["host", "id"],
+    )
+
+    tx.labels("foo", "bar").set(0)
+    tx.labels("boo", "baz").set(0)
+
+
+# Decorate function with metric.
+# @update_heli_time.time()
+# def process_prometheus(t):
+#     """A dummy function that takes some time."""
+#     tx.labels("foo", "bar").inc()
+#     tx.labels("boo", "baz").inc()
+#     sleep(t)
+
+
 def run_loop(interval, h_types):
     """
     Run as loop and sleep specified interval
     """
     dump_clock = 0
-
+    # process_prometheus(random.random())
     while True:
         logger.debug("Starting Update")
 
@@ -929,11 +964,15 @@ if __name__ == "__main__":
         #            log_handles += getLogFileHandles(logger.parent)
 
         with daemon.DaemonContext(files_preserve=log_handles):
+            init_prometheus()
+            start_http_server(PROM_PORT)
             run_loop(args.interval, heli_types)
 
     else:
         try:
             logger.debug("Starting main processing loop")
+            init_prometheus()
+            start_http_server(PROM_PORT)
             run_loop(args.interval, heli_types)
 
         except KeyboardInterrupt:

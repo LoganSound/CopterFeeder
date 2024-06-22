@@ -16,6 +16,9 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.t
 
 FROM python:3.12-slim
 
+
+EXPOSE 8999
+
 WORKDIR /app
 
 COPY --from=builder /app/wheels /wheels
