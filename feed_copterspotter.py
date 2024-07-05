@@ -199,7 +199,11 @@ def dump_recents(signum=signal.SIGUSR1, frame=""):
 def update_helidb():
     """Main"""
 
-    logger.info("Updating Helidb at %s", datetime.now())
+    # local_time = datetime.now().astimezone()
+
+    logger.info(
+        "Updating Helidb at %s ", datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z %z")
+    )
 
     # Set the signal handler to dump recents
 
@@ -226,6 +230,7 @@ def update_helidb():
                 data = requests.get(AIRCRAFT_URL, timeout=5)
                 if data.status_code == 200:
                     logger.debug("Found data at URL: %s", AIRCRAFT_URL)
+                    # "now" is a 10.1 digit seconds since the epoch timestamp
                     dt_stamp = data.json()["now"]
                     logger.debug("Found TimeStamp %s", dt_stamp)
                     planes = data.json()["aircraft"]
@@ -250,6 +255,7 @@ def update_helidb():
                         )
                         data = json.load(json_file)
                         planes = data["aircraft"]
+                        # "now" is a 10.1 digit seconds since the epoch timestamp
                         dt_stamp = data["now"]
                         logger.debug("Found TimeStamp %s", dt_stamp)
                         break
