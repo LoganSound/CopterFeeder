@@ -494,7 +494,7 @@ def update_helidb():
             }
             ret_val = mongo_insert(mydict)
             # return ret_val
-            logger.info("Mongo_insert return: %s ", ret_val)
+            logger.debug("Mongo_insert return: %s ", ret_val)
             # if ret_val: ... do something
 
 
