@@ -202,7 +202,8 @@ def update_helidb():
     # local_time = datetime.now().astimezone()
 
     logger.info(
-        "Updating Helidb at %s ", datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z %z")
+        "Updating Helidb at %s ",
+        datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z %z"),
     )
 
     # Set the signal handler to dump recents
