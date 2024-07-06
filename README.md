@@ -1,24 +1,155 @@
+# CopterFeeder
 
-Start by running
+## Table of Contents
+
+-   [Prerequisites](#prerequisites)
+-   [Installation](#installation)
+    -   [Option 1: Using ADSB.IM Image](#option-1-using-adsbim-image)
+    -   [Option 2: Manual Setup with Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
+-   [Configuration and Running](#configuration-and-running)
+-   [Updating Copterfeeder](#updating-copterfeeder)
+
+-   [Running without Docker](#running-without-docker)
+
+## Prerequisites
+
+-   A Raspberry Pi or other supported single board computer
+-   Ubuntu or a compatible Linux distribution
+
+## Installation
+
+### Option 1: Using ADSB.IM Image
+
+1. Download and install the [ADSB.im](https://adsb.im) image on your device.
+2. Follow their [how-to guide](https://www.adsb.im/howto) for hardware setup and image loading.
+3. Proceed to the [Configuration and Running](#configuration-and-running) section.
+
+### Option 2: Manual Setup with ADSB.im and Ubuntu
+
+📌 **Note:** If you already have Git and Docker installed, skip to step 6 [install ADSB.im](#install-adsbim)
+
+1. Update your system:
+
+    ```shell
+    sudo apt update
+    sudo apt upgrade
+    ```
+
+2. Install Docker and docker-compose:
+
+    ```shell
+    sudo apt install docker.io docker-compose
+    ```
+
+3. To run Docker commands without sudo, add your user to the Docker group:
+
+    ```shell
+    sudo usermod -aG docker $USERNAME
+    ```
+
+    📝 **Note:** fill in your username like `$JOHNDOE`
+
+4. Apply the new group membership:
+
+    ```shell
+    newgrp docker
+    ```
+
+5. Install Git
+
+    ```shell
+    sudo apt install git
+    ```
+
+6. #### Install ADSB.im:
+
+    ```shell
+    curl https://raw.githubusercontent.com/dirkhh/adsb-feeder-image/main/src/tools/app-install.sh | sudo bash
+    ```
+
+## Configuration and Running
+
+1. Clone the repository:
+
+    ```shell
+    git clone https://github.com/LoganSound/CopterFeeder.git
+    cd CopterFeeder
+    ```
+
+2. Set up the environment file:
+
+    ```shell
+    cp .env.example .env
+    nano .env
+    ```
+
+    📝 Fill in the required values provided by the dev team and your feeder name
+
+    💡 **Nano tips:** Save (Ctrl+O, Enter) | Exit (Ctrl+X)
+
+3. Build and run the Docker container:
+
+    ```shell
+    docker-compose build
+    docker-compose up -d
+    ```
+
+    📝 **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts.
+
+4. (Optional) View logs:
+    ```shell
+    docker compose logs -f
+    ```
+
+## Updating CopterFeeder
+
+1. Navigate to the project folder and pull the latest
+
+    ```shell
+    cd ./CopterFeeder
+    git pull
+    ```
+
+2. Build and restart the Docker container:
+
+    ```shell
+    docker-compose build
+    docker-compose down
+    docker-compose up -d
+    ```
+
+    **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# Running without Docker
+
+Update your package list:
 
 ```Shell
-sudo apt-get update
+sudo apt update
 ```
 
 If your system hasn't had its Operating system updated in a while, you may need to run:
 
 ```Shell
-sudo apt-get upgrade
+sudo apt upgrade
 ```
 
-or
+If you are not using the adsb.im, to use this script with docker you will first need to install Docker and docker compose on your machine. If you need help for this step, search the web for your version of Linux, etc. It could be as simple as:
 
 ```Shell
-sudo apt-get dist-upgrade
+sudo apt install docker.io docker-compose
 ```
 
-The following is required if you don't have pip3 installed (eg: FR24 feeder images ) - Note that in later OS releases, it is not recommended to use "sudo pip3" to install libraries, rather either using the OS tools like apt to install python-XYZ or using a "venv" is preferred. See: https://packaging.python.org/en/latest/tutorials/installing-packages/ for more detailed information.
+There may be other setup steps required - such as adding yourself to the docker group to give yourself privileges to run docker without needed root access. Again, out of scope for this readme.md file. Depending on which version of docker you have installed, it may already include "compose" -- as such, you may not need to install docker-compose. If this is the case, just use "docker compose" instead of "docker-compose"
 
+The following is required if you don't have pip3 installed (eg: FR24 feeder images ) - Note that in later OS releases, it is not recommended to use "sudo pip3" to install libraries, rather either using the OS tools like apt to install python-XYZ or using a "venv" is preferred. See: https://packaging.python.org/en/latest/tutorials/installing-packages/ for more detailed information.
 
 ```Shell
 sudo apt-get install python3-pip
@@ -37,7 +168,6 @@ move into the project folder:
 cd CopterFeeder/
 ```
 
-
 And then (optionally) download the latest helicopter database. This functionality has been included in the main feeder script so is now an optional step.
 
 ```Shell
@@ -50,20 +180,20 @@ OR (preferred, but still optional) use the incluided "get_bills.py" script to pu
 ./get_bills.py
 ```
 
-
-
-
 Run pip3 to install requirements
+
 ```Shell
 python3 -m pip3 --user install -r requirements.txt
 ```
 
 Copy example_env_file to .env ( this should only have to be done for the first install!!!)
+
 ```Shell
 cp  example_dot_env .env
 ```
 
 Add your credentials or API-key, and Feeder-ID type to the .env file
+
 ```Shell
 nano .env
 ```
@@ -74,13 +204,12 @@ Change the permissions on the .env file so that only you read Read/Write the fil
 chmod go-rwx .env
 ```
 
-
 Credentials can also be specified using command line options (see below). Command line options
 take precedence over environtment settings. Note that Userid/Password specified on the commandline
 will be able to be seen by others using "ps -ef"
 
-
 Make the main script executable
+
 ```Shell
 chmod +x feed_copterspotter.py
 ```
@@ -93,8 +222,6 @@ take a bit of trial and error. If you are running the script on the system you u
 you might want to start with the "-r" option, which will scan several different directories under /run.
 If you're on a different machine, you'll want to use the server (-s) and port (-p) options. Note: if you use
 the -r option, -s and -p options will be ignored.
-
-
 
 The script is intended to be run as a daemon (-d option):
 
@@ -115,6 +242,7 @@ Or run on the command line, so that you can watch debugging output (-D option):
 If you want to run from Crontab, use the -o (one shot) option.
 
 #type:
+
 ```Shell
 crontab -e
 ```
@@ -134,7 +262,6 @@ convenient directory of your choice.
 ```
 
 And you're DONE!
-
 
 You can TEST one iteration by typing:
 
@@ -167,17 +294,14 @@ You can do:
 ```Code
 tail -f /full/path/to/logfile
 ```
-to watch the logging messages in the logfile.
 
+to watch the logging messages in the logfile.
 
 Note: the -D debug mode will be very noisy as it is intended for debugging - you probably want to use -v or -l to just see periodic reports.
 
-
 If you consistently see "None" or "Null" we may need to tweak your variables
 
-
 Help is available with the -h or --help option:
-
 
 ```Code
 ./feed_copterspotter.py --help
@@ -208,57 +332,4 @@ optional arguments:
   -f FEEDERID, --feederid FEEDERID
                         Feeder ID
   -r, --readlocalfiles  Check for aircraft.json files under /run/...
-
-
 ```
-
-
-
-
-## Running as Docker
-
-
-This script can be (arguably, should be as it simplifies many things) run as a Docker container, using docker-compose or docker compose, depending on which version of docker you have installed.  Running CopterFeeder using Docker will simplify setup as a dameon, and will help simplify Python configs, especially under recent OS releases, which push using venv to avoid library conflicts. This is a bit more advanced method - detailing all of the tasks needed for installing and setting up Docker is out of the scope of this readme. There is plenty of documentation available elsewhere, from Docker, from OS maintainers and from other 3rd parties.
-
-Note: If you're using (recommended!) https://adsb.im/home image - docker-ce (community edition) is already installed. It includes the "compoose" command, so you don't need to install anything extra. Just setup ssh or shell access, login, clone the CopterFeeder github repository and skip to the "setup the .env" step below.
-
-If you are not using the adsb.im, to use this script with docker you will first need to install Docker and docker compose on your machine. If you need help for this step, search the web for your version of Linux, etc. It could be as simple as:
-
-```Shell
-sudo apt install docker.io docker-compose
-```
-
-There may be other setup steps required - such as adding yourself to the docker group to give yourself priveledges to run docker without needed root access. Again, out of scope for this readme.md file. Depending on which version of docker you have installed, it may already include "compose" -- as such, you may not need to install docker-compose. If this is the case, just use "docker compose" instead of "docker-compose"
-
-
-```Shell
-git clone https://github.com/LoganSound/CopterFeeder.git
-cd CopterFeeder
-```
-
-
-Next - setup the .env file as outlined above, using the credentials you've been provided for copter-spotter.
-
-
-Run docker-compose to build the container:
-
-
-```Shell
-docker compose build
-```
-
-And then run the container:
-
-```Shell
-docker compose up -d
-```
-
-
-If you'd like to see debug and loogging use:
-
-
-```Shell
-docker compose logs -f
-```
-
-If you're curious about what Docker is doing, see the Dockerfile and the docker-compose.yml file.
