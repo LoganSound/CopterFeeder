@@ -1,7 +1,0 @@
-API-KEY = "BigLongRandomStringOfLettersAndNumbers"
-
-FEEDER_ID = "MyFeederID"
-MONGO_URL = "longUrlFromTheTeam"
-
-SERVER = host.docker.internal
-PORT = 8080
