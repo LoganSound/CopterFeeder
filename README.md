@@ -13,16 +13,16 @@
 
 ## Prerequisites
 
--   A Raspberry Pi or other supported single board computer
--   Ubuntu or a compatible Linux distribution
+-   A Raspberry Pi or another host with Ubuntu or a similar Linux distribution
+-   A supported SDR, see the ADSB.im [supported list](https://www.adsb.im/supported#sdrs)
 
 ## Installation
 
 ### Option 1: Using ADSB.IM Image
 
-1. Download and install the [ADSB.im](https://adsb.im) image on your device.
-2. Follow their [how-to guide](https://www.adsb.im/howto) for hardware setup and image loading.
-3. Proceed to the [Configuration and Running](#configuration-and-running) section.
+1. Download and install the [ADSB.im](https://adsb.im) image on your device
+2. Follow their [how-to guide](https://www.adsb.im/howto) for hardware setup and image loading
+3. Proceed to the [Configuration and Running](#configuration-and-running) section
 
 ### Option 2: Manual Setup with ADSB.im and Ubuntu
 
@@ -94,7 +94,7 @@
     docker-compose up -d
     ```
 
-    📝 **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts.
+    📝 **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts
 
 4. (Optional) View logs:
     ```shell
@@ -118,7 +118,7 @@
     docker-compose up -d
     ```
 
-    **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts.
+    **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts
 
 <br>
 <br>
