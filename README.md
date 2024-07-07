@@ -262,3 +262,15 @@ docker compose logs -f
 ```
 
 If you're curious about what Docker is doing, see the Dockerfile and the docker-compose.yml file.
+
+## Updating via Docker
+
+```Shell
+git pull
+```
+```Shell
+docker compose build
+```
+```Shell
+docker compose down && docker compose up -d
+```
