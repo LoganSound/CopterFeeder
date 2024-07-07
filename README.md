@@ -3,18 +3,22 @@
 ## Table of Contents
 
 -   [Prerequisites](#prerequisites)
--   [Installation](#installation)
-    -   [Option 1: Using ADSB.IM Image](#option-1-using-adsbim-image)
-    -   [Option 2: Manual Setup with Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
--   [Configuration and Running](#configuration-and-running)
--   [Updating Copterfeeder](#updating-copterfeeder)
-
+-   [Running with Docker](#running-with-docker)
+    -   [Installation](#installation)
+        -   [Option 1: Using ADSB.IM Image](#option-1-using-adsbim-image)
+        -   [Option 2: Manual Setup with Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
+    -   [Configuration and Running](#configuration-and-running)
+    -   [Updating Copterfeeder](#updating-copterfeeder)
 -   [Running without Docker](#running-without-docker)
 
 ## Prerequisites
 
 -   A Raspberry Pi or another host with Ubuntu or a similar Linux distribution
 -   A supported SDR, see the ADSB.im [supported list](https://www.adsb.im/supported#sdrs)
+
+<br>
+
+# Running with Docker
 
 ## Installation
 
@@ -26,7 +30,7 @@
 
 ### Option 2: Manual Setup with ADSB.im and Ubuntu
 
-📌 **Note:** If you already have Git and Docker installed, skip to step 6 [install ADSB.im](#install-adsbim)
+📌 **Note:** If you already have Git and Docker installed, skip to step 6: [Install ADSB.im](#install-adsbim)
 
 1. Update your system:
 
@@ -120,12 +124,8 @@
 
     **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+    <br>
+    <br>
 
 # Running without Docker
 
