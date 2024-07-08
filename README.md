@@ -6,7 +6,7 @@
 -   [Running with Docker](#running-with-docker)
     -   [Installation](#installation)
         -   [Option 1: Using ADSB.IM Image](#option-1-using-adsbim-image)
-        -   [Option 2: Manual Setup with Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
+        -   [Option 2: Manual Setup with ADSB.im and Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
     -   [Configuration and Running](#configuration-and-running)
     -   [Updating Copterfeeder](#updating-copterfeeder)
 -   [Running without Docker](#running-without-docker)
