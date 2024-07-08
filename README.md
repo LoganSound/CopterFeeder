@@ -129,25 +129,23 @@
 
 # Running without Docker
 
-Update your package list:
+Start by running
 
 ```Shell
-sudo apt update
+sudo apt-get update
 ```
 
 If your system hasn't had its Operating system updated in a while, you may need to run:
 
 ```Shell
-sudo apt upgrade
+sudo apt-get upgrade
 ```
 
-If you are not using the adsb.im, to use this script with docker you will first need to install Docker and docker compose on your machine. If you need help for this step, search the web for your version of Linux, etc. It could be as simple as:
+or
 
 ```Shell
-sudo apt install docker.io docker-compose
+sudo apt-get dist-upgrade
 ```
-
-There may be other setup steps required - such as adding yourself to the docker group to give yourself privileges to run docker without needed root access. Again, out of scope for this readme.md file. Depending on which version of docker you have installed, it may already include "compose" -- as such, you may not need to install docker-compose. If this is the case, just use "docker compose" instead of "docker-compose"
 
 The following is required if you don't have pip3 installed (eg: FR24 feeder images ) - Note that in later OS releases, it is not recommended to use "sudo pip3" to install libraries, rather either using the OS tools like apt to install python-XYZ or using a "venv" is preferred. See: https://packaging.python.org/en/latest/tutorials/installing-packages/ for more detailed information.
 
