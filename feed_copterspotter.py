@@ -477,8 +477,8 @@ def update_helidb():
             mydict = {
                 "type": "Feature",
                 "properties": {
-                    # "date": dt_stamp,
-                    "date": utc_time,
+                    "date": dt_stamp,
+                    # "date": utc_time,
                     "icao": icao_hex,
                     "type": heli_type,
                     "tail": heli_tail,
