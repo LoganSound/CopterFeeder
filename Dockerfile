@@ -1,4 +1,4 @@
-FROM python:3.12-slim as builder
+FROM python:3.12-slim AS builder
 
 #WORKDIR /usr/local/bin
 
@@ -15,6 +15,9 @@ COPY requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
 FROM python:3.12-slim
+
+
+EXPOSE 8999
 
 WORKDIR /app
 

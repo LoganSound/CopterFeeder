@@ -25,6 +25,8 @@ import daemon
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
+from prometheus_client import start_http_server, Gauge, Summary
+
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
 
@@ -36,13 +38,14 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202403031400_001"
+VERSION = "202408110938_001"
 
 # Bills
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
-BILLS_TIMEOUT = 86400  # Standard is 1 day
+#BILLS_TIMEOUT = 86400  # In seconds - Standard is 1 day
+BILLS_TIMEOUT = 3600  # Standard is 1 hour as of 20240811
 
 
 # Default Mongo URL
@@ -67,10 +70,20 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 #   "feeder":
 
 
+# Prometheus
+
+PROM_PORT = 8999
+
+update_heli_time = Summary(
+    "update_heli_processing_seconds", "Time spent updating heli db"
+)
+
+
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 # logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
-logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+# logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(format="%(asctime)s - %(module)s - %(levelname)s - %(message)s")
 
 # create formatter
 
@@ -184,10 +197,16 @@ def dump_recents(signum=signal.SIGUSR1, frame=""):
         )
 
 
+@update_heli_time.time()
 def update_helidb():
     """Main"""
 
-    logger.info("Updating Helidb at %s", datetime.now())
+    # local_time = datetime.now().astimezone()
+
+    logger.info(
+        "Updating Helidb at %s ",
+        datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z %z"),
+    )
 
     # Set the signal handler to dump recents
 
@@ -214,6 +233,7 @@ def update_helidb():
                 data = requests.get(AIRCRAFT_URL, timeout=5)
                 if data.status_code == 200:
                     logger.debug("Found data at URL: %s", AIRCRAFT_URL)
+                    # "now" is a 10.1 digit seconds since the epoch timestamp
                     dt_stamp = data.json()["now"]
                     logger.debug("Found TimeStamp %s", dt_stamp)
                     planes = data.json()["aircraft"]
@@ -238,6 +258,7 @@ def update_helidb():
                         )
                         data = json.load(json_file)
                         planes = data["aircraft"]
+                        # "now" is a 10.1 digit seconds since the epoch timestamp
                         dt_stamp = data["now"]
                         logger.debug("Found TimeStamp %s", dt_stamp)
                         break
@@ -458,6 +479,7 @@ def update_helidb():
                 "type": "Feature",
                 "properties": {
                     "date": dt_stamp,
+                    # "date": utc_time,
                     "icao": icao_hex,
                     "type": heli_type,
                     "tail": heli_tail,
@@ -615,12 +637,35 @@ def check_bills_age():
     return bills_age
 
 
+def init_prometheus():
+    global tx
+    global update_heli_time
+
+    tx = Gauge(
+        f"switch_interface_tx_packets",
+        "Total transmitted packets on interface",
+        ["host", "id"],
+    )
+
+    tx.labels("foo", "bar").set(0)
+    tx.labels("boo", "baz").set(0)
+
+
+# Decorate function with metric.
+# @update_heli_time.time()
+# def process_prometheus(t):
+#     """A dummy function that takes some time."""
+#     tx.labels("foo", "bar").inc()
+#     tx.labels("boo", "baz").inc()
+#     sleep(t)
+
+
 def run_loop(interval, h_types):
     """
     Run as loop and sleep specified interval
     """
     dump_clock = 0
-
+    # process_prometheus(random.random())
     while True:
         logger.debug("Starting Update")
 
@@ -930,11 +975,15 @@ if __name__ == "__main__":
         #            log_handles += getLogFileHandles(logger.parent)
 
         with daemon.DaemonContext(files_preserve=log_handles):
+            init_prometheus()
+            start_http_server(PROM_PORT)
             run_loop(args.interval, heli_types)
 
     else:
         try:
             logger.debug("Starting main processing loop")
+            init_prometheus()
+            start_http_server(PROM_PORT)
             run_loop(args.interval, heli_types)
 
         except KeyboardInterrupt:
