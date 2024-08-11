@@ -38,13 +38,14 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202406191500_001"
+VERSION = "202408110938_001"
 
 # Bills
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
-BILLS_TIMEOUT = 86400  # Standard is 1 day
+#BILLS_TIMEOUT = 86400  # In seconds - Standard is 1 day
+BILLS_TIMEOUT = 3600  # Standard is 1 hour as of 20240811
 
 
 # Default Mongo URL
