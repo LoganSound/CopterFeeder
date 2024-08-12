@@ -25,7 +25,7 @@ import daemon
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-from prometheus_client import start_http_server, Gauge, Summary
+from prometheus_client import start_http_server, Counter, Gauge, Summary
 
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
@@ -44,7 +44,7 @@ VERSION = "202408110938_001"
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
-#BILLS_TIMEOUT = 86400  # In seconds - Standard is 1 day
+# BILLS_TIMEOUT = 86400  # In seconds - Standard is 1 day
 BILLS_TIMEOUT = 3600  # Standard is 1 hour as of 20240811
 
 
@@ -335,6 +335,7 @@ def update_helidb():
                     len(recent_flights),
                     callsign,
                 )
+                rx.labels(cs=callsign)
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
@@ -353,6 +354,8 @@ def update_helidb():
             else:
                 # increment the count
                 recent_flights[icao_hex][1] += 1
+                # Prometheus counter
+                rx(icao=icao_hex, cs=callsign).inc()
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -641,14 +644,17 @@ def init_prometheus():
     global tx
     global update_heli_time
 
-    tx = Gauge(
-        f"switch_interface_tx_packets",
-        "Total transmitted packets on interface",
-        ["host", "id"],
-    )
+    rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
+    return rx
 
-    tx.labels("foo", "bar").set(0)
-    tx.labels("boo", "baz").set(0)
+    # tx = Gauge(
+    #     f"switch_interface_tx_packets",
+    #     "Total transmitted packets on interface",
+    #     ["host", "id"],
+    # )
+
+    # tx.labels("foo", "bar").set(0)
+    # tx.labels("boo", "baz").set(0)
 
 
 # Decorate function with metric.
@@ -982,7 +988,7 @@ if __name__ == "__main__":
     else:
         try:
             logger.debug("Starting main processing loop")
-            init_prometheus()
+            rx = init_prometheus()
             start_http_server(PROM_PORT)
             run_loop(args.interval, heli_types)
 
