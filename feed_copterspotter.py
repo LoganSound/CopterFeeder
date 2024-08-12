@@ -558,10 +558,19 @@ def load_helis_from_url(bills_url):
     """
     helis_dict = {}
 
-    try:
-        bills = requests.get(bills_url, timeout=7.5)
-    except requests.exceptions.RequestException as e:
-        raise
+    status_code = 0
+    sleep_time = 10
+
+    while status_code != 200:
+        try:
+            bills = requests.get(bills_url, timeout=sleep_time)
+            status_code = bills.status_code
+        except requests.exceptions.Timeout:
+            logger.warning("Connection Timed out for Bills -- sleeping %d", sleep_time)
+            sleep(sleep_time)
+            sleep_time += 5
+        except requests.exceptions.RequestException as e:
+            raise
 
     logger.debug("Request returns Status_Code: %s", bills.status_code)
 
