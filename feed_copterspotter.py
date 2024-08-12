@@ -335,7 +335,7 @@ def update_helidb():
                     len(recent_flights),
                     callsign,
                 )
-                rx.labels(icao=icao_hex, cs=callsign)
+                rx.labels(icao=icao_hex, cs=callsign).set(0)
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
@@ -642,10 +642,11 @@ def check_bills_age():
 
 
 def init_prometheus():
-    global tx
+    global rx
     global update_heli_time
 
     rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
+
     return rx
 
     # tx = Gauge(
@@ -989,7 +990,7 @@ if __name__ == "__main__":
     else:
         try:
             logger.debug("Starting main processing loop")
-            rx = init_prometheus()
+            init_prometheus()
             start_http_server(PROM_PORT)
             run_loop(args.interval, heli_types)
 
