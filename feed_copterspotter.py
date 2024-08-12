@@ -139,6 +139,9 @@ CONF_FOLDERS = [
 def mongo_client_insert(mydict):
     """
     Insert one entry into Mongo db
+
+    This function is largely deprecated in favor of the https insert
+
     """
 
     #   password = urllib.parse.quote_plus(MONGOPW)
@@ -157,6 +160,8 @@ def mongo_client_insert(mydict):
 
     #   This needs to be wrapped in a try/except
     ret_val = mycol.insert_one(mydict)
+
+    mongo_inserts.labels(status_code=ret_val).inc()
 
     return ret_val
 
@@ -178,6 +183,7 @@ def mongo_https_insert(mydict):
     except requests.exceptions.HTTPError as e:
         logger.warning("Mongo Post Error: %s ", e.response.text)
 
+    mongo_inserts.labels(status_code=response.status_code).inc()
     return response.status_code
 
 
@@ -642,10 +648,11 @@ def check_bills_age():
 
 
 def init_prometheus():
-    global rx
+    global rx, mongo_inserts
     global update_heli_time
 
     rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
+    mongo_inserts = Counter("mongo_inserts", "Mongo Inserts", ["status_code"])
 
     return rx
 
