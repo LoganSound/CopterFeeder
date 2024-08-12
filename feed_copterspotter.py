@@ -197,7 +197,7 @@ def dump_recents(signum=signal.SIGUSR1, frame=""):
         )
 
 
-@update_heli_time.time()
+# @update_heli_time.time()
 def update_helidb():
     """Main"""
 
@@ -350,13 +350,13 @@ def update_helidb():
                     recent_flights[icao_hex][0],
                 )
                 recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
-                rx(icao=icao_hex, cs=callsign).inc(1)
+                rx.labels(icao=icao_hex, cs=callsign).inc(1)
 
             else:
                 # increment the count
                 recent_flights[icao_hex][1] += 1
                 # Prometheus counter
-                rx(icao=icao_hex, cs=callsign).inc(1)
+                rx.labels(icao=icao_hex, cs=callsign).inc(1)
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
