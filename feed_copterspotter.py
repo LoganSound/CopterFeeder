@@ -197,7 +197,7 @@ def dump_recents(signum=signal.SIGUSR1, frame=""):
         )
 
 
-# @update_heli_time.time()
+@update_heli_time.time()
 def update_helidb():
     """Main"""
 
