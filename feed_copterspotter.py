@@ -335,7 +335,7 @@ def update_helidb():
                     len(recent_flights),
                     callsign,
                 )
-                rx.labels(icao=icao_hex, cs=callsign).set(0)
+                rx.labels(icao=icao_hex, cs=callsign)
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
