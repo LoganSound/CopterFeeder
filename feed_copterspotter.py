@@ -306,12 +306,33 @@ def update_helidb():
 
         try:
             icao_hex = str(plane["hex"]).lower()
+
+        except BaseException:
+            output += " Error coverting to lowercase"
+
+        try:
+            # icao_hex = str(plane["hex"]).lower()
             # heli_type = find_helis(icao_hex)
             heli_type = search_bills(icao_hex, "type")
-            heli_tail = search_bills(icao_hex, "tail")
-            output += " " + heli_type + " " + heli_tail
+            if heli_type != None:
+                output += " " + heli_type
+            # heli_tail = search_bills(icao_hex, "tail")
+            else:
+                output += " no type "
         except BaseException:
-            output += " no type or reg"
+            output += " no type "
+
+        try:
+            # icao_hex = str(plane["hex"]).lower()
+            # heli_type = find_helis(icao_hex)
+            # heli_type = search_bills(icao_hex, "type")
+            heli_tail = search_bills(icao_hex, "tail")
+            if heli_tail != None:
+                output += " " + heli_tail
+            else:
+                output += " no reg"
+        except BaseException:
+            output += " no reg"
 
         if search_bills(icao_hex, "hex") != None:
             logger.debug("%s found in Bills", icao_hex)
