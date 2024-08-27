@@ -502,7 +502,8 @@ def update_helidb():
 
         logger.info("Heli Reported %s: %s", plane["hex"], output)
 
-        if heli_type != "":
+        # if heli_type != "":
+        if icao_hex != "":
             utc_time = datetime.fromtimestamp(dt_stamp, tz=timezone.utc)
             est_time = utc_time.astimezone(ZoneInfo("America/New_York"))
 
