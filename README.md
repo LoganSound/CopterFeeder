@@ -117,8 +117,8 @@
 2. Build and restart the Docker container:
 
     ```shell
-    docker-compose build
     docker-compose down
+    docker-compose build
     docker-compose up -d
     ```
 
