@@ -917,6 +917,13 @@ if __name__ == "__main__":
         logger.debug("Mongo API Key found - using https api ")
         MONGO_API_KEY = config["API-KEY"]
         mongo_insert = mongo_https_insert
+    elif (
+        "API_KEY" in config
+        and config["API_KEY"] != "BigLongRandomStringOfLettersAndNumbers"
+    ):
+        logger.debug("Mongo API Key found - using https api ")
+        MONGO_API_KEY = config["API_KEY"]
+        mongo_insert = mongo_https_insert
     else:
 
         if args.mongopw:
