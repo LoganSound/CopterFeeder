@@ -51,7 +51,7 @@
     sudo usermod -aG docker $USERNAME
     ```
 
-    📝 **Note:** fill in your username like `$JOHNDOE`
+    📝 **Note:** fill in your username like `JOHNDOE`
 
 4. Apply the new group membership:
 
@@ -332,14 +332,9 @@ optional arguments:
   -r, --readlocalfiles  Check for aircraft.json files under /run/...
 ```
 
-
-
-
-
 ## Running as Docker
 
-
-This script can be (arguably, should be as it simplifies many things) run as a Docker container, using docker-compose or docker compose, depending on which version of docker you have installed.  Running CopterFeeder using Docker will simplify setup as a dameon, and will help simplify Python configs, especially under recent OS releases, which push using venv to avoid library conflicts. This is a bit more advanced method - detailing all of the tasks needed for installing and setting up Docker is out of the scope of this readme. There is plenty of documentation available elsewhere, from Docker, from OS maintainers and from other 3rd parties.
+This script can be (arguably, should be as it simplifies many things) run as a Docker container, using docker-compose or docker compose, depending on which version of docker you have installed. Running CopterFeeder using Docker will simplify setup as a dameon, and will help simplify Python configs, especially under recent OS releases, which push using venv to avoid library conflicts. This is a bit more advanced method - detailing all of the tasks needed for installing and setting up Docker is out of the scope of this readme. There is plenty of documentation available elsewhere, from Docker, from OS maintainers and from other 3rd parties.
 
 Note: If you're using (recommended!) https://adsb.im/home image - docker-ce (community edition) is already installed. It includes the "compoose" command, so you don't need to install anything extra. Just setup ssh or shell access, login, clone the CopterFeeder github repository and skip to the "setup the .env" step below.
 
@@ -351,18 +346,14 @@ sudo apt install docker.io docker-compose
 
 There may be other setup steps required - such as adding yourself to the docker group to give yourself priveledges to run docker without needed root access. Again, out of scope for this readme.md file. Depending on which version of docker you have installed, it may already include "compose" -- as such, you may not need to install docker-compose. If this is the case, just use "docker compose" instead of "docker-compose"
 
-
 ```Shell
 git clone https://github.com/LoganSound/CopterFeeder.git
 cd CopterFeeder
 ```
 
-
 Next - setup the .env file as outlined above, using the credentials you've been provided for copter-spotter.
 
-
 Run docker-compose to build the container:
-
 
 ```Shell
 docker compose build
@@ -374,9 +365,7 @@ And then run the container:
 docker compose up -d
 ```
 
-
 If you'd like to see debug and loogging use:
-
 
 ```Shell
 docker compose logs -f
