@@ -1,6 +1,6 @@
 
 # Update this line when you have an API-Key
-API-KEY = "BigLongRandomStringOfLettersAndNumbers"
+API_KEY = "BigLongRandomStringOfLettersAndNumbers"
 FEEDER_ID = "MyFeederID"
 
 # Mongo URL
