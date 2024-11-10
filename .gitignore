@@ -22,6 +22,8 @@ Releasable*
 
 *.tmp
 *.foo
+*.log
+*.out
 
 
 #mac crap
