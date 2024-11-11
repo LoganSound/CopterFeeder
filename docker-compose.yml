@@ -9,6 +9,7 @@ services:
     restart: unless-stopped
     environment:
       - PYTHONUNBUFFERED=1
+    env_file: ".env"
     extra_hosts:
       #- host.docker.internal:172.17.0.1
        - "host.docker.internal:host-gateway"
