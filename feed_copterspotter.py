@@ -980,7 +980,7 @@ if __name__ == "__main__":
 
     if server and port:
         AIRCRAFT_URL = f"http://{server}:{port}/data/aircraft.json"
-        logger.debug("Using AIRCRAFT_URL: %s", AIRCRAFT_URL)
+        logger.info("Using AIRCRAFT_URL: <%s>", AIRCRAFT_URL)
     else:
         AIRCRAFT_URL = None
         logger.debug("AIRCRAFT_URL set to None")
