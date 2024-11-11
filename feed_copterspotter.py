@@ -896,8 +896,10 @@ if __name__ == "__main__":
 
     bills_operators = os.path.join(conf_folder, "bills_operators.csv")
 
-    config = dotenv_values(env_file)
-
+    config = {
+        **dotenv_values(env_file),
+        **os.environ,
+    }
     if "MONGO_URL" in config:
         MONGO_URL = config["MONGO_URL"]
 
