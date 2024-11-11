@@ -20,6 +20,7 @@ from time import sleep, ctime, time, strftime, gmtime
 import signal
 
 import requests
+import validators
 import daemon
 
 from datetime import datetime, timezone
@@ -980,7 +981,18 @@ if __name__ == "__main__":
 
     if server and port:
         AIRCRAFT_URL = f"http://{server}:{port}/data/aircraft.json"
-        logger.info("Using AIRCRAFT_URL: <%s>", AIRCRAFT_URL)
+
+        validation = validators.url(AIRCRAFT_URL)
+
+        if validation:
+            logger.info("Using AIRCRAFT_URL: <%s>", AIRCRAFT_URL)
+        else:
+            logger.warning(
+                "AIRCRAFT_URL is invalid - setting to None - check .env for errors: <%s>",
+                AIRCRAFT_URL,
+            )
+            AIRCRAFT_URL = None
+
     else:
         AIRCRAFT_URL = None
         logger.debug("AIRCRAFT_URL set to None")
