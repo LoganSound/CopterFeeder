@@ -25,7 +25,7 @@ import daemon
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-from prometheus_client import start_http_server, Gauge, Summary
+from prometheus_client import start_http_server, Counter, Gauge, Summary
 
 # used for getting MONGOPW and MONGOUSER
 from dotenv import dotenv_values  # , set_key
@@ -44,7 +44,7 @@ VERSION = "202408110938_001"
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
-#BILLS_TIMEOUT = 86400  # In seconds - Standard is 1 day
+# BILLS_TIMEOUT = 86400  # In seconds - Standard is 1 day
 BILLS_TIMEOUT = 3600  # Standard is 1 hour as of 20240811
 
 
@@ -139,6 +139,9 @@ CONF_FOLDERS = [
 def mongo_client_insert(mydict):
     """
     Insert one entry into Mongo db
+
+    This function is largely deprecated in favor of the https insert
+
     """
 
     #   password = urllib.parse.quote_plus(MONGOPW)
@@ -157,6 +160,8 @@ def mongo_client_insert(mydict):
 
     #   This needs to be wrapped in a try/except
     ret_val = mycol.insert_one(mydict)
+
+    mongo_inserts.labels(status_code=ret_val).inc()
 
     return ret_val
 
@@ -178,6 +183,7 @@ def mongo_https_insert(mydict):
     except requests.exceptions.HTTPError as e:
         logger.warning("Mongo Post Error: %s ", e.response.text)
 
+    mongo_inserts.labels(status_code=response.status_code).inc()
     return response.status_code
 
 
@@ -300,12 +306,33 @@ def update_helidb():
 
         try:
             icao_hex = str(plane["hex"]).lower()
+
+        except BaseException:
+            output += " Error coverting to lowercase"
+
+        try:
+            # icao_hex = str(plane["hex"]).lower()
             # heli_type = find_helis(icao_hex)
             heli_type = search_bills(icao_hex, "type")
-            heli_tail = search_bills(icao_hex, "tail")
-            output += " " + heli_type + " " + heli_tail
+            if heli_type != None:
+                output += " " + heli_type
+            # heli_tail = search_bills(icao_hex, "tail")
+            else:
+                output += " no type "
         except BaseException:
-            output += " no type or reg"
+            output += " no type "
+
+        try:
+            # icao_hex = str(plane["hex"]).lower()
+            # heli_type = find_helis(icao_hex)
+            # heli_type = search_bills(icao_hex, "type")
+            heli_tail = search_bills(icao_hex, "tail")
+            if heli_tail != None:
+                output += " " + heli_tail
+            else:
+                output += " no reg"
+        except BaseException:
+            output += " no reg"
 
         if search_bills(icao_hex, "hex") != None:
             logger.debug("%s found in Bills", icao_hex)
@@ -335,6 +362,7 @@ def update_helidb():
                     len(recent_flights),
                     callsign,
                 )
+                rx.labels(icao=icao_hex, cs=callsign).inc(1)
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
@@ -349,10 +377,13 @@ def update_helidb():
                     recent_flights[icao_hex][0],
                 )
                 recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
+                rx.labels(icao=icao_hex, cs=callsign).inc(1)
 
             else:
                 # increment the count
                 recent_flights[icao_hex][1] += 1
+                # Prometheus counter
+                rx.labels(icao=icao_hex, cs=callsign).inc(1)
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -471,7 +502,8 @@ def update_helidb():
 
         logger.info("Heli Reported %s: %s", plane["hex"], output)
 
-        if heli_type != "":
+        # if heli_type != "":
+        if icao_hex != "":
             utc_time = datetime.fromtimestamp(dt_stamp, tz=timezone.utc)
             est_time = utc_time.astimezone(ZoneInfo("America/New_York"))
 
@@ -548,10 +580,19 @@ def load_helis_from_url(bills_url):
     """
     helis_dict = {}
 
-    try:
-        bills = requests.get(bills_url, timeout=7.5)
-    except requests.exceptions.RequestException as e:
-        raise
+    status_code = 0
+    sleep_time = 10
+
+    while status_code != 200:
+        try:
+            bills = requests.get(bills_url, timeout=sleep_time)
+            status_code = bills.status_code
+        except requests.exceptions.Timeout:
+            logger.warning("Connection Timed out for Bills -- sleeping %d", sleep_time)
+            sleep(sleep_time)
+            sleep_time += 5
+        except requests.exceptions.RequestException as e:
+            raise
 
     logger.debug("Request returns Status_Code: %s", bills.status_code)
 
@@ -638,17 +679,22 @@ def check_bills_age():
 
 
 def init_prometheus():
-    global tx
+    global rx, mongo_inserts
     global update_heli_time
 
-    tx = Gauge(
-        f"switch_interface_tx_packets",
-        "Total transmitted packets on interface",
-        ["host", "id"],
-    )
+    rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
+    mongo_inserts = Counter("mongo_inserts", "Mongo Inserts", ["status_code"])
 
-    tx.labels("foo", "bar").set(0)
-    tx.labels("boo", "baz").set(0)
+    return rx
+
+    # tx = Gauge(
+    #     f"switch_interface_tx_packets",
+    #     "Total transmitted packets on interface",
+    #     ["host", "id"],
+    # )
+
+    # tx.labels("foo", "bar").set(0)
+    # tx.labels("boo", "baz").set(0)
 
 
 # Decorate function with metric.
@@ -870,6 +916,13 @@ if __name__ == "__main__":
     ):
         logger.debug("Mongo API Key found - using https api ")
         MONGO_API_KEY = config["API-KEY"]
+        mongo_insert = mongo_https_insert
+    elif (
+        "API_KEY" in config
+        and config["API_KEY"] != "BigLongRandomStringOfLettersAndNumbers"
+    ):
+        logger.debug("Mongo API Key found - using https api ")
+        MONGO_API_KEY = config["API_KEY"]
         mongo_insert = mongo_https_insert
     else:
 
