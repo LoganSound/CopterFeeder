@@ -188,7 +188,7 @@ def mongo_https_insert(mydict):
     return response.status_code
 
 
-def dump_recents(signum=signal.SIGUSR1, frame=""):
+def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
     """Dump recents if we get a sigusr1"""
     signame = signal.Signals(signum).name
     logger.info(f"Signal handler dump_recents called with signal {signame} ({signum})")
@@ -534,7 +534,7 @@ def update_helidb():
             # if ret_val: ... do something
 
 
-def find_helis_old(icao_hex):
+def find_helis_old(icao_hex) -> str:
     """
     Deprecated
     Check if an icao hex code is in Bills catalog of DC Helicopters
@@ -550,7 +550,7 @@ def find_helis_old(icao_hex):
         return heli_type
 
 
-def find_helis(icao_hex):
+def find_helis(icao_hex) -> str:
     """
     check if icao is known and return type or empty string
     """
@@ -561,7 +561,7 @@ def find_helis(icao_hex):
     return ""
 
 
-def search_bills(icao_hex, column_name):
+def search_bills(icao_hex, column_name) -> str | None:
     """
     check if icao is known return callsign or empty string
     """
@@ -666,7 +666,7 @@ def load_helis_from_file():
         return (helis_dict, bills_age)
 
 
-def check_bills_age():
+def check_bills_age() -> float:
     """
     Checks age of file - returns zero if File not Found
     """
