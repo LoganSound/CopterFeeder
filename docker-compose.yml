@@ -15,4 +15,4 @@ services:
        - "host.docker.internal:host-gateway"
     ports:
       - 8999:8999
-    command: ["python3", "feed_copterspotter.py", "-i", "30", "-w", "-v"]
+    command: ["python3", "feed_copterspotter.py", "-i", "15", "-w", "-v"]
