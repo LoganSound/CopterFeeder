@@ -237,7 +237,7 @@ def update_helidb():
 
         if AIRCRAFT_URL:
             try:
-                data = requests.get(AIRCRAFT_URL, timeout=5)
+                data = requests.get(AIRCRAFT_URL, timeout=15)
                 if data.status_code == 200:
                     logger.debug("Found data at URL: %s", AIRCRAFT_URL)
                     # "now" is a 10.1 digit seconds since the epoch timestamp
