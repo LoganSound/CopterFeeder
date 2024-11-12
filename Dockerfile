@@ -28,7 +28,8 @@ RUN pip install --no-cache /wheels/*
 
 
 COPY feed_copterspotter.py .
-COPY .env .
+# 20241111 - removed copy of .env - see docker-compose "env_file:"" setting.
+# COPY .env .
 
 
 CMD ["python3", "feed_copterspotter.py", "-w", "-v"]

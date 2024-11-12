@@ -20,6 +20,7 @@ from time import sleep, ctime, time, strftime, gmtime
 import signal
 
 import requests
+import validators
 import daemon
 
 from datetime import datetime, timezone
@@ -895,8 +896,10 @@ if __name__ == "__main__":
 
     bills_operators = os.path.join(conf_folder, "bills_operators.csv")
 
-    config = dotenv_values(env_file)
-
+    config = {
+        **dotenv_values(env_file),
+        **os.environ,
+    }
     if "MONGO_URL" in config:
         MONGO_URL = config["MONGO_URL"]
 
@@ -980,7 +983,18 @@ if __name__ == "__main__":
 
     if server and port:
         AIRCRAFT_URL = f"http://{server}:{port}/data/aircraft.json"
-        logger.info("Using AIRCRAFT_URL: <%s>", AIRCRAFT_URL)
+
+        validation = validators.url(AIRCRAFT_URL)
+
+        if validation:
+            logger.info("Using AIRCRAFT_URL: <%s>", AIRCRAFT_URL)
+        else:
+            logger.warning(
+                "AIRCRAFT_URL is invalid - setting to None - check .env for errors: <%s>",
+                AIRCRAFT_URL,
+            )
+            AIRCRAFT_URL = None
+
     else:
         AIRCRAFT_URL = None
         logger.debug("AIRCRAFT_URL set to None")
