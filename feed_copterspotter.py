@@ -238,12 +238,20 @@ def update_helidb():
         if AIRCRAFT_URL:
             try:
                 data = requests.get(AIRCRAFT_URL, timeout=15)
+                data.raise_for_status()
                 if data.status_code == 200:
                     logger.debug("Found data at URL: %s", AIRCRAFT_URL)
                     # "now" is a 10.1 digit seconds since the epoch timestamp
                     dt_stamp = data.json()["now"]
                     logger.debug("Found TimeStamp %s", dt_stamp)
                     planes = data.json()["aircraft"]
+                elif data.status_code >= 400:
+                    logger.warning(
+                        "Received error %d from request for aircraft.json - sleeping 30",
+                        data.status_code,
+                    )
+                    sleep(30)
+                    return None
 
             except requests.exceptions.RequestException as e:
                 logger.error(
