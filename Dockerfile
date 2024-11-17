@@ -16,6 +16,10 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.t
 
 FROM python:3.12-slim
 
+# adding for debug purposes
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl iputils-ping
+
 
 EXPOSE 8999
 
