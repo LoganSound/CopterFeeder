@@ -509,6 +509,16 @@ def update_helidb():
             squawk = None
             output += " no squawk"
 
+        try:
+            # See https://github.com/wiedehopf/readsb/blob/dev/README-json.md
+            source = str(plane["type"])
+            output += " " + source
+
+        except BaseException:
+
+            source = None
+            output += " no source"
+
         logger.info("Heli Reported %s: %s", plane["hex"], output)
 
         # if heli_type != "":
