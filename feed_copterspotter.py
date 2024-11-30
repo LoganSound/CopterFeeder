@@ -432,8 +432,12 @@ def update_helidb():
 
         try:
             callsign = str(plane["flight"]).strip()
-            output += " " + callsign
+            if callsign == None:
+                callsign = ""
+            output += " <" + callsign + ">"
         except BaseException:
+            logger.info("No 'flight' field - using tail number: %s", heli_tail)
+            callsign = heli_tail
             output += " no call (" + heli_tail + ")"
 
         try:
