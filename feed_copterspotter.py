@@ -556,6 +556,7 @@ def update_helidb():
             # See https://github.com/wiedehopf/readsb/blob/dev/README-json.md
             source = clean_source(str(plane["type"]))
             output += " " + source
+            sources.labels(source=source).inc(1)
 
         except BaseException:
 
@@ -742,11 +743,12 @@ def check_bills_age() -> float:
 
 
 def init_prometheus():
-    global rx, mongo_inserts
+    global rx, mongo_inserts, sources
     global update_heli_time
 
     rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
     mongo_inserts = Counter("mongo_inserts", "Mongo Inserts", ["status_code"])
+    sources = Counter("msg_srcs", "Message Sources", ["source"])
 
     return rx
 
