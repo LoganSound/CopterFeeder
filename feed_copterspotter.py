@@ -366,11 +366,18 @@ def update_helidb():
             # icao_hex = str(plane["hex"]).lower()
             # heli_type = find_helis(icao_hex)
             # heli_type = search_bills(icao_hex, "type")
-            heli_tail = search_bills(icao_hex, "tail")
+
+            if "r" in plane:
+                heli_tail = str(plane["r"])
+
+            if heli_tail == "" or heli_tail == None:
+                heli_tail = search_bills(icao_hex, "tail")
+
             if heli_tail != None:
                 output += " " + heli_tail
             else:
                 output += " no reg"
+
         except BaseException:
             output += " no reg"
 
@@ -462,12 +469,13 @@ def update_helidb():
         logger.debug("Parsing Helicopter: %s", icao_hex)
 
         try:
+            # note that this is somewhat redundant to callsign processing before being in this if stanza
             callsign = str(plane["flight"]).strip()
             if callsign == None:
                 callsign = ""
             output += " <" + callsign + ">"
         except BaseException:
-            logger.info("No 'flight' field - using tail number: %s", heli_tail)
+            logger.debug("No 'flight' field - using tail number: %s", heli_tail)
             callsign = heli_tail
             output += " no call (" + heli_tail + ")"
 
