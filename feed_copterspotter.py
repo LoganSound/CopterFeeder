@@ -204,6 +204,37 @@ def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
         )
 
 
+def clean_source(source) -> str:
+
+    """
+    Ugly if/else to clean up source
+
+    """
+
+    if source == None:
+        source = "unkn"
+    elif source[:4] == "adsb":
+        source = "adsb"
+    elif source[:4] == "adsr":
+        source = "adsr"
+    elif source == "mlat":
+        source = "mlat"
+    elif source == "adsb_icao_nt":
+        ssource = "modeS"
+    elif source == "mode_s":
+        source = "modeS"
+    elif source[:4] == "tisb":
+        source = "tisb"
+    elif source == "adsc":
+        source = "adsc"
+    elif source == "other":
+        source = "other"
+    elif source == "unknown":
+        source = "unkn"
+
+    return source
+
+
 @update_heli_time.time()
 def update_helidb():
     """Main"""
@@ -515,7 +546,7 @@ def update_helidb():
 
         try:
             # See https://github.com/wiedehopf/readsb/blob/dev/README-json.md
-            source = str(plane["type"])
+            source = clean_source(str(plane["type"]))
             output += " " + source
 
         except BaseException:
@@ -546,6 +577,7 @@ def update_helidb():
                     "groundspeed": groundspeed,
                     "rssi": rssi,
                     "feeder": FEEDER_ID,
+                    "source": source,
                     "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
                 "geometry": {"type": "Point", "coordinates": geometry},
