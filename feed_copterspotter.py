@@ -39,7 +39,7 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202408110938_001"
+VERSION = "202412021345_00"
 
 # Bills
 
