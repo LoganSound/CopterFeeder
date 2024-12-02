@@ -393,7 +393,7 @@ def update_helidb():
 
         if "flight" in plane:
             callsign = str(plane["flight"]).strip()
-            logger.info("Flight: %s", callsign)
+            logger.debug("Flight: %s", callsign)
         else:
             # callsign = "no_call"
             # callsign = ""
