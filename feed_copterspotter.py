@@ -39,7 +39,7 @@ import pymongo
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202408110938_001"
+VERSION = "202412021345_00"
 
 # Bills
 
@@ -393,10 +393,12 @@ def update_helidb():
 
         if "flight" in plane:
             callsign = str(plane["flight"]).strip()
+            logger.debug("Flight: %s", callsign)
         else:
             # callsign = "no_call"
             # callsign = ""
-            callsign = None
+            # callsign = None
+            callsign = heli_tail
 
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
@@ -470,9 +472,9 @@ def update_helidb():
 
         try:
             # note that this is somewhat redundant to callsign processing before being in this if stanza
-            callsign = str(plane["flight"]).strip()
-            if callsign == None:
-                callsign = ""
+            if "flight" in plane and callsign == "" or callsign == None:
+                # should never get here - should be handled above
+                callsign = str(plane["flight"]).strip()
             output += " <" + callsign + ">"
         except BaseException:
             logger.debug("No 'flight' field - using tail number: %s", heli_tail)
@@ -545,7 +547,7 @@ def update_helidb():
 
         try:
             squawk = str(plane["squawk"])
-            output += " " + squawk
+            output += " sq " + squawk
 
         except BaseException:
             # squawk = ""
@@ -555,7 +557,7 @@ def update_helidb():
         try:
             # See https://github.com/wiedehopf/readsb/blob/dev/README-json.md
             source = clean_source(str(plane["type"]))
-            output += " " + source
+            output += " src " + source
             sources.labels(source=source).inc(1)
 
         except BaseException:
