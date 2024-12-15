@@ -76,7 +76,7 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 PROM_PORT = 8999
 
 fcs_update_heli_time = Summary(
-    "update_heli_processing_seconds", "Time spent updating heli db"
+    "fcs_update_helidb_proc_secs", "Time spent updating heli db"
 )
 
 
