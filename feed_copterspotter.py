@@ -162,7 +162,7 @@ def mongo_client_insert(mydict):
     #   This needs to be wrapped in a try/except
     ret_val = mycol.insert_one(mydict)
 
-    mongo_inserts.labels(status_code=ret_val).inc()
+    fcs_mongo_inserts.labels(status_code=ret_val).inc()
 
     return ret_val
 
@@ -184,7 +184,7 @@ def mongo_https_insert(mydict):
     except requests.exceptions.HTTPError as e:
         logger.warning("Mongo Post Error: %s ", e.response.text)
 
-    mongo_inserts.labels(status_code=response.status_code).inc()
+    fcs_mongo_inserts.labels(status_code=response.status_code).inc()
     return response.status_code
 
 
@@ -413,7 +413,7 @@ def update_helidb():
                     len(recent_flights),
                     callsign,
                 )
-                rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
@@ -428,13 +428,13 @@ def update_helidb():
                     recent_flights[icao_hex][0],
                 )
                 recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
-                rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
 
             else:
                 # increment the count
                 recent_flights[icao_hex][1] += 1
                 # Prometheus counter
-                rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -563,7 +563,7 @@ def update_helidb():
             # See https://github.com/wiedehopf/readsb/blob/dev/README-json.md
             source = clean_source(str(plane["type"]))
             output += " src " + source
-            sources.labels(source=source).inc(1)
+            fcs_sources.labels(source=source).inc(1)
 
         except BaseException:
 
@@ -750,14 +750,14 @@ def check_bills_age() -> float:
 
 
 def init_prometheus():
-    global rx, mongo_inserts, sources
-    global update_heli_time
+    global fcs_rx, fcs_mongo_inserts, fcs_sources
+    global fcs_update_heli_time
 
-    rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
-    mongo_inserts = Counter("mongo_inserts", "Mongo Inserts", ["status_code"])
-    sources = Counter("msg_srcs", "Message Sources", ["source"])
+    fcs_rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
+    fcs_mongo_inserts = Counter("mongo_inserts", "Mongo Inserts", ["status_code"])
+    fcs_sources = Counter("msg_srcs", "Message Sources", ["source"])
 
-    return rx
+    return fcs_rx
 
     # tx = Gauge(
     #     f"switch_interface_tx_packets",
