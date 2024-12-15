@@ -75,7 +75,7 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 
 PROM_PORT = 8999
 
-update_heli_time = Summary(
+fcs_update_heli_time = Summary(
     "update_heli_processing_seconds", "Time spent updating heli db"
 )
 
@@ -235,7 +235,7 @@ def clean_source(source) -> str:
     return source
 
 
-@update_heli_time.time()
+@fcs_update_heli_time.time()
 def update_helidb():
     """Main"""
 
@@ -753,9 +753,9 @@ def init_prometheus():
     global fcs_rx, fcs_mongo_inserts, fcs_sources
     global fcs_update_heli_time
 
-    fcs_rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
-    fcs_mongo_inserts = Counter("mongo_inserts", "Mongo Inserts", ["status_code"])
-    fcs_sources = Counter("msg_srcs", "Message Sources", ["source"])
+    fcs_rx = Counter("fcs_rx_msgs", "Messages Received", ["icao", "cs"])
+    fcs_mongo_inserts = Counter("fcs_mongo_inserts", "Mongo Inserts", ["status_code"])
+    fcs_sources = Counter("fcs_msg_srcs", "Message Sources", ["source"])
 
     return fcs_rx
 
