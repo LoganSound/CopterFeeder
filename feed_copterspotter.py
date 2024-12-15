@@ -236,7 +236,7 @@ def clean_source(source) -> str:
 
 
 @fcs_update_heli_time.time()
-def update_helidb():
+def fcs_update_helidb():
     """Main"""
 
     # local_time = datetime.now().astimezone()
@@ -802,7 +802,7 @@ def run_loop(interval, h_types):
                 ctime(bills_age),
             )
 
-        update_helidb()
+        fcs_update_helidb()
 
         if dump_clock >= 60:
             dump_recents(signal.SIGUSR1, "")
@@ -1096,7 +1096,7 @@ if __name__ == "__main__":
     logger.info("Loaded %s helis from Bills", str(len(heli_types)))
 
     if args.once:
-        update_helidb()
+        fcs_update_helidb()
         sys.exit()
 
     if args.daemon:
