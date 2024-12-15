@@ -211,7 +211,7 @@ def clean_source(source) -> str:
 
     """
 
-    if source == None:
+    if source is None:
         source = "unkn"
     elif source[:4] == "adsb":
         source = "adsb"
@@ -314,7 +314,8 @@ def update_helidb():
                         "/run/" + airplanes_folder + "/aircraft.json",
                     )
 
-        if data == "" or data is None:
+        if not data:
+
             logger.error("No aircraft data read")
             return None
             # sys.exit()
@@ -354,7 +355,7 @@ def update_helidb():
             # icao_hex = str(plane["hex"]).lower()
             # heli_type = find_helis(icao_hex)
             heli_type = search_bills(icao_hex, "type")
-            if heli_type != None:
+            if heli_type is not None:
                 output += " " + heli_type
             # heli_tail = search_bills(icao_hex, "tail")
             else:
@@ -370,10 +371,11 @@ def update_helidb():
             if "r" in plane:
                 heli_tail = str(plane["r"])
 
-            if heli_tail == "" or heli_tail == None:
+            # if not heli_tail or heli_tail is None:
+            if not heli_tail:
                 heli_tail = search_bills(icao_hex, "tail")
 
-            if heli_tail != None:
+            if heli_tail is not None:
                 output += " " + heli_tail
             else:
                 output += " no reg"
@@ -381,7 +383,7 @@ def update_helidb():
         except BaseException:
             output += " no reg"
 
-        if search_bills(icao_hex, "hex") != None:
+        if search_bills(icao_hex, "hex") is not None:
             logger.debug("%s found in Bills", icao_hex)
         else:
             logger.debug("%s not found in Bills", icao_hex)
@@ -417,7 +419,7 @@ def update_helidb():
                 and recent_flights[icao_hex][0] != callsign
                 # and callsign != "no_call"
                 # and callsign != ""
-                and callsign != None
+                and callsign is not None
             ):
                 logger.debug(
                     "Updating %s in recents as: %s - was:  %s",
@@ -463,7 +465,8 @@ def update_helidb():
                     heli_type or "Unknown",
                 )
 
-        if heli_type == "" or heli_type is None:
+        # if not heli_type or heli_type is None:
+        if not heli_type:
             # This short circuits parsing of aircraft with unknown icao_hex codes
             logger.debug("%s Not a known rotorcraft ", icao_hex)
             continue
@@ -472,8 +475,10 @@ def update_helidb():
 
         try:
             # note that this is somewhat redundant to callsign processing before being in this if stanza
-            if "flight" in plane and callsign == "" or callsign == None:
+            # if "flight" in plane and not callsign or callsign is None:
+            if "flight" in plane and not callsign:
                 # should never get here - should be handled above
+                logger.warning("Callsign is empty or None")
                 callsign = str(plane["flight"]).strip()
             output += " <" + callsign + ">"
         except BaseException:
