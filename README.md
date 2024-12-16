@@ -87,7 +87,9 @@
     nano .env
     ```
 
-    📝 Fill in the required values provided by the dev team and your feeder name
+    📝 Fill in the API key and feeder name values provided by the dev team
+
+    📝 Find the port number variable that matches your situation and put a "#" in front of the other variable.
 
     💡 **Nano tips:** Save (Ctrl+O, Enter) | Exit (Ctrl+X)
 
