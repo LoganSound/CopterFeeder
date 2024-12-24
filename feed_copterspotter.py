@@ -452,7 +452,7 @@ def fcs_update_helidb():
             if icao_hex in recent_flights:
 
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s flags: %s seen: %d times",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s dbFlag: %s seen: %d times",
                     icao_hex,
                     category,
                     recent_flights[icao_hex][0],
@@ -464,7 +464,7 @@ def fcs_update_helidb():
 
             else:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s flags: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s dbFlag: %s",
                     icao_hex,
                     category,
                     "(null)",
