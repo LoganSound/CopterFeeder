@@ -335,6 +335,7 @@ def fcs_update_helidb():
         output = ""
         # aircrafts.json documented here (and elsewhere):
         # https://github.com/flightaware/dump1090/blob/master/README-json.md
+        # https://github.com/wiedehopf/readsb/blob/dev/README-json.md
         #
         # There is a ts in the json output - should we use that?
         #        dt = ts = datetime.datetime.now().timestamp()
@@ -402,6 +403,11 @@ def fcs_update_helidb():
             # callsign = None
             callsign = heli_tail
 
+        if "dbFlag" in plane:
+            dbFlag = plane["dbFlag"]
+        else:
+            dbFlag = ""
+
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
 
@@ -446,23 +452,25 @@ def fcs_update_helidb():
             if icao_hex in recent_flights:
 
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s seen: %d times",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s flags: %s seen: %d times",
                     icao_hex,
                     category,
                     recent_flights[icao_hex][0],
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
+                    dbFlag,
                     recent_flights[icao_hex][1],
                 )
 
             else:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s flags: %s",
                     icao_hex,
                     category,
                     "(null)",
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
+                    dbFlag,
                 )
 
         # if not heli_type or heli_type is None:
