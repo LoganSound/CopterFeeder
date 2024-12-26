@@ -515,7 +515,7 @@ def fcs_update_helidb():
             # Assumtion is made that negative altitude is unlikely
             # Using max() here removes negative numbers
 
-            alt_baro = max(0, int(plane["alt_baro"]))
+            alt_baro = max(0.0, float(plane["alt_baro"]))
 
             # FR altitude
 
@@ -525,7 +525,7 @@ def fcs_update_helidb():
             alt_baro = None
 
         try:
-            alt_geom = max(0, int(plane["alt_geom"]))
+            alt_geom = max(0.0, float(plane["alt_geom"]))
             # FR altitude
             output += " altgeom " + str(alt_geom)
 
