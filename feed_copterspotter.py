@@ -981,7 +981,7 @@ if __name__ == "__main__":
     }
 
     # somewhat redundant here but logging is bootstrapped before reading config
-    if "DEBUG" in config and config["DEBUG"] == True:
+    if "DEBUG" in config and config["DEBUG"] is True:
         #        ch=logging.StreamHandler()
         #        ch.setLevel(logging.DEBUG)
         #        logger.addHandler(ch)
