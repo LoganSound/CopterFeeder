@@ -40,7 +40,7 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202412261745_00"
+VERSION = "202412261745_01"
 
 # Bills
 
