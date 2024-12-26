@@ -154,7 +154,8 @@ def mongo_client_insert(mydict):
         + MONGOUSER
         + ":"
         + MONGOPW
-        + "@helicoptersofdc.sq5oe.mongodb.net/?retryWrites=true&w=majority"
+        # + "@helicoptersofdc.sq5oe.mongodb.net/?retryWrites=true&w=majority"
+        + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
     )
 
     #   This needs to be wrapped in a try/except
