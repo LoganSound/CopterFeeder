@@ -979,19 +979,19 @@ if __name__ == "__main__":
         **dotenv_values(env_file),
         **os.environ,
     }
-    if "MONGO_URL" in config:
-        MONGO_URL = config["MONGO_URL"]
 
-    elif args.mongourl:
-        MONGO_URL = args.mongourl
+    # somewhat redundant here but logging is bootstrapped before reading config
+    if "DEBUG" in config and config["DEBUG"] == True:
+        #        ch=logging.StreamHandler()
+        #        ch.setLevel(logging.DEBUG)
+        #        logger.addHandler(ch)
 
-    else:
-        MONGO_URL = None
-        logger.error("No Mongo Endpoint URL Found - Exiting")
-        sys.exit()
+        logger.setLevel(logging.DEBUG)
+        logger.debug("Debug Mode Enabled")
 
     # Should be pulling these from env
 
+    # If we find the API-Key - use that. Otherwise try login/password method.
     if (
         "API-KEY" in config
         and config["API-KEY"] != "BigLongRandomStringOfLettersAndNumbers"
@@ -999,13 +999,25 @@ if __name__ == "__main__":
         logger.debug("Mongo API Key found - using https api ")
         MONGO_API_KEY = config["API-KEY"]
         mongo_insert = mongo_https_insert
-    elif (
-        "API_KEY" in config
-        and config["API_KEY"] != "BigLongRandomStringOfLettersAndNumbers"
-    ):
-        logger.debug("Mongo API Key found - using https api ")
-        MONGO_API_KEY = config["API_KEY"]
-        mongo_insert = mongo_https_insert
+        if "MONGO_URL" in config:
+            MONGO_URL = config["MONGO_URL"]
+
+        elif args.mongourl:
+            MONGO_URL = args.mongourl
+
+        else:
+            MONGO_URL = None
+            logger.error("API-Key found but No Mongo Endpoint URL specified - Exiting")
+            sys.exit()
+
+    # 20241226 - why is this section here? dhb
+    # elif (
+    #     "API_KEY" in config
+    #     and config["API_KEY"] != "BigLongRandomStringOfLettersAndNumbers"
+    # ):
+    #     logger.debug("Mongo API Key found - using https api ")
+    #     MONGO_API_KEY = config["API_KEY"]
+    #     mongo_insert = mongo_https_insert
     else:
 
         if args.mongopw:
