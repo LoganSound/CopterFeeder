@@ -164,9 +164,10 @@ def mongo_client_insert(mydict):
         mycol = mydb["ADSB"]
         ret_val = mycol.insert_one(mydict)
 
-        if ret_val.acknowledged is True:
+        # if ret_val.acknowledged is True:
 
-            logger.info("Mongo Inserted Object id: %s", ret_val.inserted_id)
+        logger.info("Mongo Inserted Object id: %s", ret_val.inserted_id)
+        # Adds too many metrics: #fcs_mongo_inserts.labels(status_code=ret_val).inc()
 
         return ret_val.inserted_id
 
@@ -179,8 +180,6 @@ def mongo_client_insert(mydict):
     finally:
         if "myclient" in locals():
             myclient.close()
-
-    # Adds too many metrics: #fcs_mongo_inserts.labels(status_code=ret_val).inc()
 
 
 def mongo_https_insert(mydict):
