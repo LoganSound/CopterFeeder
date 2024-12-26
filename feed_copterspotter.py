@@ -161,7 +161,7 @@ def mongo_client_insert(mydict):
     #   This needs to be wrapped in a try/except
     try:
 
-        mydb = myclient["HelicoptersofDC"]
+        mydb = myclient["HelicoptersofDC-2023"]
         mycol = mydb["ADSB"]
         ret_val = mycol.insert_one(mydict)
 
