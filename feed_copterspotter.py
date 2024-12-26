@@ -33,7 +33,8 @@ from dotenv import dotenv_values  # , set_key
 
 
 # only need one of these
-import pymongo
+from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure, OperationFailure
 
 # from pymongo import MongoClient
 
@@ -148,7 +149,7 @@ def mongo_client_insert(mydict):
     #   password = urllib.parse.quote_plus(MONGOPW)
 
     #   This needs to be wrapped in a try/except
-    myclient = pymongo.MongoClient(
+    myclient = MongoClient(
         "mongodb+srv://"
         + MONGOUSER
         + ":"
@@ -156,20 +157,36 @@ def mongo_client_insert(mydict):
         + "@helicoptersofdc.sq5oe.mongodb.net/?retryWrites=true&w=majority"
     )
 
-    mydb = myclient["HelicoptersofDC"]
-    mycol = mydb["ADSB"]
-
     #   This needs to be wrapped in a try/except
-    ret_val = mycol.insert_one(mydict)
+    try:
 
-    fcs_mongo_inserts.labels(status_code=ret_val).inc()
+        mydb = myclient["HelicoptersofDC"]
+        mycol = mydb["ADSB"]
+        ret_val = mycol.insert_one(mydict)
 
-    return ret_val
+        if ret_val.acknowledged is True:
+
+            logger.info("Mongo Inserted Object id: %s", ret_val.inserted_id)
+
+        return ret_val.inserted_id
+
+    except ConnectionFailure as e:
+        logger.error("Failed to connect to MongoDB: %s ", e)
+    except OperationFailure as e:
+        logger.error("An error occurred during insertion: %s", e)
+    except Exception as e:
+        logger.error("An unexpected error occurred: %s", e)
+    finally:
+        if "myclient" in locals():
+            myclient.close()
+
+    # Adds too many metrics: #fcs_mongo_inserts.labels(status_code=ret_val).inc()
 
 
 def mongo_https_insert(mydict):
     """
     Insert into Mongo using HTTPS requests call
+    This will be deprecated September 2024
     """
     # url = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
 
