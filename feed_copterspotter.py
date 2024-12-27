@@ -420,10 +420,10 @@ def fcs_update_helidb():
             # callsign = None
             callsign = heli_tail
 
-        if "dbFlag" in plane:
-            dbFlag = plane["dbFlag"]
+        if "dbFlags" in plane:
+            dbFlags = plane["dbFlags"]
         else:
-            dbFlag = ""
+            dbFlags = ""
 
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
@@ -469,13 +469,13 @@ def fcs_update_helidb():
             if icao_hex in recent_flights:
 
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s dbFlag: %s seen: %d times",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s dbFlags: %s seen: %d times",
                     icao_hex,
                     category,
                     recent_flights[icao_hex][0],
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
-                    dbFlag,
+                    dbFlags,
                     recent_flights[icao_hex][1],
                 )
 
