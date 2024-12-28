@@ -778,10 +778,12 @@ def check_bills_age() -> float:
     """
     try:
         bills_age = os.path.getmtime(bills_operators)
+        logger.debug("Bills Age: %f", bills_age)
 
     except FileNotFoundError:
         bills_age = 0
 
+    logger.debug("Bills Age: %f", bills_age)
     return bills_age
 
 
