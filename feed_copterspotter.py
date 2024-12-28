@@ -364,6 +364,17 @@ def fcs_update_helidb():
         heli_tail = ""
 
         try:
+            # seen_pos is an offset in seconds from "now" time to when last position was seen
+            if "seen_pos" in plane:
+                seen_pos = float(plane["seen_pos"])
+            else:
+                seen_pos = 0
+            logger.info("seen_pos: %f", seen_pos)
+
+        except BaseException:
+            logger.warning("seen_pos error")
+
+        try:
             icao_hex = str(plane["hex"]).lower()
 
         except BaseException:
@@ -487,7 +498,7 @@ def fcs_update_helidb():
                     "(null)",
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
-                    dbFlag,
+                    dbFlags,
                 )
 
         # if not heli_type or heli_type is None:
@@ -605,7 +616,7 @@ def fcs_update_helidb():
             mydict = {
                 "type": "Feature",
                 "properties": {
-                    "date": dt_stamp,
+                    "date": dt_stamp - seen_pos,
                     # "date": utc_time,
                     "icao": icao_hex,
                     "type": heli_type,
