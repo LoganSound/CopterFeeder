@@ -842,7 +842,8 @@ def run_loop(interval, h_types):
 
         fcs_update_helidb()
 
-        if dump_clock >= 60:
+        # dump 1x per hour
+        if dump_clock >= (60 * 60 / interval):
             dump_recents(signal.SIGUSR1, "")
             dump_clock = 0
         else:
