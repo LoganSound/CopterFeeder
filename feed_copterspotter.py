@@ -616,8 +616,14 @@ def fcs_update_helidb():
             mydict = {
                 "type": "Feature",
                 "properties": {
-                    "date": dt_stamp - seen_pos,
-                    # "date": utc_time,
+                    # jsDate - a datetime obect in utc timezone corrected by seen_pos
+                    "jsDate": datetime.fromtimestamp(
+                        dt_stamp - seen_pos, tz=timezone.utc
+                    ),
+                    # pythonDate - float seconds from the epoch corrected by seen_pos
+                    "pythonDate": dt_stamp - seen_pos,
+                    # createdDate - datetime object of "now" from aircraft.json
+                    "createdDate": utc_time,
                     "icao": icao_hex,
                     "type": heli_type,
                     "tail": heli_tail,
@@ -630,6 +636,7 @@ def fcs_update_helidb():
                     "rssi": rssi,
                     "feeder": FEEDER_ID,
                     "source": source,
+                    # readableTime - string representation of Datetime in EST timezone
                     "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
                 "geometry": {"type": "Point", "coordinates": geometry},
