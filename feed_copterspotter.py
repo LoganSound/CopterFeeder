@@ -253,7 +253,7 @@ def clean_source(source) -> str:
 
 
 @fcs_update_heli_time.time()
-def fcs_update_helidb():
+def fcs_update_helidb(interval):
     """Main"""
 
     # local_time = datetime.now().astimezone()
@@ -509,6 +509,15 @@ def fcs_update_helidb():
         except BaseException:
             logger.warning("seen_pos error")
 
+        if seen_pos > interval:
+            logger.info(
+                "Seen_pos (%d) > interval (%d): skipping %s ",
+                seen_pos,
+                interval,
+                icao_hex,
+            )
+            continue
+
         try:
             # note that this is somewhat redundant to callsign processing before being in this if stanza
             # if "flight" in plane and not callsign or callsign is None:
@@ -616,12 +625,18 @@ def fcs_update_helidb():
             mydict = {
                 "type": "Feature",
                 "properties": {
+                    # Date - "now" from aircraft.json in seconds from the unix epoch format
+                    # "date": dt_stamp,
+                    # Corrected with seen_pos
+                    "date": dt_stamp - seen_pos,
                     # jsDate - a datetime obect in utc timezone corrected by seen_pos
                     "jsDate": datetime.fromtimestamp(
                         dt_stamp - seen_pos, tz=timezone.utc
                     ),
+                    # proposed but not implemented
                     # pythonDate - float seconds from the epoch corrected by seen_pos
-                    "pythonDate": dt_stamp - seen_pos,
+                    # "pythonDate": dt_stamp - seen_pos,
+                    #
                     # createdDate - datetime object of "now" from aircraft.json
                     "createdDate": utc_time,
                     "icao": icao_hex,
@@ -847,7 +862,7 @@ def run_loop(interval, h_types):
                 ctime(bills_age),
             )
 
-        fcs_update_helidb()
+        fcs_update_helidb(interval)
 
         # dump 1x per hour
         if dump_clock >= (60 * 60 / interval):
@@ -1154,7 +1169,7 @@ if __name__ == "__main__":
     logger.info("Loaded %s helis from Bills", str(len(heli_types)))
 
     if args.once:
-        fcs_update_helidb()
+        fcs_update_helidb(99999)
         sys.exit()
 
     if args.daemon:
