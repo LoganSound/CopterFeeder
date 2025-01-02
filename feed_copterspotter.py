@@ -504,17 +504,14 @@ def fcs_update_helidb(interval):
                 seen_pos = float(plane["seen_pos"])
             else:
                 seen_pos = 0
-            logger.info("seen_pos: %f", seen_pos)
+            logger.debug(f"seen_pos: {seen_pos:.2f}")
 
         except BaseException:
             logger.warning("seen_pos error")
 
         if seen_pos > interval:
             logger.info(
-                "Seen_pos (%d) > interval (%d): skipping %s ",
-                seen_pos,
-                interval,
-                icao_hex,
+                f"Seen_pos ({seen_pos:.2f}) > interval ({interval}): skipping {icao_hex} "
             )
             continue
 
