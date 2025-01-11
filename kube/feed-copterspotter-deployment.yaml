@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file kube-docker-compose.yml convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: feed-copterspotter
+  name: feed-copterspotter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: feed-copterspotter
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose --file kube-docker-compose.yml convert
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: feed-copterspotter
+    spec:
+      containers:
+        - args:
+            - python3
+            - feed_copterspotter.py
+            - -i
+            - "15"
+            - -w
+            - -v
+          env:
+            - name: FEEDER_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: FEEDER_ID
+                  name: env
+            - name: MONGOPW
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGOPW
+                  name: env
+            - name: MONGOUSER
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGOUSER
+                  name: env
+            - name: MONGO_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_URL
+                  name: env
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PORT
+                  name: env
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: SERVER
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER
+                  name: env
+          image: registry:5000/fcs/feed_copterspotter:latest
+          name: feed-copterspotter
+          ports:
+            - containerPort: 8999
+              protocol: TCP
+          securityContext:
+            privileged: true
+      restartPolicy: Always

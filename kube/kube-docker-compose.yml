@@ -2,7 +2,7 @@
 services:
 
   feed_copterspotter:
-    image: feed_copterspotter
+    image: registry:5000/fcs/feed_copterspotter:latest
     build:
       dockerfile: Dockerfile
       tags:
