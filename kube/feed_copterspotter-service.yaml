@@ -14,3 +14,4 @@ spec:
       targetPort: 8999
   selector:
     io.kompose.service: feed-copterspotter
+  type: LoadBalancer
