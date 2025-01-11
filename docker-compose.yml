@@ -4,6 +4,10 @@ services:
   feed_copterspotter:
     image: feed_copterspotter
     build: .
+    x-bake:
+      platforms:
+        - linux/amd64
+        - linux/arm64
     container_name: feed_copterspotter
     privileged: true
     restart: unless-stopped
