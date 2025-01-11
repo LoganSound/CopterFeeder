@@ -1,0 +1,8 @@
+[registry."registry:5000"]
+  http = true
+  insecure = true
+
+
+[dns]
+  nameservers=["DNS_SERVER_IP_ADDRESS_GOES_HERE"]
+  searchDomains=["DOMAINAME_TO_SEARCH_GOES_HERE"]
