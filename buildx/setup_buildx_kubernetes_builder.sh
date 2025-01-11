@@ -5,17 +5,16 @@
 
 #docker buildx bake --push --set *.platform=linux/amd64,linux/arm64
 
-if [ -e /etc/docker/buildkitd.toml ] {
-    printf "buildkitd.toml exists"
-
-} else {
-    printf "buildkitd.toml not found"
+if [ -e /etc/docker/buildkitd.toml ]
+then
+    printf "buildkitd.toml exists\n"
+else
+    printf "buildkitd.toml not found\n"
     exit
-}
-
+fi
 
 kubectl get namespace fcsbuilder > /dev/null 2>&1 ||  {
-    printf "Creating fcsbuilder namespace\n"
+    printf "Creating fcsbuilder kubernetes namespace\n"
     kubectl create namespace fcsbuilder
 }
 
