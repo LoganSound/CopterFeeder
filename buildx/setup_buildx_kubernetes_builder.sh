@@ -5,13 +5,23 @@
 
 #docker buildx bake --push --set *.platform=linux/amd64,linux/arm64
 
+if [ -e /etc/docker/buildkitd.toml ] {
+    printf "buildkitd.toml exists"
+
+} else {
+    printf "buildkitd.toml not found"
+    exit
+}
 
 
-
-kubectl get namespace fcsbuilder > /dev/null 2>&1 ||  kubectl create namespace fcsbuilder
+kubectl get namespace fcsbuilder > /dev/null 2>&1 ||  {
+    printf "Creating fcsbuilder namespace\n"
+    kubectl create namespace fcsbuilder
+}
 
 docker buildx use fcsbuilder ||
 {
+    printf "Creating fcsbuilder\n"
     docker buildx create \
         --name fcsbuilder \
         --driver=kubernetes \
@@ -32,5 +42,7 @@ docker buildx use fcsbuilder ||
         --driver-opt=nodeselector="kubernetes.io/arch=arm64,namespace=fcsbuilder"
 
     # Use this to build with Kubernetes builder:
-    printf "Use this command: \n\tdocker buildx bake --builder=fcsbuilder --push --set *.platform=linux/amd64,linux/arm64\n"
+
 }
+
+printf "Use this command: \n\tdocker buildx bake --builder=fcsbuilder --push --set *.platform=linux/amd64,linux/arm64\n"
