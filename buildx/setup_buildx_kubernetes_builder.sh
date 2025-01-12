@@ -5,43 +5,46 @@
 
 #docker buildx bake --push --set *.platform=linux/amd64,linux/arm64
 
-if [ -e /etc/docker/buildkitd.toml ]
+DOCKER_CONFIG=~/.docker
+export DOCKER_CONFIG
+
+if [ -e $DOCKER_CONFIG/buildx/buildkitd.default.toml ]
 then
-    printf "buildkitd.toml exists\n"
+    printf "buildkitd.default.toml exists\n"
 else
-    printf "buildkitd.toml not found\n"
+    printf "buildkitd.default.toml not found\n"
     exit
 fi
 
-kubectl get namespace fcsbuilder > /dev/null 2>&1 ||  {
-    printf "Creating fcsbuilder kubernetes namespace\n"
-    kubectl create namespace fcsbuilder
+kubectl get namespace multiarch-builder > /dev/null 2>&1 ||  {
+    printf "Creating multiarch-builder kubernetes namespace\n"
+    kubectl create namespace multiarch-builder
 }
 
-docker buildx use fcsbuilder ||
+docker buildx use multiarch-builder ||
 {
-    printf "Creating fcsbuilder\n"
+    printf "Creating builder\n"
     docker buildx create \
-        --name fcsbuilder \
+        --name multiarch-builder \
         --driver=kubernetes \
         --bootstrap \
-        --config /etc/docker/buildkitd.toml \
+        --config $DOCKER_CONFIG/buildx/buildkitd.default.toml \
         --platform=linux/amd64 \
-        --node=fcsbuilder-amd64 \
-        --driver-opt=nodeselector="kubernetes.io/arch=amd64,namespace=fcsbuilder"
+        --node=multiarch-builder-amd64 \
+        --driver-opt=nodeselector="kubernetes.io/arch=amd64,namespace=multiarch-builder"
 
     docker buildx create \
         --append \
-        --name fcsbuilder \
+        --name multiarch-builder \
         --driver=kubernetes \
         --bootstrap \
-        --config /etc/docker/buildkitd.toml \
+        --config $DOCKER_CONFIG/buildx/buildkitd.default.toml \
         --platform=linux/arm64 \
-        --node=fcsbuilder-arm64 \
-        --driver-opt=nodeselector="kubernetes.io/arch=arm64,namespace=fcsbuilder"
+        --node=multiarch-builder-arm64 \
+        --driver-opt=nodeselector="kubernetes.io/arch=arm64,namespace=multiarch-builder"
 
     # Use this to build with Kubernetes builder:
 
 }
 
-printf "Use this command: \n\tdocker buildx bake --builder=fcsbuilder --push --set *.platform=linux/amd64,linux/arm64\n"
+printf "Use this command: \n\tdocker buildx bake --builder=multiarch-builder --push --set *.platform=linux/amd64,linux/arm64\n"
