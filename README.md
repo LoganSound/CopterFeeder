@@ -55,8 +55,10 @@ sudo apt upgrade
 
 2. Install Docker and docker-compose:
 
+**Note:** Some OS's have "docker-compose-v2" others use "docker-compose-plugin" Use the one which exists for your os - either will install the newer version of docker compose.
+
 ```shell
-sudo apt install docker.io docker-compose
+sudo apt install docker.io docker-compose docker-compose-v2
 ```
 
 3. To run Docker commands without sudo, add your user to the Docker group:
