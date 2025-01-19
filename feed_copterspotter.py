@@ -138,7 +138,7 @@ CONF_FOLDERS = [
 # Readsb location: readsb
 
 
-def mongo_client_insert(mydict):
+def mongo_client_insert(mydict, dbFlags):
     """
     Insert one entry into Mongo db
 
@@ -162,7 +162,12 @@ def mongo_client_insert(mydict):
     try:
 
         mydb = myclient["HelicoptersofDC-2023"]
-        mycol = mydb["ADSB"]
+
+        if dbFlags & 1:
+            mycol = mydb["ADSB-mil"]
+        else:
+            mycol = mydb["ADSB"]
+
         ret_val = mycol.insert_one(mydict)
 
         # if ret_val.acknowledged is True:
@@ -183,7 +188,7 @@ def mongo_client_insert(mydict):
             myclient.close()
 
 
-def mongo_https_insert(mydict):
+def mongo_https_insert(mydict, dbFlags):
     """
     Insert into Mongo using HTTPS requests call
     This will be deprecated September 2024
@@ -491,10 +496,10 @@ def fcs_update_helidb(interval):
                 )
 
         # if not heli_type or heli_type is None:
-        if not heli_type:
-            # This short circuits parsing of aircraft with unknown icao_hex codes
-            logger.debug("%s Not a known rotorcraft ", icao_hex)
-            continue
+        # if not heli_type:
+        #     # This short circuits parsing of aircraft with unknown icao_hex codes
+        #     logger.debug("%s Not a known rotorcraft ", icao_hex)
+        #     continue
 
         logger.debug("Parsing Helicopter: %s", icao_hex)
 
@@ -653,7 +658,7 @@ def fcs_update_helidb(interval):
                 },
                 "geometry": {"type": "Point", "coordinates": geometry},
             }
-            ret_val = mongo_insert(mydict)
+            ret_val = mongo_insert(mydict, dbFlags)
             # return ret_val
             logger.debug("Mongo_insert return: %s ", ret_val)
             # if ret_val: ... do something
