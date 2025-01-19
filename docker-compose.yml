@@ -4,7 +4,9 @@ services:
   feed_copterspotter:
     image: feed_copterspotter
     build:
-      dockerfile: Dockerfile
+      context: .
+
+    # dockerfile: Dockerfile
     #   tags:
     #     - registry:5000/fcs/feed_copterspotter:latest
     # x-bake:
