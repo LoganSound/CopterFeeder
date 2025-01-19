@@ -24,9 +24,23 @@
 
 ### Option 1: Using ADSB.IM Image
 
-1. Download and install the [ADSB.im](https://adsb.im) image on your device
-2. Follow their [how-to guide](https://www.adsb.im/howto) for hardware setup and image loading
-3. Proceed to the [Configuration and Running](#configuration-and-running) section
+1.  Download and install the [ADSB.im](https://adsb.im) image on your device
+2.  Follow their [how-to guide](https://www.adsb.im/howto) for hardware setup and image loading
+
+3.  Delete the userland-proxy line from docker's daemon.json:
+
+    1. Navigate to the Docker directory and open the `daemon.json` file in a text editor:
+
+    ```shell
+    cd /etc/docker
+    sudo nano daemon.json
+    ```
+
+    3. Locate the line containing `"userland-proxy": false,` and delete it.
+
+    4. Save the changes and exit the editor (in nano, press `CTRL + O`, then `Enter`, then `Ctrl+X`).
+
+4.  Proceed to the [Configuration and Running](#configuration-and-running) section
 
 ### Option 2: Manual Setup with ADSB.im and Ubuntu
 
@@ -34,98 +48,103 @@
 
 1. Update your system:
 
-    ```shell
-    sudo apt update
-    sudo apt upgrade
-    ```
+```shell
+sudo apt update
+sudo apt upgrade
+```
 
 2. Install Docker and docker-compose:
 
-    ```shell
-    sudo apt install docker.io docker-compose
-    ```
+```shell
+sudo apt install docker.io docker-compose
+```
 
 3. To run Docker commands without sudo, add your user to the Docker group:
 
-    ```shell
-    sudo usermod -aG docker $USERNAME
-    ```
+```shell
+sudo usermod -aG docker $USERNAME
+```
 
-    📝 **Note:** fill in your username like `JOHNDOE`
+📝 **Note:** fill in your username like `JOHNDOE`
 
 4. Apply the new group membership:
 
-    ```shell
-    newgrp docker
-    ```
+```shell
+newgrp docker
+```
 
 5. Install Git
 
-    ```shell
-    sudo apt install git
-    ```
+```shell
+sudo apt install git
+```
 
 6. #### Install ADSB.im:
 
-    ```shell
-    curl https://raw.githubusercontent.com/dirkhh/adsb-feeder-image/main/src/tools/app-install.sh | sudo bash
-    ```
+```shell
+curl https://raw.githubusercontent.com/dirkhh/adsb-feeder-image/main/src/tools/app-install.sh | sudo bash
+```
 
 ## Configuration and Running
 
 1. Clone the repository:
 
-    ```shell
-    git clone https://github.com/LoganSound/CopterFeeder.git
-    cd CopterFeeder
-    ```
+```shell
+git clone https://github.com/LoganSound/CopterFeeder.git
+cd CopterFeeder
+```
 
 2. Set up the environment file:
 
-    ```shell
-    cp .env.example .env
-    nano .env
-    ```
+```shell
+cp .env.example .env
+nano .env
+```
 
-    📝 Fill in the required values provided by the dev team and your feeder name
+📝 Fill in the API key and feeder name values provided by the dev team
 
-    💡 **Nano tips:** Save (Ctrl+O, Enter) | Exit (Ctrl+X)
+📝 For the port number, comment out the line which does not apply to your situation by putting a `#` in front of it
+
+💡 **Nano tips:** Save: `Ctrl+O`, `Enter` | Exit: `Ctrl+X`
 
 3. Build and run the Docker container:
 
-    ```shell
-    docker-compose build
-    docker-compose up -d
-    ```
+```shell
+docker-compose build
+docker-compose up -d
+```
 
-    📝 **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts
+📝 **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose`
+
+📝 **Note:** the -d flag runs the container in the background.
 
 4. (Optional) View logs:
-    ```shell
-    docker compose logs -f
-    ```
+
+```shell
+docker compose logs -f
+```
+
+📝 **Note:** `Ctrl-C` escapes you from viewing logs
 
 ## Updating CopterFeeder
 
 1. Navigate to the project folder and pull the latest
 
-    ```shell
-    cd ./CopterFeeder
-    git pull
-    ```
+```shell
+cd ./CopterFeeder
+git pull
+```
 
 2. Build and restart the Docker container:
 
-    ```shell
-    docker-compose down
-    docker-compose build
-    docker-compose up -d
-    ```
+```shell
+docker-compose down && docker-compose build && docker-compose up -d
+```
 
-    **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts
+**Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts
 
-    <br>
-    <br>
+<br>
+<br>
 
 # Running without Docker
 
