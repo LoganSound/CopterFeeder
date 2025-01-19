@@ -8,6 +8,8 @@ __pycache__/
 
 bills_operators*.csv
 
+
+*aircraft.json
 Releasable*
 
 # Logfiles
@@ -139,6 +141,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+env-configmap.yaml
+
 
 # Spyder project settings
 .spyderproject

@@ -33,13 +33,14 @@ from dotenv import dotenv_values  # , set_key
 
 
 # only need one of these
-import pymongo
+from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure, OperationFailure
 
 # from pymongo import MongoClient
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202412021345_00"
+VERSION = "202412261745_01"
 
 # Bills
 
@@ -75,8 +76,8 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 
 PROM_PORT = 8999
 
-update_heli_time = Summary(
-    "update_heli_processing_seconds", "Time spent updating heli db"
+fcs_update_heli_time = Summary(
+    "fcs_update_helidb_proc_secs", "Time spent updating heli db"
 )
 
 
@@ -148,28 +149,44 @@ def mongo_client_insert(mydict):
     #   password = urllib.parse.quote_plus(MONGOPW)
 
     #   This needs to be wrapped in a try/except
-    myclient = pymongo.MongoClient(
+    myclient = MongoClient(
         "mongodb+srv://"
         + MONGOUSER
         + ":"
         + MONGOPW
-        + "@helicoptersofdc.sq5oe.mongodb.net/?retryWrites=true&w=majority"
+        # + "@helicoptersofdc.sq5oe.mongodb.net/?retryWrites=true&w=majority"
+        + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
     )
 
-    mydb = myclient["HelicoptersofDC"]
-    mycol = mydb["ADSB"]
-
     #   This needs to be wrapped in a try/except
-    ret_val = mycol.insert_one(mydict)
+    try:
 
-    mongo_inserts.labels(status_code=ret_val).inc()
+        mydb = myclient["HelicoptersofDC-2023"]
+        mycol = mydb["ADSB"]
+        ret_val = mycol.insert_one(mydict)
 
-    return ret_val
+        # if ret_val.acknowledged is True:
+
+        logger.info("Mongo Inserted Object id: %s", ret_val.inserted_id)
+        # Adds too many metrics: #fcs_mongo_inserts.labels(status_code=ret_val).inc()
+
+        return ret_val.inserted_id
+
+    except ConnectionFailure as e:
+        logger.error("Failed to connect to MongoDB: %s ", e)
+    except OperationFailure as e:
+        logger.error("An error occurred during insertion: %s", e)
+    except Exception as e:
+        logger.error("An unexpected error occurred: %s", e)
+    finally:
+        if "myclient" in locals():
+            myclient.close()
 
 
 def mongo_https_insert(mydict):
     """
     Insert into Mongo using HTTPS requests call
+    This will be deprecated September 2024
     """
     # url = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
 
@@ -184,7 +201,7 @@ def mongo_https_insert(mydict):
     except requests.exceptions.HTTPError as e:
         logger.warning("Mongo Post Error: %s ", e.response.text)
 
-    mongo_inserts.labels(status_code=response.status_code).inc()
+    fcs_mongo_inserts.labels(status_code=response.status_code).inc()
     return response.status_code
 
 
@@ -211,7 +228,7 @@ def clean_source(source) -> str:
 
     """
 
-    if source == None:
+    if source is None:
         source = "unkn"
     elif source[:4] == "adsb":
         source = "adsb"
@@ -235,8 +252,8 @@ def clean_source(source) -> str:
     return source
 
 
-@update_heli_time.time()
-def update_helidb():
+@fcs_update_heli_time.time()
+def fcs_update_helidb(interval):
     """Main"""
 
     # local_time = datetime.now().astimezone()
@@ -314,7 +331,8 @@ def update_helidb():
                         "/run/" + airplanes_folder + "/aircraft.json",
                     )
 
-        if data == "" or data is None:
+        if not data:
+
             logger.error("No aircraft data read")
             return None
             # sys.exit()
@@ -334,6 +352,7 @@ def update_helidb():
         output = ""
         # aircrafts.json documented here (and elsewhere):
         # https://github.com/flightaware/dump1090/blob/master/README-json.md
+        # https://github.com/wiedehopf/readsb/blob/dev/README-json.md
         #
         # There is a ts in the json output - should we use that?
         #        dt = ts = datetime.datetime.now().timestamp()
@@ -354,7 +373,7 @@ def update_helidb():
             # icao_hex = str(plane["hex"]).lower()
             # heli_type = find_helis(icao_hex)
             heli_type = search_bills(icao_hex, "type")
-            if heli_type != None:
+            if heli_type is not None:
                 output += " " + heli_type
             # heli_tail = search_bills(icao_hex, "tail")
             else:
@@ -370,10 +389,11 @@ def update_helidb():
             if "r" in plane:
                 heli_tail = str(plane["r"])
 
-            if heli_tail == "" or heli_tail == None:
+            # if not heli_tail or heli_tail is None:
+            if not heli_tail:
                 heli_tail = search_bills(icao_hex, "tail")
 
-            if heli_tail != None:
+            if heli_tail is not None:
                 output += " " + heli_tail
             else:
                 output += " no reg"
@@ -381,7 +401,7 @@ def update_helidb():
         except BaseException:
             output += " no reg"
 
-        if search_bills(icao_hex, "hex") != None:
+        if search_bills(icao_hex, "hex") is not None:
             logger.debug("%s found in Bills", icao_hex)
         else:
             logger.debug("%s not found in Bills", icao_hex)
@@ -400,6 +420,11 @@ def update_helidb():
             # callsign = None
             callsign = heli_tail
 
+        if "dbFlags" in plane:
+            dbFlags = plane["dbFlags"]
+        else:
+            dbFlags = ""
+
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
 
@@ -411,13 +436,13 @@ def update_helidb():
                     len(recent_flights),
                     callsign,
                 )
-                rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
                 # and callsign != "no_call"
                 # and callsign != ""
-                and callsign != None
+                and callsign is not None
             ):
                 logger.debug(
                     "Updating %s in recents as: %s - was:  %s",
@@ -426,13 +451,13 @@ def update_helidb():
                     recent_flights[icao_hex][0],
                 )
                 recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
-                rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
 
             else:
                 # increment the count
                 recent_flights[icao_hex][1] += 1
                 # Prometheus counter
-                rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -444,26 +469,29 @@ def update_helidb():
             if icao_hex in recent_flights:
 
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s seen: %d times",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s dbFlags: %s seen: %d times",
                     icao_hex,
                     category,
                     recent_flights[icao_hex][0],
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
+                    dbFlags,
                     recent_flights[icao_hex][1],
                 )
 
             else:
                 logger.info(
-                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s",
+                    "Aircraft: %s is rotorcraft - Category: %s flight: %s tail: %s type: %s dbFlag: %s",
                     icao_hex,
                     category,
                     "(null)",
                     heli_tail or "Unknown",
                     heli_type or "Unknown",
+                    dbFlags,
                 )
 
-        if heli_type == "" or heli_type is None:
+        # if not heli_type or heli_type is None:
+        if not heli_type:
             # This short circuits parsing of aircraft with unknown icao_hex codes
             logger.debug("%s Not a known rotorcraft ", icao_hex)
             continue
@@ -471,9 +499,28 @@ def update_helidb():
         logger.debug("Parsing Helicopter: %s", icao_hex)
 
         try:
+            # seen_pos is an offset in seconds from "now" time to when last position was seen
+            if "seen_pos" in plane:
+                seen_pos = float(plane["seen_pos"])
+            else:
+                seen_pos = 0
+            logger.debug(f"seen_pos: {seen_pos:.2f}")
+
+        except BaseException:
+            logger.warning("seen_pos error")
+
+        if seen_pos > interval:
+            logger.info(
+                f"Seen_pos ({seen_pos:.2f}) > interval ({interval}): skipping {icao_hex} "
+            )
+            continue
+
+        try:
             # note that this is somewhat redundant to callsign processing before being in this if stanza
-            if "flight" in plane and callsign == "" or callsign == None:
+            # if "flight" in plane and not callsign or callsign is None:
+            if "flight" in plane and not callsign:
                 # should never get here - should be handled above
+                logger.warning("Callsign is empty or None")
                 callsign = str(plane["flight"]).strip()
             output += " <" + callsign + ">"
         except BaseException:
@@ -485,7 +532,7 @@ def update_helidb():
             # Assumtion is made that negative altitude is unlikely
             # Using max() here removes negative numbers
 
-            alt_baro = max(0, int(plane["alt_baro"]))
+            alt_baro = max(0.0, float(plane["alt_baro"]))
 
             # FR altitude
 
@@ -495,7 +542,7 @@ def update_helidb():
             alt_baro = None
 
         try:
-            alt_geom = max(0, int(plane["alt_geom"]))
+            alt_geom = max(0.0, float(plane["alt_geom"]))
             # FR altitude
             output += " altgeom " + str(alt_geom)
 
@@ -558,7 +605,7 @@ def update_helidb():
             # See https://github.com/wiedehopf/readsb/blob/dev/README-json.md
             source = clean_source(str(plane["type"]))
             output += " src " + source
-            sources.labels(source=source).inc(1)
+            fcs_sources.labels(source=source).inc(1)
 
         except BaseException:
 
@@ -575,8 +622,20 @@ def update_helidb():
             mydict = {
                 "type": "Feature",
                 "properties": {
-                    "date": dt_stamp,
-                    # "date": utc_time,
+                    # Date - "now" from aircraft.json in seconds from the unix epoch format
+                    # "date": dt_stamp,
+                    # Corrected with seen_pos
+                    "date": dt_stamp - seen_pos,
+                    # jsDate - a datetime obect in utc timezone corrected by seen_pos
+                    "jsDate": datetime.fromtimestamp(
+                        dt_stamp - seen_pos, tz=timezone.utc
+                    ),
+                    # proposed but not implemented
+                    # pythonDate - float seconds from the epoch corrected by seen_pos
+                    # "pythonDate": dt_stamp - seen_pos,
+                    #
+                    # createdDate - datetime object of "now" from aircraft.json
+                    "createdDate": utc_time,
                     "icao": icao_hex,
                     "type": heli_type,
                     "tail": heli_tail,
@@ -589,6 +648,7 @@ def update_helidb():
                     "rssi": rssi,
                     "feeder": FEEDER_ID,
                     "source": source,
+                    # readableTime - string representation of Datetime in EST timezone
                     "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
                 "geometry": {"type": "Point", "coordinates": geometry},
@@ -737,22 +797,24 @@ def check_bills_age() -> float:
     """
     try:
         bills_age = os.path.getmtime(bills_operators)
+        logger.debug("Bills Age: %f", bills_age)
 
     except FileNotFoundError:
         bills_age = 0
 
+    logger.debug("Bills Age: %f", bills_age)
     return bills_age
 
 
 def init_prometheus():
-    global rx, mongo_inserts, sources
-    global update_heli_time
+    global fcs_rx, fcs_mongo_inserts, fcs_sources
+    global fcs_update_heli_time
 
-    rx = Counter("rx_msgs", "Messages Received", ["icao", "cs"])
-    mongo_inserts = Counter("mongo_inserts", "Mongo Inserts", ["status_code"])
-    sources = Counter("msg_srcs", "Message Sources", ["source"])
+    fcs_rx = Counter("fcs_rx_msgs", "Messages Received", ["icao", "cs"])
+    fcs_mongo_inserts = Counter("fcs_mongo_inserts", "Mongo Inserts", ["status_code"])
+    fcs_sources = Counter("fcs_msg_srcs", "Message Sources", ["source"])
 
-    return rx
+    return fcs_rx
 
     # tx = Gauge(
     #     f"switch_interface_tx_packets",
@@ -797,9 +859,10 @@ def run_loop(interval, h_types):
                 ctime(bills_age),
             )
 
-        update_helidb()
+        fcs_update_helidb(interval)
 
-        if dump_clock >= 60:
+        # dump 1x per hour
+        if dump_clock >= (60 * 60 / interval):
             dump_recents(signal.SIGUSR1, "")
             dump_clock = 0
         else:
@@ -966,19 +1029,19 @@ if __name__ == "__main__":
         **dotenv_values(env_file),
         **os.environ,
     }
-    if "MONGO_URL" in config:
-        MONGO_URL = config["MONGO_URL"]
 
-    elif args.mongourl:
-        MONGO_URL = args.mongourl
+    # somewhat redundant here but logging is bootstrapped before reading config
+    if "DEBUG" in config and config["DEBUG"] == "True":
+        #        ch=logging.StreamHandler()
+        #        ch.setLevel(logging.DEBUG)
+        #        logger.addHandler(ch)
 
-    else:
-        MONGO_URL = None
-        logger.error("No Mongo Endpoint URL Found - Exiting")
-        sys.exit()
+        logger.setLevel(logging.DEBUG)
+        logger.debug("Debug Mode Enabled")
 
     # Should be pulling these from env
 
+    # If we find the API-Key - use that. Otherwise try login/password method.
     if (
         "API-KEY" in config
         and config["API-KEY"] != "BigLongRandomStringOfLettersAndNumbers"
@@ -986,13 +1049,25 @@ if __name__ == "__main__":
         logger.debug("Mongo API Key found - using https api ")
         MONGO_API_KEY = config["API-KEY"]
         mongo_insert = mongo_https_insert
-    elif (
-        "API_KEY" in config
-        and config["API_KEY"] != "BigLongRandomStringOfLettersAndNumbers"
-    ):
-        logger.debug("Mongo API Key found - using https api ")
-        MONGO_API_KEY = config["API_KEY"]
-        mongo_insert = mongo_https_insert
+        if "MONGO_URL" in config:
+            MONGO_URL = config["MONGO_URL"]
+
+        elif args.mongourl:
+            MONGO_URL = args.mongourl
+
+        else:
+            MONGO_URL = None
+            logger.error("API-Key found but No Mongo Endpoint URL specified - Exiting")
+            sys.exit()
+
+    # 20241226 - why is this section here? dhb
+    # elif (
+    #     "API_KEY" in config
+    #     and config["API_KEY"] != "BigLongRandomStringOfLettersAndNumbers"
+    # ):
+    #     logger.debug("Mongo API Key found - using https api ")
+    #     MONGO_API_KEY = config["API_KEY"]
+    #     mongo_insert = mongo_https_insert
     else:
 
         if args.mongopw:
@@ -1091,7 +1166,7 @@ if __name__ == "__main__":
     logger.info("Loaded %s helis from Bills", str(len(heli_types)))
 
     if args.once:
-        update_helidb()
+        fcs_update_helidb(99999)
         sys.exit()
 
     if args.daemon:
