@@ -5,12 +5,13 @@ services:
     image: feed_copterspotter
     build:
       dockerfile: Dockerfile
-    #   tags:
-    #     - registry:5000/fcs/feed_copterspotter:latest
-    # x-bake:
-    #   platforms:
-    #     - linux/amd64
-    #     - linux/arm64
+      tags:
+        - registry:5000/fcs/feed_copterspotter:latest
+
+    x-bake:
+      platforms:
+        - linux/amd64
+        - linux/arm64
 
     container_name: feed_copterspotter
     privileged: true
