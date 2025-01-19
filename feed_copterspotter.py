@@ -494,10 +494,14 @@ def fcs_update_helidb(interval):
                     heli_type or "Unknown",
                     dbFlags,
                 )
+        else:
+            logger.debug("%s Not a rotorcraft ", icao_hex)
+            continue
 
         # if not heli_type or heli_type is None:
         # if not heli_type:
         #     # This short circuits parsing of aircraft with unknown icao_hex codes
+
         #     logger.debug("%s Not a known rotorcraft ", icao_hex)
         #     continue
 
