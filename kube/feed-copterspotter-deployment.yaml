@@ -62,11 +62,28 @@ spec:
                 configMapKeyRef:
                   key: SERVER
                   name: env
-          image: registry:5000/fcs/feed_copterspotter:latest
+          image: registry:5000/fcs/feed_copterspotter:20250119-02
           name: feed-copterspotter
           ports:
             - containerPort: 8999
               protocol: TCP
           securityContext:
             privileged: true
+          resources:
+            requests:
+              cpu: 250m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
       restartPolicy: Always
+
+      tolerations:
+        - key: "arm64"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+        - key: "asdb"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
