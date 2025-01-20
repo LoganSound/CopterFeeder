@@ -163,7 +163,7 @@ def mongo_client_insert(mydict, dbFlags):
 
         mydb = myclient["HelicoptersofDC-2023"]
 
-        if int(dbFlags) & 1:
+        if dbFlags != "" and int(dbFlags) & 1:
             mycol = mydb["ADSB-mil"]
         else:
             mycol = mydb["ADSB"]
