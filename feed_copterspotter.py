@@ -40,7 +40,7 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202412261745_01"
+VERSION = "20250120-02"
 
 # Bills
 
@@ -379,10 +379,16 @@ def fcs_update_helidb(interval):
             # heli_type = find_helis(icao_hex)
             heli_type = search_bills(icao_hex, "type")
             if heli_type is not None:
-                output += " " + heli_type
+                logger.debug(f"Using heli_type from bills: {heli_type}")
+            elif "t" in plane and plane["t"] != "":
+                heli_type = str(plane["t"])
+                logger.debug(f"Using heli_type from aircraft.json: {heli_type}")
             # heli_tail = search_bills(icao_hex, "tail")
             else:
-                output += " no type "
+                heli_type = "no type"
+                logger.debug(f"No heli_type identified: {heli_type}")
+            output += " " + heli_type
+
         except BaseException:
             output += " no type "
 
@@ -406,10 +412,10 @@ def fcs_update_helidb(interval):
         except BaseException:
             output += " no reg"
 
-        if search_bills(icao_hex, "hex") is not None:
-            logger.debug("%s found in Bills", icao_hex)
-        else:
-            logger.debug("%s not found in Bills", icao_hex)
+        # if search_bills(icao_hex, "hex") is not None:
+        #     logger.debug("%s found in Bills", icao_hex)
+        # else:
+        #     logger.debug("%s not found in Bills", icao_hex)
 
         if "category" in plane:
             category = plane["category"]
