@@ -40,9 +40,10 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "20250120-02"
+VERSION = "20250125-03"
 
 # Bills
+
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
@@ -118,6 +119,7 @@ CONF_FOLDERS = [
     "~/CopterFeeder",
     "~",
     ".",
+    "/app/data",
 ]
 
 # Hard Coding User/Pw etc is bad umkay
@@ -516,6 +518,11 @@ def fcs_update_helidb(interval):
         else:
             dbFlags = ""
 
+        if "ownOp" in plane:
+            ownOp = plane["ownOp"]
+        else:
+            ownOp = ""
+
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
 
@@ -744,6 +751,7 @@ def fcs_update_helidb(interval):
                     "feeder": FEEDER_ID,
                     "source": source,
                     "dbFlags": dbFlags,
+                    "ownOp": ownOp,
                     # readableTime - string representation of Datetime in EST timezone
                     "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
@@ -863,21 +871,29 @@ def load_helis_from_url(bills_url):
         tmp_bills_age = time()
         # Saving Copy for subsequent operations
         # Note: it would be best if we were in the right directory before we tried to write
-        with open("bills_operators_tmp.csv", "w", encoding="UTF-8") as tmpcsvfile:
+        with open(
+            conf_folder + "/bills_operators_tmp.csv", "w", encoding="UTF-8"
+        ) as tmpcsvfile:
             try:
                 tmpcsvfile.write(bills.text)
                 tmpcsvfile.close()
-                if os.path.exists("bills_operators.csv"):
+                if os.path.exists(conf_folder + "/bills_operators.csv"):
                     old_bills_age = check_bills_age()
                 else:
                     old_bills_age = 0
 
                 if old_bills_age > 0:
                     os.rename(
-                        "bills_operators.csv",
-                        "bills_operators_" + strftime("%Y%m%d-%H%M%S") + ".csv",
+                        conf_folder + "/bills_operators.csv",
+                        conf_folder
+                        + "/bills_operators_"
+                        + strftime("%Y%m%d-%H%M%S")
+                        + ".csv",
                     )
-                os.rename("bills_operators_tmp.csv", "bills_operators.csv")
+                os.rename(
+                    conf_folder + "/bills_operators_tmp.csv",
+                    conf_folder + "/bills_operators.csv",
+                )
                 logger.info(
                     "Bills File Updated from web at %s",
                     ctime(tmp_bills_age),
@@ -930,37 +946,95 @@ def load_helis_from_file():
 
 def check_bills_age() -> float:
     """
-    Checks age of file - returns zero if File not Found
+    Get the age (modification time) of the bills_operators file.
+
+    Returns:
+        float:
+            - Unix timestamp of file's last modification time
+            - 0.0 if file not found or error occurs
+
+    Note:
+        The bills_operators global variable must be properly set before calling this function.
+        A return value of 0.0 indicates the file doesn't exist or isn't accessible.
+
+    Example:
+        >>> check_bills_age()
+        1705987654.123  # File exists, last modified at this timestamp
+        >>> check_bills_age()
+        0.0  # File not found or error occurred
     """
     try:
+        # Get file modification time
         bills_age = os.path.getmtime(bills_operators)
-        logger.debug("Bills Age: %f", bills_age)
+
+        # Convert timestamp to readable format for logging
+        readable_time = datetime.fromtimestamp(bills_age).strftime("%Y-%m-%d %H:%M:%S")
+        logger.debug(
+            "Bills file last modified at %s (timestamp: %.3f)", readable_time, bills_age
+        )
+
+        return bills_age
 
     except FileNotFoundError:
-        bills_age = 0
+        logger.warning("Bills operators file not found at: %s", bills_operators)
+        return 0.0
 
-    logger.debug("Bills Age: %f", bills_age)
-    return bills_age
+    except (PermissionError, OSError) as e:
+        logger.error(
+            "Error accessing bills operators file at %s: %s", bills_operators, str(e)
+        )
+        return 0.0
 
 
-def init_prometheus():
-    global fcs_rx, fcs_mongo_inserts, fcs_sources
-    global fcs_update_heli_time
+def init_prometheus() -> Counter:
+    """
+    Initialize Prometheus metrics for monitoring helicopter data collection.
 
-    fcs_rx = Counter("fcs_rx_msgs", "Messages Received", ["icao", "cs"])
-    fcs_mongo_inserts = Counter("fcs_mongo_inserts", "Mongo Inserts", ["status_code"])
-    fcs_sources = Counter("fcs_msg_srcs", "Message Sources", ["source"])
+    Initializes global counters for:
+    - Received messages (by ICAO and callsign)
+    - MongoDB insert operations (by status code)
+    - Message sources (by source type)
+    - Update operation timing
 
-    return fcs_rx
+    Returns:
+        Counter: The fcs_rx counter for tracking received messages
 
-    # tx = Gauge(
-    #     f"switch_interface_tx_packets",
-    #     "Total transmitted packets on interface",
-    #     ["host", "id"],
-    # )
+    Raises:
+        Exception: If there's an error initializing any metric
 
-    # tx.labels("foo", "bar").set(0)
-    # tx.labels("boo", "baz").set(0)
+    Note:
+        This function modifies global variables for metric tracking.
+        All metrics are prefixed with 'fcs_' (Feed CopterSpotter).
+    """
+    try:
+        # Declare globals to be modified
+        global fcs_rx, fcs_mongo_inserts, fcs_sources, fcs_update_heli_time
+
+        # Initialize counters with descriptive labels
+        fcs_rx = Counter(
+            name="fcs_rx_msgs",
+            documentation="Messages received from aircraft",
+            labelnames=["icao", "cs"],
+        )
+
+        fcs_mongo_inserts = Counter(
+            name="fcs_mongo_inserts",
+            documentation="MongoDB insert operations by status code",
+            labelnames=["status_code"],
+        )
+
+        fcs_sources = Counter(
+            name="fcs_msg_srcs",
+            documentation="Message sources by type (ADSB, MLAT, etc)",
+            labelnames=["source"],
+        )
+
+        logger.info("Prometheus metrics initialized successfully")
+        return fcs_rx
+
+    except Exception as e:
+        logger.error("Failed to initialize Prometheus metrics: %s", str(e))
+        raise
 
 
 # Decorate function with metric.
@@ -1153,10 +1227,12 @@ if __name__ == "__main__":
         conf_folder = os.path.abspath(conf_folder)
         # .env is probably not unique enough to search for
         if os.path.exists(os.path.join(conf_folder, ".env")) and os.path.exists(
-            os.path.join(conf_folder, ".bills_operators.csv")
+            os.path.join(conf_folder, "bills_operators.csv")
         ):
             logger.debug("Conf folder found: %s", conf_folder)
             break
+        else:
+            conf_folder = "/app/data"
 
     env_file = os.path.join(conf_folder, ".env")
 
