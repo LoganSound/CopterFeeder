@@ -278,34 +278,63 @@ def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
 
 
 def clean_source(source) -> str:
-
     """
-    Ugly if/else to clean up source
+    Normalize aircraft data source identifiers to standard format.
 
+    Args:
+        source (str | None): Raw source identifier from aircraft data
+
+    Returns:
+        str: Normalized source identifier
+
+    Source mappings:
+        - None, "unknown" -> "unkn"
+        - "adsb*" -> "adsb"
+        - "adsr*" -> "adsr"
+        - "mlat" -> "mlat"
+        - "adsb_icao_nt", "mode_s" -> "modeS"
+        - "tisb*" -> "tisb"
+        - "adsc" -> "adsc"
+        - "other" -> "other"
+
+    Example:
+        >>> clean_source("adsb_icao")
+        "adsb"
+        >>> clean_source(None)
+        "unkn"
     """
+    try:
+        # Handle None or non-string input
+        if source is None:
+            return "unkn"
 
-    if source is None:
-        source = "unkn"
-    elif source[:4] == "adsb":
-        source = "adsb"
-    elif source[:4] == "adsr":
-        source = "adsr"
-    elif source == "mlat":
-        source = "mlat"
-    elif source == "adsb_icao_nt":
-        ssource = "modeS"
-    elif source == "mode_s":
-        source = "modeS"
-    elif source[:4] == "tisb":
-        source = "tisb"
-    elif source == "adsc":
-        source = "adsc"
-    elif source == "other":
-        source = "other"
-    elif source == "unknown":
-        source = "unkn"
+        # Ensure source is string and lowercase for comparison
+        source = str(source).lower()
 
-    return source
+        # Define source mappings
+        SOURCE_MAPPINGS = {
+            "unknown": "unkn",
+            "mlat": "mlat",
+            "adsb_icao_nt": "modeS",
+            "mode_s": "modeS",
+            "adsc": "adsc",
+            "other": "other",
+        }
+
+        # Check prefix matches first
+        if source.startswith("adsb"):
+            return "adsb"
+        if source.startswith("adsr"):
+            return "adsr"
+        if source.startswith("tisb"):
+            return "tisb"
+
+        # Return mapped value or "unkn" if no match found
+        return SOURCE_MAPPINGS.get(source, "unkn")
+
+    except Exception as e:
+        logger.error("Error cleaning source identifier: %s - Error: %s", source, str(e))
+        return "unkn"
 
 
 @fcs_update_heli_time.time()
@@ -714,6 +743,7 @@ def fcs_update_helidb(interval):
                     "rssi": rssi,
                     "feeder": FEEDER_ID,
                     "source": source,
+                    "dbFlags": dbFlags,
                     # readableTime - string representation of Datetime in EST timezone
                     "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
