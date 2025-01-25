@@ -127,8 +127,8 @@ CONF_FOLDERS = [
 #    # FR24: dump1090-mutability
 #    # ADSBEXchange location: adsbexchange-feed
 #    # Readsb location: readsb
-#    MONGOUSER = ""
-#    MONGOPW = ""
+#    # MONGOUSER = ""
+#    # MONGOPW = ""
 
 
 # Deprecated with "requests" pull to localhost:8080
@@ -140,52 +140,68 @@ CONF_FOLDERS = [
 
 def mongo_client_insert(mydict, dbFlags):
     """
-    Insert one entry into Mongo db
+    Insert one entry into MongoDB using the MongoDB client.
 
-    This function is largely deprecated in favor of the https insert
+    Args:
+        mydict (dict): Dictionary containing the helicopter data to insert
+        dbFlags (str): Flags to determine which collection to use
 
+    Returns:
+        ObjectId or None: Returns the inserted document's ID if successful, None if failed
     """
-
-    #   password = urllib.parse.quote_plus(MONGOPW)
-
-    #   This needs to be wrapped in a try/except
-    myclient = MongoClient(
-        "mongodb+srv://"
-        + MONGOUSER
-        + ":"
-        + MONGOPW
-        # + "@helicoptersofdc.sq5oe.mongodb.net/?retryWrites=true&w=majority"
-        + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
-    )
-
-    #   This needs to be wrapped in a try/except
+    myclient = None
     try:
+        # Construct MongoDB connection URI
+        mongo_uri = (
+            "mongodb+srv://"
+            + MONGOUSER
+            + ":"
+            + MONGOPW
+            + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/"
+            + "?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
+        )
 
+        # Connect with timeout and retry options
+        myclient = MongoClient(
+            mongo_uri,
+            serverSelectionTimeoutMS=5000,  # 5 second timeout
+            connectTimeoutMS=5000,
+            retryWrites=True,
+        )
+
+        # Test connection
+        myclient.admin.command("ping")
+
+        # Select database and collection
         mydb = myclient["HelicoptersofDC-2023"]
+        collection_name = "ADSB-mil" if dbFlags and int(dbFlags) & 1 else "ADSB"
+        mycol = mydb[collection_name]
 
-        if dbFlags != "" and int(dbFlags) & 1:
-            mycol = mydb["ADSB-mil"]
+        # Insert document
+        result = mycol.insert_one(mydict)
+
+        if result.acknowledged:
+            logger.info(
+                "Successfully inserted document with ID: %s", result.inserted_id
+            )
+            return result.inserted_id
         else:
-            mycol = mydb["ADSB"]
-
-        ret_val = mycol.insert_one(mydict)
-
-        # if ret_val.acknowledged is True:
-
-        logger.info("Mongo Inserted Object id: %s", ret_val.inserted_id)
-        # Adds too many metrics: #fcs_mongo_inserts.labels(status_code=ret_val).inc()
-
-        return ret_val.inserted_id
+            logger.error("Insert was not acknowledged by MongoDB")
+            return None
 
     except ConnectionFailure as e:
-        logger.error("Failed to connect to MongoDB: %s ", e)
+        logger.error("Failed to connect to MongoDB: %s", e)
+        return None
     except OperationFailure as e:
-        logger.error("An error occurred during insertion: %s", e)
+        logger.error("MongoDB operation failed: %s", e)
+        return None
     except Exception as e:
-        logger.error("An unexpected error occurred: %s", e)
+        logger.error("Unexpected error during MongoDB operation: %s", e)
+        return None
     finally:
-        if "myclient" in locals():
+        if myclient:
             myclient.close()
+            logger.debug("MongoDB connection closed")
 
 
 def mongo_https_insert(mydict, dbFlags):
@@ -211,19 +227,54 @@ def mongo_https_insert(mydict, dbFlags):
 
 
 def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
-    """Dump recents if we get a sigusr1"""
-    signame = signal.Signals(signum).name
-    logger.info(f"Signal handler dump_recents called with signal {signame} ({signum})")
+    """
+    Dump information about recently seen aircraft to the logs.
 
-    logger.info("Dumping %d entries...", len(recent_flights))
+    This function is primarily used as a signal handler for SIGUSR1 but can also be called
+    directly. It provides a summary of all aircraft currently being tracked, including their
+    ICAO hex codes, flight numbers/callsigns, and how many times they've been seen.
 
-    for hex_icao in sorted(recent_flights):
-        logger.info(
-            "hex_icao: %s flight: %s seen: %d",
-            hex_icao,
-            recent_flights[hex_icao][0],
-            recent_flights[hex_icao][1],
-        )
+    Args:
+        signum: Signal number that triggered this handler (defaults to SIGUSR1)
+        frame: Current stack frame (unused, required for signal handler interface)
+    """
+    try:
+        # Log signal information if called as signal handler
+        if signum:
+            signame = signal.Signals(signum).name
+            logger.info(
+                f"Signal handler dump_recents called with signal {signame} ({signum})"
+            )
+
+        # Handle empty recent_flights case
+        if not recent_flights:
+            logger.info("No recent flights to dump")
+            return
+
+        # Log summary header with timestamp
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        logger.info("=== Recent Flights Dump at %s ===", current_time)
+        logger.info("Total aircraft being tracked: %d", len(recent_flights))
+
+        # Sort and dump detailed aircraft information
+        for hex_icao in sorted(recent_flights):
+            flight, seen_count = recent_flights[hex_icao]
+            aircraft_type = heli_types.get(hex_icao, {}).get("type", "Unknown")
+            logger.info(
+                "Aircraft: %s | Type: %s | Flight: %s | Times seen: %d",
+                hex_icao.upper(),
+                aircraft_type,
+                flight or "No Callsign",
+                seen_count,
+            )
+
+        logger.info("=== End of Dump ===")
+
+    except Exception as e:
+        logger.error("Error in dump_recents: %s", str(e))
+        # Re-raise if this wasn't called as a signal handler
+        if not signum:
+            raise
 
 
 def clean_source(source) -> str:
