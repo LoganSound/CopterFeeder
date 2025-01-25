@@ -725,44 +725,85 @@ def fcs_update_helidb(interval):
             # if ret_val: ... do something
 
 
-def find_helis_old(icao_hex) -> str:
+def find_helis(icao_hex) -> str | None:
     """
-    Deprecated
-    Check if an icao hex code is in Bills catalog of DC Helicopters
-    returns the type of helicopter if known
+    Check if an ICAO hex code is in the known helicopter database and return its type.
+
+    Args:
+        icao_hex (str): The ICAO hex code to look up (case-insensitive)
+
+    Returns:
+        str | None: The helicopter type if found, None if not found
+
+    Example:
+        >>> find_helis("ac9f65")
+        "MD52"
+        >>> find_helis("unknown")
+        None
     """
+    try:
+        # Ensure icao_hex is lowercase for consistent lookup
+        icao_hex = str(icao_hex).lower()
+        logger.debug("Checking helicopter type for ICAO: %s", icao_hex)
 
-    with open("bills_operators.csv", encoding="UTF-8") as csvfile:
-        opsread = csv.DictReader(csvfile)
-        heli_type = ""
-        for row in opsread:
-            if icao_hex.upper() == row["hex"]:
-                heli_type = row["type"]
-        return heli_type
+        # Check if ICAO exists in database and has a type
+        if icao_hex in heli_types and heli_types[icao_hex].get("type"):
+            return heli_types[icao_hex]["type"]
+
+        return None
+
+    except Exception as e:
+        logger.error("Error looking up helicopter type for %s: %s", icao_hex, str(e))
+        return None
 
 
-def find_helis(icao_hex) -> str:
+def search_bills(icao_hex: str, column_name: str) -> str | None:
     """
-    check if icao is known and return type or empty string
-    """
-    logger.debug("Checking for: %s", icao_hex)
-    if heli_types[icao_hex]["type"]:
-        return heli_types[icao_hex]["type"]
+    Search for a specific column value in the helicopter database by ICAO hex code.
 
-    return ""
+    Args:
+        icao_hex (str): The ICAO hex code to look up (case-insensitive)
+        column_name (str): The column/field name to retrieve (e.g., 'type', 'tail', 'operator')
 
+    Returns:
+        str | None:
+            - The requested value if found
+            - Empty string if ICAO exists but requested field is empty
+            - None if ICAO not found or error occurs
 
-def search_bills(icao_hex, column_name) -> str | None:
+    Example:
+        >>> search_bills("ac9f65", "type")
+        "MD52"
+        >>> search_bills("ac9f65", "tail")
+        "N12345"
+        >>> search_bills("unknown", "type")
+        None
     """
-    check if icao is known return callsign or empty string
-    """
-    logger.debug("Checking for: %s", icao_hex)
-    if icao_hex in heli_types:
-        if heli_types[icao_hex][column_name]:
-            return heli_types[icao_hex][column_name]
-        else:
-            return ""
-    else:
+    try:
+        # Ensure icao_hex is lowercase for consistent lookup
+        icao_hex = str(icao_hex).lower()
+        logger.debug(
+            "Searching bills database - ICAO: %s, Column: %s", icao_hex, column_name
+        )
+
+        # Check if ICAO exists in database
+        if icao_hex not in heli_types:
+            logger.debug("ICAO %s not found in database", icao_hex)
+            return None
+
+        # Get the requested field, defaulting to empty string if field exists but is empty
+        value = heli_types[icao_hex].get(column_name)
+
+        # Return empty string for null/empty values, otherwise return the value
+        return "" if value is None else value
+
+    except Exception as e:
+        logger.error(
+            "Error searching bills database - ICAO: %s, Column: %s, Error: %s",
+            icao_hex,
+            column_name,
+            str(e),
+        )
         return None
 
 
