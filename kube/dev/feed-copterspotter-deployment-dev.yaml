@@ -29,6 +29,7 @@ spec:
             - "15"
             - -w
             - -v
+
           env:
             - name: FEEDER_ID
               valueFrom:
@@ -62,7 +63,7 @@ spec:
                 configMapKeyRef:
                   key: SERVER
                   name: fcs-env
-          image: registry:5000/fcs/feed_copterspotter:20250125-03
+          image: registry:5000/fcs/feed_copterspotter:20250127-01
           name: feed-copterspotter
           ports:
             - containerPort: 8999
