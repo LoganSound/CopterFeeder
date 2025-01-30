@@ -63,7 +63,7 @@ spec:
                 configMapKeyRef:
                   key: SERVER
                   name: fcs-env
-          image: registry:5000/fcs/feed_copterspotter:20250127-01
+          image: registry:5000/fcs/feed_copterspotter:20250127-03
           name: feed-copterspotter
           ports:
             - containerPort: 8999
