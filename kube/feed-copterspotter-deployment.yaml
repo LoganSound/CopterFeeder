@@ -7,7 +7,7 @@ metadata:
   labels:
     io.kompose.service: feed-copterspotter
   name: feed-copterspotter
-  namespace: fcs-prod
+  namespace: fcs
 spec:
   replicas: 1
   selector:
@@ -34,56 +34,39 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: FEEDER_ID
-                  name: fcs-env
+                  name: env
             - name: MONGOPW
               valueFrom:
                 configMapKeyRef:
                   key: MONGOPW
-                  name: fcs-env
+                  name: env
             - name: MONGOUSER
               valueFrom:
                 configMapKeyRef:
                   key: MONGOUSER
-                  name: fcs-env
+                  name: env
             - name: MONGO_URL
               valueFrom:
                 configMapKeyRef:
                   key: MONGO_URL
-                  name: fcs-env
+                  name: env
             - name: PORT
               valueFrom:
                 configMapKeyRef:
                   key: PORT
-                  name: fcs-env
+                  name: env
             - name: PYTHONUNBUFFERED
               value: "1"
             - name: SERVER
               valueFrom:
                 configMapKeyRef:
                   key: SERVER
-                  name: fcs-env
-          image: registry:5000/fcs/feed_copterspotter:pre-20250119
+                  name: env
+          image: registry:5000/fcs/feed_copterspotter:latest
           name: feed-copterspotter
           ports:
             - containerPort: 8999
               protocol: TCP
           securityContext:
             privileged: true
-          resources:
-            requests:
-              cpu: 250m
-              memory: 128Mi
-            limits:
-              cpu: 500m
-              memory: 256Mi
       restartPolicy: Always
-
-      tolerations:
-        - key: "arm64"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
-        - key: "adsb"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
