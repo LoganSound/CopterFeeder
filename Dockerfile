@@ -3,7 +3,7 @@ FROM python:3.12-slim AS builder
 
 # Add build metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="20250125-02"
+LABEL version="20250130-01"
 LABEL description="Feed CopterSpotter Service"
 
 # Set build arguments
@@ -35,7 +35,7 @@ FROM python:3.12-slim
 
 # Add runtime metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="20250125-02"
+LABEL version="20250130-01"
 LABEL description="Feed CopterSpotter Service"
 
 # Set working directory
