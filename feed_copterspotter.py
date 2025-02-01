@@ -40,7 +40,7 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "20250130-01"
+VERSION = "202412261745_01"
 
 # Bills
 
@@ -162,22 +162,15 @@ def mongo_client_insert(mydict):
     try:
 
         mydb = myclient["HelicoptersofDC-2023"]
-        collection_name = "ADSB-mil" if dbFlags and int(dbFlags) & 1 else "ADSB"
-        mycol = mydb[collection_name]
+        mycol = mydb["ADSB"]
+        ret_val = mycol.insert_one(mydict)
 
-        # Insert document
-        result = mycol.insert_one(mydict)
+        # if ret_val.acknowledged is True:
 
-        if result.acknowledged:
-            logger.info(
-                "Successfully inserted document with ID: %s into %s",
-                result.inserted_id,
-                collection_name,
-            )
-            return result.inserted_id
-        else:
-            logger.error("Insert was not acknowledged by MongoDB")
-            return None
+        logger.info("Mongo Inserted Object id: %s", ret_val.inserted_id)
+        # Adds too many metrics: #fcs_mongo_inserts.labels(status_code=ret_val).inc()
+
+        return ret_val.inserted_id
 
     except ConnectionFailure as e:
         logger.error("Failed to connect to MongoDB: %s ", e)
@@ -376,91 +369,64 @@ def fcs_update_helidb(interval):
         except BaseException:
             output += " Error coverting to lowercase"
 
+        try:
+            # icao_hex = str(plane["hex"]).lower()
+            # heli_type = find_helis(icao_hex)
+            heli_type = search_bills(icao_hex, "type")
+            if heli_type is not None:
+                output += " " + heli_type
+            # heli_tail = search_bills(icao_hex, "tail")
+            else:
+                output += " no type "
+        except BaseException:
+            output += " no type "
+
+        try:
+            # icao_hex = str(plane["hex"]).lower()
+            # heli_type = find_helis(icao_hex)
+            # heli_type = search_bills(icao_hex, "type")
+
+            if "r" in plane:
+                heli_tail = str(plane["r"])
+
+            # if not heli_tail or heli_tail is None:
+            if not heli_tail:
+                heli_tail = search_bills(icao_hex, "tail")
+
+            if heli_tail is not None:
+                output += " " + heli_tail
+            else:
+                output += " no reg"
+
+        except BaseException:
+            output += " no reg"
+
+        if search_bills(icao_hex, "hex") is not None:
+            logger.debug("%s found in Bills", icao_hex)
+        else:
+            logger.debug("%s not found in Bills", icao_hex)
+
         if "category" in plane:
             category = plane["category"]
         else:
             category = "Unk"
 
+        if "flight" in plane:
+            callsign = str(plane["flight"]).strip()
+            logger.debug("Flight: %s", callsign)
+        else:
+            # callsign = "no_call"
+            # callsign = ""
+            # callsign = None
+            callsign = heli_tail
+
+        if "dbFlags" in plane:
+            dbFlags = plane["dbFlags"]
+        else:
+            dbFlags = ""
+
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
-
-            try:
-                # icao_hex = str(plane["hex"]).lower()
-                # heli_type = find_helis(icao_hex)
-                heli_type = search_bills(icao_hex, "type")
-                if heli_type is not None:
-                    logger.debug(f"Using heli_type from bills: {heli_type}")
-                elif "t" in plane and plane["t"] != "":
-                    heli_type = str(plane["t"])
-                    add_to_htypes(icao_hex, "type", heli_type)
-                    add_to_htypes(icao_hex, "src", "spot")
-                    logger.debug(f"Using heli_type from aircraft.json: {heli_type}")
-                # heli_tail = search_bills(icao_hex, "tail")
-                else:
-                    heli_type = "no type"
-                    logger.debug(f"No heli_type identified: {heli_type}")
-                output += " " + heli_type
-
-            except BaseException:
-                output += " no type "
-
-            try:
-                # icao_hex = str(plane["hex"]).lower()
-                # heli_type = find_helis(icao_hex)
-                # heli_type = search_bills(icao_hex, "type")
-
-                heli_tail = str(plane.get("r", "")).strip()
-
-                # If no registration found in aircraft data, check bills database
-                if not heli_tail:
-                    heli_tail = search_bills(icao_hex, "tail")
-                    if heli_tail:
-                        logger.debug(
-                            "Using registration from bills database for %s: %s",
-                            icao_hex,
-                            heli_tail,
-                        )
-                else:
-                    logger.debug(
-                        "Using registration from aircraft data for %s: %s",
-                        icao_hex,
-                        heli_tail,
-                    )
-
-                # If still no registration found, use default value
-                if not heli_tail:
-                    heli_tail = "no reg"
-                    logger.debug(
-                        "No registration found for %s, using default", icao_hex
-                    )
-
-                output += f" {heli_tail}"
-
-            except Exception as e:
-                logger.error(
-                    "Error processing registration for %s: %s", icao_hex, str(e)
-                )
-                heli_tail = "no reg"
-                output += " no reg"
-
-            if "flight" in plane:
-                callsign = str(plane["flight"]).strip()
-                logger.debug("Flight: %s", callsign)
-            else:
-                # callsign = "no_call"
-                # callsign = ""
-                # callsign = None
-                callsign = heli_tail
-
-            if "dbFlags" in plane:
-                dbFlags = plane["dbFlags"]
-            else:
-                dbFlags = ""
-
-            if "ownOp" in plane:
-                ownOp = plane["ownOp"]
-            else:
-                ownOp = None
 
             if icao_hex not in recent_flights:
                 recent_flights[icao_hex] = [callsign, 1]
@@ -552,14 +518,10 @@ def fcs_update_helidb(interval):
         try:
             # note that this is somewhat redundant to callsign processing before being in this if stanza
             # if "flight" in plane and not callsign or callsign is None:
-            if not callsign:
+            if "flight" in plane and not callsign:
                 # should never get here - should be handled above
                 logger.warning("Callsign is empty or None")
-                if "flight" in plane:
-                    callsign = str(plane["flight"]).strip()
-                else:
-                    callsign = heli_tail
-
+                callsign = str(plane["flight"]).strip()
             output += " <" + callsign + ">"
         except BaseException:
             logger.debug("No 'flight' field - using tail number: %s", heli_tail)
