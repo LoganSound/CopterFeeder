@@ -2,7 +2,7 @@
 services:
 
   feed_copterspotter:
-    image: feed_copterspotter
+    image: feed_copterspotter:20250201-01
     build:
       context: .
 
