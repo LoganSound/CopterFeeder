@@ -1,4 +1,3 @@
-# Build stage
 FROM python:3.12-slim AS builder
 
 # Add build metadata
@@ -20,17 +19,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 # Install build dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        gcc \
-        python3-dev \
-        && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends gcc
 
-# Install Python dependencies
 COPY requirements.txt .
-RUN pip wheel --no-deps --wheel-dir /build/wheels -r requirements.txt
 
-# Runtime stage
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
+
 FROM python:3.12-slim
 
 # Add runtime metadata
@@ -49,41 +43,22 @@ RUN groupadd -r copterspotter && \
 
 # Install runtime dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        curl \
-        iputils-ping \
-        ca-certificates \
-        && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends curl iputils-ping
 
-# Copy wheels and install dependencies
-COPY --from=builder /build/wheels /wheels
-COPY --from=builder /build/requirements.txt .
-RUN pip install --no-cache-dir /wheels/* && \
-    rm -rf /wheels
 
-# Copy application code
-COPY --chown=copterspotter:copterspotter feed_copterspotter.py .
-COPY --chown=copterspotter:copterspotter config/ ./config/
-
-# Create necessary directories with proper permissions
-RUN mkdir -p /app/data && \
-    chown -R copterspotter:copterspotter /app/data
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    TZ=UTC
-
-# Expose port
 EXPOSE 8999
 
-# Switch to non-root user
-USER copterspotter
+WORKDIR /app
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
-    CMD curl -f http://localhost:8999/health || exit 1
+COPY --from=builder /app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
 
-# Set default command
+RUN pip install --no-cache /wheels/*
+
+
+COPY feed_copterspotter.py .
+# 20241111 - removed copy of .env - see docker-compose "env_file:"" setting.
+# COPY .env .
+
+
 CMD ["python3", "feed_copterspotter.py", "-w", "-v"]
