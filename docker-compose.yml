@@ -25,4 +25,12 @@ services:
        - "host.docker.internal:host-gateway"
     ports:
       - 8999:8999
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '.5'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
     command: ["python3", "feed_copterspotter.py", "-i", "15", "-w", "-v"]

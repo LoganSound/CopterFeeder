@@ -6,7 +6,7 @@ services:
     build:
       dockerfile: Dockerfile
       tags:
-        - registry:5000/fcs/feed_copterspotter:pre-20250119
+        - registry:5000/fcs/feed_copterspotter:20250130-01
 
     x-bake:
       platforms:
@@ -14,10 +14,20 @@ services:
         - linux/arm64
 
     container_name: feed_copterspotter
-    privileged: true
-    restart: always
+    # privileged: true
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '.5'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
+    restart: unless-stopped
     environment:
       - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - TZ=UTC
     env_file: ".env"
     extra_hosts:
       #- host.docker.internal:172.17.0.1
