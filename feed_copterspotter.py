@@ -40,9 +40,10 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "202412261745_01"
+VERSION = "20250130-01"
 
 # Bills
+
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
@@ -118,6 +119,7 @@ CONF_FOLDERS = [
     "~/CopterFeeder",
     "~",
     ".",
+    "/app/data",
 ]
 
 # Hard Coding User/Pw etc is bad umkay
@@ -127,8 +129,8 @@ CONF_FOLDERS = [
 #    # FR24: dump1090-mutability
 #    # ADSBEXchange location: adsbexchange-feed
 #    # Readsb location: readsb
-#    MONGOUSER = ""
-#    MONGOPW = ""
+#    # MONGOUSER = ""
+#    # MONGOPW = ""
 
 
 # Deprecated with "requests" pull to localhost:8080
@@ -138,52 +140,75 @@ CONF_FOLDERS = [
 # Readsb location: readsb
 
 
-def mongo_client_insert(mydict):
+def mongo_client_insert(mydict, dbFlags):
     """
-    Insert one entry into Mongo db
+    Insert one entry into MongoDB using the MongoDB client.
 
-    This function is largely deprecated in favor of the https insert
+    Args:
+        mydict (dict): Dictionary containing the helicopter data to insert
+        dbFlags (str): Flags to determine which collection to use
 
+    Returns:
+        ObjectId or None: Returns the inserted document's ID if successful, None if failed
     """
-
-    #   password = urllib.parse.quote_plus(MONGOPW)
-
-    #   This needs to be wrapped in a try/except
-    myclient = MongoClient(
-        "mongodb+srv://"
-        + MONGOUSER
-        + ":"
-        + MONGOPW
-        # + "@helicoptersofdc.sq5oe.mongodb.net/?retryWrites=true&w=majority"
-        + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
-    )
-
-    #   This needs to be wrapped in a try/except
+    myclient = None
     try:
+        # Construct MongoDB connection URI
+        mongo_uri = (
+            "mongodb+srv://"
+            + MONGOUSER
+            + ":"
+            + MONGOPW
+            + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/"
+            + "?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
+        )
 
+        # Connect with timeout and retry options
+        myclient = MongoClient(
+            mongo_uri,
+            serverSelectionTimeoutMS=5000,  # 5 second timeout
+            connectTimeoutMS=5000,
+            retryWrites=True,
+        )
+
+        # Test connection
+        myclient.admin.command("ping")
+
+        # Select database and collection
         mydb = myclient["HelicoptersofDC-2023"]
-        mycol = mydb["ADSB"]
-        ret_val = mycol.insert_one(mydict)
+        collection_name = "ADSB-mil" if dbFlags and int(dbFlags) & 1 else "ADSB"
+        mycol = mydb[collection_name]
 
-        # if ret_val.acknowledged is True:
+        # Insert document
+        result = mycol.insert_one(mydict)
 
-        logger.info("Mongo Inserted Object id: %s", ret_val.inserted_id)
-        # Adds too many metrics: #fcs_mongo_inserts.labels(status_code=ret_val).inc()
-
-        return ret_val.inserted_id
+        if result.acknowledged:
+            logger.info(
+                "Successfully inserted document with ID: %s into %s",
+                result.inserted_id,
+                collection_name,
+            )
+            return result.inserted_id
+        else:
+            logger.error("Insert was not acknowledged by MongoDB")
+            return None
 
     except ConnectionFailure as e:
-        logger.error("Failed to connect to MongoDB: %s ", e)
+        logger.error("Failed to connect to MongoDB: %s", e)
+        return None
     except OperationFailure as e:
-        logger.error("An error occurred during insertion: %s", e)
+        logger.error("MongoDB operation failed: %s", e)
+        return None
     except Exception as e:
-        logger.error("An unexpected error occurred: %s", e)
+        logger.error("Unexpected error during MongoDB operation: %s", e)
+        return None
     finally:
-        if "myclient" in locals():
+        if myclient:
             myclient.close()
+            logger.debug("MongoDB connection closed")
 
 
-def mongo_https_insert(mydict):
+def mongo_https_insert(mydict, dbFlags):
     """
     Insert into Mongo using HTTPS requests call
     This will be deprecated September 2024
@@ -206,50 +231,114 @@ def mongo_https_insert(mydict):
 
 
 def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
-    """Dump recents if we get a sigusr1"""
-    signame = signal.Signals(signum).name
-    logger.info(f"Signal handler dump_recents called with signal {signame} ({signum})")
+    """
+    Dump information about recently seen aircraft to the logs.
 
-    logger.info("Dumping %d entries...", len(recent_flights))
+    This function is primarily used as a signal handler for SIGUSR1 but can also be called
+    directly. It provides a summary of all aircraft currently being tracked, including their
+    ICAO hex codes, flight numbers/callsigns, and how many times they've been seen.
 
-    for hex_icao in sorted(recent_flights):
-        logger.info(
-            "hex_icao: %s flight: %s seen: %d",
-            hex_icao,
-            recent_flights[hex_icao][0],
-            recent_flights[hex_icao][1],
-        )
+    Args:
+        signum: Signal number that triggered this handler (defaults to SIGUSR1)
+        frame: Current stack frame (unused, required for signal handler interface)
+    """
+    try:
+        # Log signal information if called as signal handler
+        if signum:
+            signame = signal.Signals(signum).name
+            logger.info(
+                f"Signal handler dump_recents called with signal {signame} ({signum})"
+            )
+
+        # Handle empty recent_flights case
+        if not recent_flights:
+            logger.info("No recent flights to dump")
+            return
+
+        # Log summary header with timestamp
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        logger.info("=== Recent Flights Dump at %s ===", current_time)
+        logger.info("Total aircraft being tracked: %d", len(recent_flights))
+
+        # Sort and dump detailed aircraft information
+        for hex_icao in sorted(recent_flights):
+            flight, seen_count = recent_flights[hex_icao]
+            aircraft_type = heli_types.get(hex_icao, {}).get("type", "Unknown")
+            logger.info(
+                "Aircraft: %s | Type: %s | Flight: %s | Times seen: %d",
+                hex_icao.upper(),
+                aircraft_type,
+                flight or "No Callsign",
+                seen_count,
+            )
+
+        logger.info("=== End of Dump ===")
+
+    except Exception as e:
+        logger.error("Error in dump_recents: %s", str(e))
+        # Re-raise if this wasn't called as a signal handler
+        if not signum:
+            raise
 
 
 def clean_source(source) -> str:
-
     """
-    Ugly if/else to clean up source
+    Normalize aircraft data source identifiers to standard format.
 
+    Args:
+        source (str | None): Raw source identifier from aircraft data
+
+    Returns:
+        str: Normalized source identifier
+
+    Source mappings:
+        - None, "unknown" -> "unkn"
+        - "adsb*" -> "adsb"
+        - "adsr*" -> "adsr"
+        - "mlat" -> "mlat"
+        - "adsb_icao_nt", "mode_s" -> "modeS"
+        - "tisb*" -> "tisb"
+        - "adsc" -> "adsc"
+        - "other" -> "other"
+
+    Example:
+        >>> clean_source("adsb_icao")
+        "adsb"
+        >>> clean_source(None)
+        "unkn"
     """
+    try:
+        # Handle None or non-string input
+        if source is None:
+            return "unkn"
 
-    if source is None:
-        source = "unkn"
-    elif source[:4] == "adsb":
-        source = "adsb"
-    elif source[:4] == "adsr":
-        source = "adsr"
-    elif source == "mlat":
-        source = "mlat"
-    elif source == "adsb_icao_nt":
-        ssource = "modeS"
-    elif source == "mode_s":
-        source = "modeS"
-    elif source[:4] == "tisb":
-        source = "tisb"
-    elif source == "adsc":
-        source = "adsc"
-    elif source == "other":
-        source = "other"
-    elif source == "unknown":
-        source = "unkn"
+        # Ensure source is string and lowercase for comparison
+        source = str(source).lower()
 
-    return source
+        # Define source mappings
+        SOURCE_MAPPINGS = {
+            "unknown": "unkn",
+            "mlat": "mlat",
+            "adsb_icao_nt": "modeS",
+            "mode_s": "modeS",
+            "adsc": "adsc",
+            "other": "other",
+        }
+
+        # Check prefix matches first
+        if source.startswith("adsb"):
+            return "adsb"
+        if source.startswith("adsr"):
+            return "adsr"
+        if source.startswith("tisb"):
+            return "tisb"
+
+        # Return mapped value or "unkn" if no match found
+        return SOURCE_MAPPINGS.get(source, "unkn")
+
+    except Exception as e:
+        logger.error("Error cleaning source identifier: %s - Error: %s", source, str(e))
+        return "unkn"
 
 
 @fcs_update_heli_time.time()
@@ -363,70 +452,102 @@ def fcs_update_helidb(interval):
         heli_type = ""
         heli_tail = ""
 
+        # if search_bills(icao_hex, "hex") is not None:
+        #     logger.debug("%s found in Bills", icao_hex)
+        # else:
+        #     logger.debug("%s not found in Bills", icao_hex)
+
         try:
             icao_hex = str(plane["hex"]).lower()
 
         except BaseException:
             output += " Error coverting to lowercase"
 
-        try:
-            # icao_hex = str(plane["hex"]).lower()
-            # heli_type = find_helis(icao_hex)
-            heli_type = search_bills(icao_hex, "type")
-            if heli_type is not None:
-                output += " " + heli_type
-            # heli_tail = search_bills(icao_hex, "tail")
-            else:
-                output += " no type "
-        except BaseException:
-            output += " no type "
-
-        try:
-            # icao_hex = str(plane["hex"]).lower()
-            # heli_type = find_helis(icao_hex)
-            # heli_type = search_bills(icao_hex, "type")
-
-            if "r" in plane:
-                heli_tail = str(plane["r"])
-
-            # if not heli_tail or heli_tail is None:
-            if not heli_tail:
-                heli_tail = search_bills(icao_hex, "tail")
-
-            if heli_tail is not None:
-                output += " " + heli_tail
-            else:
-                output += " no reg"
-
-        except BaseException:
-            output += " no reg"
-
-        if search_bills(icao_hex, "hex") is not None:
-            logger.debug("%s found in Bills", icao_hex)
-        else:
-            logger.debug("%s not found in Bills", icao_hex)
-
         if "category" in plane:
             category = plane["category"]
         else:
             category = "Unk"
 
-        if "flight" in plane:
-            callsign = str(plane["flight"]).strip()
-            logger.debug("Flight: %s", callsign)
-        else:
-            # callsign = "no_call"
-            # callsign = ""
-            # callsign = None
-            callsign = heli_tail
-
-        if "dbFlags" in plane:
-            dbFlags = plane["dbFlags"]
-        else:
-            dbFlags = ""
-
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
         if (search_bills(icao_hex, "hex") != None) or category == "A7":
+
+            try:
+                # icao_hex = str(plane["hex"]).lower()
+                # heli_type = find_helis(icao_hex)
+                heli_type = search_bills(icao_hex, "type")
+                if heli_type is not None:
+                    logger.debug(f"Using heli_type from bills: {heli_type}")
+                elif "t" in plane and plane["t"] != "":
+                    heli_type = str(plane["t"])
+                    add_to_htypes(icao_hex, "type", heli_type)
+                    add_to_htypes(icao_hex, "src", "spot")
+                    logger.debug(f"Using heli_type from aircraft.json: {heli_type}")
+                # heli_tail = search_bills(icao_hex, "tail")
+                else:
+                    heli_type = "no type"
+                    logger.debug(f"No heli_type identified: {heli_type}")
+                output += " " + heli_type
+
+            except BaseException:
+                output += " no type "
+
+            try:
+                # icao_hex = str(plane["hex"]).lower()
+                # heli_type = find_helis(icao_hex)
+                # heli_type = search_bills(icao_hex, "type")
+
+                heli_tail = str(plane.get("r", "")).strip()
+
+                # If no registration found in aircraft data, check bills database
+                if not heli_tail:
+                    heli_tail = search_bills(icao_hex, "tail")
+                    if heli_tail:
+                        logger.debug(
+                            "Using registration from bills database for %s: %s",
+                            icao_hex,
+                            heli_tail,
+                        )
+                else:
+                    logger.debug(
+                        "Using registration from aircraft data for %s: %s",
+                        icao_hex,
+                        heli_tail,
+                    )
+
+                # If still no registration found, use default value
+                if not heli_tail:
+                    heli_tail = "no reg"
+                    logger.debug(
+                        "No registration found for %s, using default", icao_hex
+                    )
+
+                output += f" {heli_tail}"
+
+            except Exception as e:
+                logger.error(
+                    "Error processing registration for %s: %s", icao_hex, str(e)
+                )
+                heli_tail = "no reg"
+                output += " no reg"
+
+            if "flight" in plane:
+                callsign = str(plane["flight"]).strip()
+                logger.debug("Flight: %s", callsign)
+            else:
+                # callsign = "no_call"
+                # callsign = ""
+                # callsign = None
+                callsign = heli_tail
+
+            if "dbFlags" in plane:
+                dbFlags = plane["dbFlags"]
+            else:
+                dbFlags = ""
+
+            if "ownOp" in plane:
+                ownOp = plane["ownOp"]
+            else:
+                ownOp = None
 
             if icao_hex not in recent_flights:
                 recent_flights[icao_hex] = [callsign, 1]
@@ -489,12 +610,16 @@ def fcs_update_helidb(interval):
                     heli_type or "Unknown",
                     dbFlags,
                 )
+        else:
+            logger.debug("%s Not a rotorcraft ", icao_hex)
+            continue
 
         # if not heli_type or heli_type is None:
-        if not heli_type:
-            # This short circuits parsing of aircraft with unknown icao_hex codes
-            logger.debug("%s Not a known rotorcraft ", icao_hex)
-            continue
+        # if not heli_type:
+        #     # This short circuits parsing of aircraft with unknown icao_hex codes
+
+        #     logger.debug("%s Not a known rotorcraft ", icao_hex)
+        #     continue
 
         logger.debug("Parsing Helicopter: %s", icao_hex)
 
@@ -518,10 +643,14 @@ def fcs_update_helidb(interval):
         try:
             # note that this is somewhat redundant to callsign processing before being in this if stanza
             # if "flight" in plane and not callsign or callsign is None:
-            if "flight" in plane and not callsign:
+            if not callsign:
                 # should never get here - should be handled above
                 logger.warning("Callsign is empty or None")
-                callsign = str(plane["flight"]).strip()
+                if "flight" in plane:
+                    callsign = str(plane["flight"]).strip()
+                else:
+                    callsign = heli_tail
+
             output += " <" + callsign + ">"
         except BaseException:
             logger.debug("No 'flight' field - using tail number: %s", heli_tail)
@@ -648,55 +777,109 @@ def fcs_update_helidb(interval):
                     "rssi": rssi,
                     "feeder": FEEDER_ID,
                     "source": source,
+                    "dbFlags": dbFlags,
+                    "ownOp": ownOp,
                     # readableTime - string representation of Datetime in EST timezone
                     "readableTime": f"{est_time.strftime('%Y-%m-%d %H:%M:%S')} ({est_time.strftime('%I:%M:%S %p')})",
                 },
                 "geometry": {"type": "Point", "coordinates": geometry},
             }
-            ret_val = mongo_insert(mydict)
+            ret_val = mongo_insert(mydict, dbFlags)
             # return ret_val
             logger.debug("Mongo_insert return: %s ", ret_val)
             # if ret_val: ... do something
 
 
-def find_helis_old(icao_hex) -> str:
+def find_helis(icao_hex) -> str | None:
     """
-    Deprecated
-    Check if an icao hex code is in Bills catalog of DC Helicopters
-    returns the type of helicopter if known
+    Check if an ICAO hex code is in the known helicopter database and return its type.
+
+    Args:
+        icao_hex (str): The ICAO hex code to look up (case-insensitive)
+
+    Returns:
+        str | None: The helicopter type if found, None if not found
+
+    Example:
+        >>> find_helis("ac9f65")
+        "MD52"
+        >>> find_helis("unknown")
+        None
     """
+    try:
+        # Ensure icao_hex is lowercase for consistent lookup
+        icao_hex = str(icao_hex).lower()
+        logger.debug("Checking helicopter type for ICAO: %s", icao_hex)
 
-    with open("bills_operators.csv", encoding="UTF-8") as csvfile:
-        opsread = csv.DictReader(csvfile)
-        heli_type = ""
-        for row in opsread:
-            if icao_hex.upper() == row["hex"]:
-                heli_type = row["type"]
-        return heli_type
+        # Check if ICAO exists in database and has a type
+        if icao_hex in heli_types and heli_types[icao_hex].get("type"):
+            return heli_types[icao_hex]["type"]
 
+        return None
 
-def find_helis(icao_hex) -> str:
-    """
-    check if icao is known and return type or empty string
-    """
-    logger.debug("Checking for: %s", icao_hex)
-    if heli_types[icao_hex]["type"]:
-        return heli_types[icao_hex]["type"]
-
-    return ""
+    except Exception as e:
+        logger.error("Error looking up helicopter type for %s: %s", icao_hex, str(e))
+        return None
 
 
-def search_bills(icao_hex, column_name) -> str | None:
-    """
-    check if icao is known return callsign or empty string
-    """
-    logger.debug("Checking for: %s", icao_hex)
-    if icao_hex in heli_types:
-        if heli_types[icao_hex][column_name]:
-            return heli_types[icao_hex][column_name]
+def add_to_htypes(icao_hex: str, column_name: str, value: str):
+    try:
+        if icao_hex not in heli_types:
+            heli_types[icao_hex] = {column_name: value}
         else:
-            return ""
-    else:
+            heli_types[icao_hex][column_name] = value
+
+    except Exception as e:
+        logger.error("Error adding to heli_types for %s: %s", icao_hex, str(e))
+
+
+def search_bills(icao_hex: str, column_name: str) -> str | None:
+    """
+    Search for a specific column value in the helicopter database by ICAO hex code.
+
+    Args:
+        icao_hex (str): The ICAO hex code to look up (case-insensitive)
+        column_name (str): The column/field name to retrieve (e.g., 'type', 'tail', 'operator')
+
+    Returns:
+        str | None:
+            - The requested value if found
+            - Empty string if ICAO exists but requested field is empty
+            - None if ICAO not found or error occurs
+
+    Example:
+        >>> search_bills("ac9f65", "type")
+        "MD52"
+        >>> search_bills("ac9f65", "tail")
+        "N12345"
+        >>> search_bills("unknown", "type")
+        None
+    """
+    try:
+        # Ensure icao_hex is lowercase for consistent lookup
+        icao_hex = str(icao_hex).lower()
+        logger.debug(
+            "Searching bills database - ICAO: %s, Column: %s", icao_hex, column_name
+        )
+
+        # Check if ICAO exists in database
+        if icao_hex not in heli_types:
+            logger.debug("ICAO %s not found in database", icao_hex)
+            return None
+
+        # Get the requested field, defaulting to empty string if field exists but is empty
+        value = heli_types[icao_hex].get(column_name)
+
+        # Return empty string for null/empty values, otherwise return the value
+        return "" if value is None else value
+
+    except Exception as e:
+        logger.error(
+            "Error searching bills database - ICAO: %s, Column: %s, Error: %s",
+            icao_hex,
+            column_name,
+            str(e),
+        )
         return None
 
 
@@ -726,21 +909,29 @@ def load_helis_from_url(bills_url):
         tmp_bills_age = time()
         # Saving Copy for subsequent operations
         # Note: it would be best if we were in the right directory before we tried to write
-        with open("bills_operators_tmp.csv", "w", encoding="UTF-8") as tmpcsvfile:
+        with open(
+            conf_folder + "/bills_operators_tmp.csv", "w", encoding="UTF-8"
+        ) as tmpcsvfile:
             try:
                 tmpcsvfile.write(bills.text)
                 tmpcsvfile.close()
-                if os.path.exists("bills_operators.csv"):
+                if os.path.exists(conf_folder + "/bills_operators.csv"):
                     old_bills_age = check_bills_age()
                 else:
                     old_bills_age = 0
 
                 if old_bills_age > 0:
                     os.rename(
-                        "bills_operators.csv",
-                        "bills_operators_" + strftime("%Y%m%d-%H%M%S") + ".csv",
+                        conf_folder + "/bills_operators.csv",
+                        conf_folder
+                        + "/bills_operators_"
+                        + strftime("%Y%m%d-%H%M%S")
+                        + ".csv",
                     )
-                os.rename("bills_operators_tmp.csv", "bills_operators.csv")
+                os.rename(
+                    conf_folder + "/bills_operators_tmp.csv",
+                    conf_folder + "/bills_operators.csv",
+                )
                 logger.info(
                     "Bills File Updated from web at %s",
                     ctime(tmp_bills_age),
@@ -793,37 +984,95 @@ def load_helis_from_file():
 
 def check_bills_age() -> float:
     """
-    Checks age of file - returns zero if File not Found
+    Get the age (modification time) of the bills_operators file.
+
+    Returns:
+        float:
+            - Unix timestamp of file's last modification time
+            - 0.0 if file not found or error occurs
+
+    Note:
+        The bills_operators global variable must be properly set before calling this function.
+        A return value of 0.0 indicates the file doesn't exist or isn't accessible.
+
+    Example:
+        >>> check_bills_age()
+        1705987654.123  # File exists, last modified at this timestamp
+        >>> check_bills_age()
+        0.0  # File not found or error occurred
     """
     try:
+        # Get file modification time
         bills_age = os.path.getmtime(bills_operators)
-        logger.debug("Bills Age: %f", bills_age)
+
+        # Convert timestamp to readable format for logging
+        readable_time = datetime.fromtimestamp(bills_age).strftime("%Y-%m-%d %H:%M:%S")
+        logger.debug(
+            "Bills file last modified at %s (timestamp: %.3f)", readable_time, bills_age
+        )
+
+        return bills_age
 
     except FileNotFoundError:
-        bills_age = 0
+        logger.warning("Bills operators file not found at: %s", bills_operators)
+        return 0.0
 
-    logger.debug("Bills Age: %f", bills_age)
-    return bills_age
+    except (PermissionError, OSError) as e:
+        logger.error(
+            "Error accessing bills operators file at %s: %s", bills_operators, str(e)
+        )
+        return 0.0
 
 
-def init_prometheus():
-    global fcs_rx, fcs_mongo_inserts, fcs_sources
-    global fcs_update_heli_time
+def init_prometheus() -> Counter:
+    """
+    Initialize Prometheus metrics for monitoring helicopter data collection.
 
-    fcs_rx = Counter("fcs_rx_msgs", "Messages Received", ["icao", "cs"])
-    fcs_mongo_inserts = Counter("fcs_mongo_inserts", "Mongo Inserts", ["status_code"])
-    fcs_sources = Counter("fcs_msg_srcs", "Message Sources", ["source"])
+    Initializes global counters for:
+    - Received messages (by ICAO and callsign)
+    - MongoDB insert operations (by status code)
+    - Message sources (by source type)
+    - Update operation timing
 
-    return fcs_rx
+    Returns:
+        Counter: The fcs_rx counter for tracking received messages
 
-    # tx = Gauge(
-    #     f"switch_interface_tx_packets",
-    #     "Total transmitted packets on interface",
-    #     ["host", "id"],
-    # )
+    Raises:
+        Exception: If there's an error initializing any metric
 
-    # tx.labels("foo", "bar").set(0)
-    # tx.labels("boo", "baz").set(0)
+    Note:
+        This function modifies global variables for metric tracking.
+        All metrics are prefixed with 'fcs_' (Feed CopterSpotter).
+    """
+    try:
+        # Declare globals to be modified
+        global fcs_rx, fcs_mongo_inserts, fcs_sources, fcs_update_heli_time
+
+        # Initialize counters with descriptive labels
+        fcs_rx = Counter(
+            name="fcs_rx_msgs",
+            documentation="Messages received from aircraft",
+            labelnames=["icao", "cs"],
+        )
+
+        fcs_mongo_inserts = Counter(
+            name="fcs_mongo_inserts",
+            documentation="MongoDB insert operations by status code",
+            labelnames=["status_code"],
+        )
+
+        fcs_sources = Counter(
+            name="fcs_msg_srcs",
+            documentation="Message sources by type (ADSB, MLAT, etc)",
+            labelnames=["source"],
+        )
+
+        logger.info("Prometheus metrics initialized successfully")
+        return fcs_rx
+
+    except Exception as e:
+        logger.error("Failed to initialize Prometheus metrics: %s", str(e))
+        raise
 
 
 # Decorate function with metric.
@@ -1016,10 +1265,12 @@ if __name__ == "__main__":
         conf_folder = os.path.abspath(conf_folder)
         # .env is probably not unique enough to search for
         if os.path.exists(os.path.join(conf_folder, ".env")) and os.path.exists(
-            os.path.join(conf_folder, ".bills_operators.csv")
+            os.path.join(conf_folder, "bills_operators.csv")
         ):
             logger.debug("Conf folder found: %s", conf_folder)
             break
+        else:
+            conf_folder = "/app/data"
 
     env_file = os.path.join(conf_folder, ".env")
 
