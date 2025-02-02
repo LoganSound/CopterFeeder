@@ -1212,7 +1212,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.version:
-        print("{parser.prog} version: {VERSION} from {CODE_DATE}")
+        print("{parser.prog} version: {VERSION} from: {CODE_DATE}")
         sys.exit()
 
     logging.basicConfig(level=logging.WARN)
@@ -1359,7 +1359,7 @@ if __name__ == "__main__":
             port = 8080
 
     # Logging should be running by now
-    logger.info(f"Starting {parser.prog} version: {VERSION} from {CODE_DATE}")
+    logger.info(f"Starting {parser.prog} version: {VERSION} from: {CODE_DATE}")
 
     if server and port:
         AIRCRAFT_URL = f"http://{server}:{port}/data/aircraft.json"
