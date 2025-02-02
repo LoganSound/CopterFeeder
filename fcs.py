@@ -27,7 +27,7 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 
 ## YYYYMMDD_HHMM_REV
-CODE_DATE = "20250202-01"
+CODE_DATE = "20250202"
 VERSION = "0.0.1"
 
 
@@ -1212,7 +1212,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.version:
-        print("{parser.prog} version: {VERSION}")
+        print("{parser.prog} version: {VERSION} from {CODE_DATE}")
         sys.exit()
 
     logging.basicConfig(level=logging.WARN)
@@ -1359,7 +1359,7 @@ if __name__ == "__main__":
             port = 8080
 
     # Logging should be running by now
-    logger.info(f"Starting {parser.prog} version: {VERSION}")
+    logger.info(f"Starting {parser.prog} version: {VERSION} from {CODE_DATE}")
 
     if server and port:
         AIRCRAFT_URL = f"http://{server}:{port}/data/aircraft.json"
