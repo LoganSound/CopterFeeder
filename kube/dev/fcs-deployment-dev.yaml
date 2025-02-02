@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.35.0 (9532ceef3)
   labels:
     io.kompose.service: fcs-dev
-  name: fcs-dev
+  name: fcs-deployment
   namespace: fcs-dev
 spec:
   replicas: 1
@@ -24,7 +24,7 @@ spec:
       containers:
         - args:
             - python3
-            - feed_copterspotter.py
+            - fcs.py
             - -i
             - "15"
             - -w
@@ -35,35 +35,35 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: FEEDER_ID
-                  name: fcs-dev
+                  name: fcs-dev-env
             - name: MONGOPW
               valueFrom:
                 configMapKeyRef:
                   key: MONGOPW
-                  name: fcs-dev
+                  name: fcs-dev-env
             - name: MONGOUSER
               valueFrom:
                 configMapKeyRef:
                   key: MONGOUSER
-                  name: fcs-dev
+                  name: fcs-dev-env
             - name: MONGO_URL
               valueFrom:
                 configMapKeyRef:
                   key: MONGO_URL
-                  name: fcs-dev
+                  name: fcs-dev-env
             - name: PORT
               valueFrom:
                 configMapKeyRef:
                   key: PORT
-                  name: fcs-dev
+                  name: fcs-dev-env
             - name: PYTHONUNBUFFERED
               value: "1"
             - name: SERVER
               valueFrom:
                 configMapKeyRef:
                   key: SERVER
-                  name: fcs-dev
-          image: registry:5000/fcs/feed_copterspotter:20250201-01
+                  name: fcs-dev-env
+          image: registry:5000/fcs/fcs:20250201-01
           name: fcs-dev
           ports:
             - containerPort: 8999
