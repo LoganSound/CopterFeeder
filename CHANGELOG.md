@@ -1,8 +1,11 @@
-## Unreleased
-- Initial release using commitizen and semantic versioning
-- Added pre-commit hooks
-- Added a changelog
-- Added a pre-commit hook to check the changelog
-- Added a pre-commit hook to check the version
-- Added a pre-commit hook to check the code
-- Added a pre-commit hook to check the code
+## 0.1.1 (2025-02-02)
+
+### Fix
+
+- Added Various docstring fixes
+
+## 0.1.0 (2025-02-02)
+
+### Feat
+
+- Added Build Date reporting
