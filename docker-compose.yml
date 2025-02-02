@@ -1,8 +1,8 @@
 
 services:
 
-  feed_copterspotter:
-    image: feed_copterspotter:20250201-01
+  fcs:
+    image: fcs:20250201-01
     build:
       context: .
 
@@ -14,7 +14,7 @@ services:
     #     - linux/amd64
     #     - linux/arm64
 
-    container_name: feed_copterspotter
+    container_name: fcs
     privileged: true
     restart: always
     environment:
@@ -33,4 +33,4 @@ services:
         reservations:
           memory: 256M
           cpus: '0.5'
-    command: ["python3", "feed_copterspotter.py", "-i", "15", "-w", "-v"]
+    command: ["python3", "fcs.py", "-i", "15", "-w", "-v"]

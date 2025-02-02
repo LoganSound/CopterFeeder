@@ -9,6 +9,6 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    io.kompose.service: feed-copterspotter-env
-  name: fcs-env
+    io.kompose.service: fcs-prod
+  name: fcs-prod-env
   namespace: fcs-prod

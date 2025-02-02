@@ -5,65 +5,66 @@ metadata:
     kompose.cmd: kompose -f ./kube-docker-compose.yml_kube_ignore -n fcs convert
     kompose.version: 1.35.0 (9532ceef3)
   labels:
-    io.kompose.service: feed-copterspotter
-  name: feed-copterspotter
-  namespace: fcs-prod
+    io.kompose.service: fcs-dev
+  name: fcs-deployment
+  namespace: fcs-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: feed-copterspotter
+      io.kompose.service: fcs-dev
   template:
     metadata:
       annotations:
         kompose.cmd: kompose -f ./kube-docker-compose.yml_kube_ignore -n fcs convert
         kompose.version: 1.35.0 (9532ceef3)
       labels:
-        io.kompose.service: feed-copterspotter
+        io.kompose.service: fcs-dev
     spec:
       containers:
         - args:
             - python3
-            - feed_copterspotter.py
+            - fcs.py
             - -i
             - "15"
             - -w
             - -v
+
           env:
             - name: FEEDER_ID
               valueFrom:
                 configMapKeyRef:
                   key: FEEDER_ID
-                  name: fcs-env
+                  name: fcs-dev-env
             - name: MONGOPW
               valueFrom:
                 configMapKeyRef:
                   key: MONGOPW
-                  name: fcs-env
+                  name: fcs-dev-env
             - name: MONGOUSER
               valueFrom:
                 configMapKeyRef:
                   key: MONGOUSER
-                  name: fcs-env
+                  name: fcs-dev-env
             - name: MONGO_URL
               valueFrom:
                 configMapKeyRef:
                   key: MONGO_URL
-                  name: fcs-env
+                  name: fcs-dev-env
             - name: PORT
               valueFrom:
                 configMapKeyRef:
                   key: PORT
-                  name: fcs-env
+                  name: fcs-dev-env
             - name: PYTHONUNBUFFERED
               value: "1"
             - name: SERVER
               valueFrom:
                 configMapKeyRef:
                   key: SERVER
-                  name: fcs-env
-          image: registry:5000/fcs/feed_copterspotter:20250201-01
-          name: feed-copterspotter
+                  name: fcs-dev-env
+          image: registry:5000/fcs/fcs:20250201-01
+          name: fcs-dev
           ports:
             - containerPort: 8999
               protocol: TCP

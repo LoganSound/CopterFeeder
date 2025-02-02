@@ -4,6 +4,9 @@
 # Dev requirements
 ipython
 pre-commit
+pre-commit-hooks
+black
+blacken-docs
 pytest
 pytest-cov
 pytest-mock

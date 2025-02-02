@@ -63,7 +63,7 @@ RUN pip install --no-cache-dir /wheels/* && \
     rm -rf /wheels
 
 # Copy application code
-COPY --chown=copterspotter:copterspotter feed_copterspotter.py .
+COPY --chown=copterspotter:copterspotter fcs.py .
 COPY --chown=copterspotter:copterspotter config/ ./config/
 
 # Create necessary directories with proper permissions
@@ -86,4 +86,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
     CMD curl -f http://localhost:8999/health || exit 1
 
 # Set default command
-CMD ["python3", "feed_copterspotter.py", "-w", "-v"]
+CMD ["python3", "fcs.py", "-i", "15", "-w", "-v"]
