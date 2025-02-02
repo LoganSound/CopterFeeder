@@ -328,7 +328,30 @@ def clean_source(source) -> str:
 
 @fcs_update_heli_time.time()
 def fcs_update_helidb(interval):
-    """Main"""
+    """
+    Process and upload rotorcraft position data to the Helicopters of DC database.
+
+    This function is the main processing loop that:
+    1. Retrieves aircraft data from either a local file or URL endpoint
+    2. Filters for rotorcraft based on category or known ICAO codes
+    3. Processes position and flight data
+    4. Uploads valid entries to MongoDB
+    5. Updates tracking metrics
+
+    Args:
+        interval (int): Maximum age in seconds for position data to be considered valid
+
+    Returns:
+        None: Function runs continuously unless an error occurs
+        Exception: Returns error object if a critical error occurs during processing
+
+    Metrics:
+        - Updates Prometheus metrics for monitoring
+        - Maintains recent_flights global dictionary for tracking
+
+    Note:
+        Function is decorated with @fcs_update_heli_time.time() for performance monitoring
+    """
 
     # local_time = datetime.now().astimezone()
 
@@ -870,7 +893,26 @@ def search_bills(icao_hex: str, column_name: str) -> str | None:
 
 def load_helis_from_url(bills_url):
     """
-    Loads helis dictionary with bills_operators pulled from URL
+    Load helicopter data from a remote URL into a dictionary.
+
+    Downloads and processes helicopter operator data from a specified URL, saves a local
+    copy of the data, and builds a dictionary mapping ICAO hex codes to helicopter details.
+
+    Args:
+        bills_url (str): URL pointing to the CSV file containing helicopter operator data
+
+    Returns:
+        tuple[dict, float | None]:
+            - dict: Mapping of lowercase ICAO hex codes to helicopter details
+            - float: Timestamp of when the data was downloaded, or None if download failed
+
+    Raises:
+        requests.exceptions.RequestException: If there's an error downloading the data
+
+    Note:
+        - Creates backup of existing bills_operators.csv before updating
+        - Retries with increasing delay on timeout
+        - Saves downloaded data to local CSV file for future use
     """
     helis_dict = {}
 
@@ -941,8 +983,27 @@ def load_helis_from_url(bills_url):
 
 def load_helis_from_file():
     """
-    Read Bills catalog of DC Helicopters into array
-    returns dictionary of helis and types
+    Load helicopter data from the local bills_operators CSV file.
+
+    Reads the local bills_operators.csv file containing helicopter operator data and
+    builds a dictionary mapping ICAO hex codes to helicopter details. Also checks
+    the age of the file to warn about outdated data.
+
+    Returns:
+        tuple[dict, float]:
+            - dict: Mapping of lowercase ICAO hex codes to helicopter details
+                   (including type, tail number, and operator information)
+            - float: Unix timestamp of when the file was last modified
+
+    Note:
+        - Requires bills_operators global variable to be set with valid file path
+        - Logs warnings if file is more than 24 hours old
+        - All ICAO hex codes are converted to lowercase for consistency
+
+    Example:
+        >>> helis_dict, file_age = load_helis_from_file()
+        >>> print(helis_dict['ac9f65']['type'])
+        'MD52'
     """
     helis_dict = {}
 
@@ -1071,7 +1132,23 @@ def init_prometheus() -> Counter:
 
 def run_loop(interval, h_types):
     """
-    Run as loop and sleep specified interval
+    Main processing loop for helicopter data collection and monitoring.
+
+    Continuously runs the helicopter data collection process at specified intervals,
+    updating the bills database when needed and periodically dumping status information.
+
+    Args:
+        interval (int): Number of seconds to sleep between processing cycles
+        h_types (dict): Dictionary containing helicopter type information keyed by ICAO hex
+
+    Note:
+        - Checks bills_operators.csv age and updates from URL if older than BILLS_TIMEOUT
+        - Dumps helicopter status information once per hour by default
+        - Runs indefinitely until interrupted
+        - Uses global variables: BILLS_URL, BILLS_TIMEOUT
+
+    Example:
+        >>> run_loop(60, heli_types_dict)  # Run with 60-second intervals
     """
     dump_clock = 0
     # process_prometheus(random.random())
