@@ -86,4 +86,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
     CMD curl -f http://localhost:8999/health || exit 1
 
 # Set default command
-CMD ["python3", "feed_copterspotter.py", "-w", "-v"]
+CMD ["python3", "fcs.py", "-i", "15", "-w", "-v"]
