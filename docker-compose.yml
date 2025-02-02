@@ -1,7 +1,7 @@
 
 services:
 
-  feed_copterspotter:
+  fcs:
     image: fcs:20250201-01
     build:
       context: .

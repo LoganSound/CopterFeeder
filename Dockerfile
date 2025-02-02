@@ -63,7 +63,7 @@ RUN pip install --no-cache-dir /wheels/* && \
     rm -rf /wheels
 
 # Copy application code
-COPY --chown=copterspotter:copterspotter feed_copterspotter.py .
+COPY --chown=copterspotter:copterspotter fcs.py .
 COPY --chown=copterspotter:copterspotter config/ ./config/
 
 # Create necessary directories with proper permissions

@@ -1,7 +1,7 @@
 
 services:
 
-  feed_copterspotter:
+  fcs:
     image: fcs
     build:
       dockerfile: Dockerfile
