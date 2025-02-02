@@ -2,7 +2,7 @@
 services:
 
   fcs:
-    image: fcs:20250201-01
+    image: fcs:0.1.1
     build:
       context: .
 
