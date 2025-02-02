@@ -20,10 +20,3 @@ repos:
     id: blacken-docs
   repo: https://github.com/adamchainz/blacken-docs
   rev: 1.19.1
-- hooks:
-  - id: commitizen
-  - id: commitizen-branch
-    stages:
-    - pre-push
-  repo: https://github.com/commitizen-tools/commitizen
-  rev: v4.1.1
