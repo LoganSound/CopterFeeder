@@ -10,5 +10,5 @@ kind: ConfigMap
 metadata:
   labels:
     io.kompose.service: fcs-prod
-  name: fcs-prod
+  name: fcs-prod-env
   namespace: fcs-prod
