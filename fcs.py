@@ -4,39 +4,26 @@
 Upload rotorcraft positions to Helicopters of DC
 """
 
-import json
-import csv
-
-# unused
-
-# from datetime import timezone
-
-# import datetime
-import logging
+# Standard library imports
 import argparse
-import sys
+import csv
+import json
+import logging
 import os
-from time import sleep, ctime, time, strftime, gmtime
 import signal
-
-import requests
-import validators
-import daemon
-
+import sys
 from datetime import datetime, timezone
+from time import ctime, gmtime, sleep, strftime, time
 from zoneinfo import ZoneInfo
 
-from prometheus_client import start_http_server, Counter, Gauge, Summary
-
-# used for getting MONGOPW and MONGOUSER
-from dotenv import dotenv_values  # , set_key
-
-
-# only need one of these
+# Third party imports
+import daemon
+import requests
+import validators
+from dotenv import dotenv_values
+from prometheus_client import Counter, Gauge, Summary, start_http_server
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, OperationFailure
-
-# from pymongo import MongoClient
 
 
 ## YYYYMMDD_HHMM_REV
@@ -265,11 +252,7 @@ def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
             flight, seen_count = recent_flights[hex_icao]
             aircraft_type = heli_types.get(hex_icao, {}).get("type", "Unknown")
             logger.info(
-                "Aircraft: %s | Type: %s | Flight: %s | Times seen: %d",
-                hex_icao.upper(),
-                aircraft_type,
-                flight or "No Callsign",
-                seen_count,
+                f"Aircraft: {hex_icao.upper():6} | Type: {aircraft_type:4} | Flight: {flight or "No Callsign"} | Times seen: {seen_count}"
             )
 
         logger.info("=== End of Dump ===")

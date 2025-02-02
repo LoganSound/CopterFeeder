@@ -1,0 +1,10 @@
+[project]
+name = "FeedCopterSpotter"
+version = "0.0.1"
+
+[tool.commitizen]
+version_provider = "pep621"
+version_files = [
+    "pyproject.toml:version",
+    "fcs/__init__.py:__version__"
+]
