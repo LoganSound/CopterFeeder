@@ -22,8 +22,7 @@ repos:
   rev: 1.19.1
 - hooks:
   - id: commitizen
-  - id: commitizen-branch
     stages:
-    - pre-push
+    - commit-msg
   repo: https://github.com/commitizen-tools/commitizen
   rev: v4.1.1
