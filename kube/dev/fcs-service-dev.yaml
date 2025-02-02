@@ -5,13 +5,13 @@ metadata:
     kompose.cmd: kompose -f ./kube-docker-compose.yml_kube_ignore -n fcs convert
     kompose.version: 1.35.0 (9532ceef3)
   labels:
-    io.kompose.service: feed-copterspotter
-  name: fcs-service
-  namespace: fcs-prod
+    io.kompose.service: fcs-dev
+  name: fcs-dev
+  namespace: fcs-dev
 spec:
   ports:
     - name: "8999"
       port: 8999
       targetPort: 8999
   selector:
-    io.kompose.service: feed-copterspotter
+    io.kompose.service: fcs-dev
