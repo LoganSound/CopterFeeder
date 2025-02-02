@@ -6,7 +6,7 @@ services:
     build:
       dockerfile: Dockerfile
       tags:
-        - registry:5000/fcs/fcs:20250201-01
+        - registry:5000/fcs/fcs:20250202-01
 
     x-bake:
       platforms:

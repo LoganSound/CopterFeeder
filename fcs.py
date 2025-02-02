@@ -40,7 +40,7 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "20250201-01"
+VERSION = "20250202-01"
 
 # Bills
 
@@ -1373,6 +1373,9 @@ if __name__ == "__main__":
         else:
             port = 8080
 
+    # Logging should be running by now
+    logger.info(f"Starting {parser.prog} version: {VERSION}")
+
     if server and port:
         AIRCRAFT_URL = f"http://{server}:{port}/data/aircraft.json"
 
@@ -1391,7 +1394,7 @@ if __name__ == "__main__":
         AIRCRAFT_URL = None
         logger.debug("AIRCRAFT_URL set to None")
 
-    # probably need to have an option for different file names
+        # probably need to have an option for different file names
 
     heli_types = {}
     recent_flights = {}

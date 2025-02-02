@@ -3,7 +3,7 @@ FROM python:3.12-slim AS builder
 
 # Add build metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="20250201-01"
+LABEL version="20250202-01"
 LABEL description="Feed CopterSpotter Service"
 
 # Set build arguments
@@ -21,9 +21,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Install build dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        gcc \
-        python3-dev \
-        && \
+    gcc \
+    python3-dev \
+    && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -35,7 +35,7 @@ FROM python:3.12-slim
 
 # Add runtime metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="20250201-01"
+LABEL version="20250202-01"
 LABEL description="Feed CopterSpotter Service"
 
 # Set working directory
@@ -50,10 +50,10 @@ RUN groupadd -r copterspotter && \
 # Install runtime dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        curl \
-        iputils-ping \
-        ca-certificates \
-        && \
+    curl \
+    iputils-ping \
+    ca-certificates \
+    && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy wheels and install dependencies
