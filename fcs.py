@@ -28,7 +28,7 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 ## YYYYMMDD_HHMM_REV
 CODE_DATE = "20250202"
-VERSION = "0.0.1"
+VERSION = "0.1.0"
 
 
 # Bills

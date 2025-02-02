@@ -8,3 +8,4 @@ version_files = [
     "pyproject.toml:version",
     "fcs/__init__.py:__version__"
 ]
+update_changelog_on_bump = true
