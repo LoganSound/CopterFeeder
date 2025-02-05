@@ -6,8 +6,6 @@ version = "0.1.2"
 version_provider = "pep621"
 version_files = [
     "pyproject.toml:version",
-    "fcs/__init__.py:__version__",
-    "docker-compose.yml:image:registry:5000/fcs/fcs:$version",
     "docker-compose-buildx.yml:tags:registry:5000/fcs/fcs:$version",
     "docker-compose-buildx.yml:image:registry:5000/fcs/fcs:$version"
 ]
