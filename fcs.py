@@ -247,7 +247,9 @@ def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
         # Log summary header with timestamp
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logger.info("=== Recent Flights Dump at %s ===", current_time)
-        logger.info("Total aircraft being tracked: %d", len(recent_flights))
+        logger.info(
+            "Total aircraft being tracked: %d since %s", len(recent_flights), start_time
+        )
 
         # Sort and dump detailed aircraft information
         for hex_icao in sorted(recent_flights):
@@ -1437,6 +1439,7 @@ if __name__ == "__main__":
 
     # Logging should be running by now
     logger.info(f"Starting {parser.prog} version: {VERSION} from: {CODE_DATE}")
+    start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     if server and port:
         AIRCRAFT_URL = f"http://{server}:{port}/data/aircraft.json"
