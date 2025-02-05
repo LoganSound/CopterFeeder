@@ -5,6 +5,8 @@ version = "0.1.6"
 [tool.commitizen]
 version_provider = "pep621"
 version_files = [
+
+    "__version__.py:__version__",
     "pyproject.toml:version",
     "docker-compose.yml:image:fcs:$version",
     "docker-compose-buildx.yml:tags:registry:5000/fcs/fcs:$version",
