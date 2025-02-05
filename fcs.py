@@ -256,7 +256,7 @@ def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
             flight, seen_count = recent_flights[hex_icao]
             aircraft_type = heli_types.get(hex_icao, {}).get("type", "Unknown")
             logger.info(
-                f"Aircraft: {hex_icao.upper():6} | Type: {aircraft_type:4} | Flight: {(flight or "No Callsign"):7} | Times seen: {seen_count}"
+                f"Aircraft: {hex_icao.upper():6} | Type: {aircraft_type:4} | Flight: {(flight or "No Callsign"):8} | Times seen: {seen_count}"
             )
 
         logger.info("=== End of Dump ===")

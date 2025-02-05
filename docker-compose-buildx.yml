@@ -2,7 +2,7 @@
 services:
 
   fcs:
-    image: fcs
+    image: registry:5000/fcs/fcs:0.1.1
     build:
       dockerfile: Dockerfile
       tags:
