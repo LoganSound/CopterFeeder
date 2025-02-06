@@ -6,6 +6,7 @@ version = "0.2.16"
 version_provider = "pep621"
 version_files = [
     "__version__.py",
+    "fcs.py:VERSION",
     "docker-compose-buildx.yml",
     "kube/dev/fcs-deployment-dev.yaml",
     "kube/prod/fcs-deployment-prod.yaml",

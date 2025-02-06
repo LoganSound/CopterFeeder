@@ -25,11 +25,11 @@ from prometheus_client import Counter, Gauge, Summary, start_http_server
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, OperationFailure
 
-import __version__
+# import __version__
 
 ## YYYYMMDD_HHMM_REV
 CODE_DATE = "20250202"
-VERSION = __version__
+VERSION = "0.2.16"
 
 
 # Bills
