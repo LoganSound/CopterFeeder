@@ -1,3 +1,9 @@
+## 0.2.3 (2025-02-06)
+
+### Fix
+
+- **new_foo_file**: Removed extraneous foo file
+
 ## 0.2.2 (2025-02-06)
 
 ### Fix
