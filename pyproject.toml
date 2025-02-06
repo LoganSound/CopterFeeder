@@ -6,7 +6,8 @@ version = "0.2.7"
 version_provider = "pep621"
 version_files = [
     "__version__.py",
-    "pyproject.toml:version",
+    "docker-compose-buildx.yml",
+    "pyproject.toml:version"
 ]
 update_changelog_on_bump = true
 name = "cz_conventional_commits"
