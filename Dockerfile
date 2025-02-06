@@ -3,7 +3,7 @@ FROM python:3.12-slim AS builder
 
 # Add build metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="0.1.1"
+LABEL version="0.2.10"
 LABEL code_date="20250202"
 LABEL description="Feed CopterSpotter Service"
 
@@ -36,7 +36,7 @@ FROM python:3.12-slim
 
 # Add runtime metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="0.1.1"
+LABEL version="0.2.10"
 LABEL code_date="20250202"
 LABEL description="Feed CopterSpotter Service"
 
