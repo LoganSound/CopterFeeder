@@ -5,10 +5,8 @@ version = "0.2.5"
 [tool.commitizen]
 version_provider = "pep621"
 version_files = [
+    "__version__.py",
     "pyproject.toml:version",
-    "__version__.py:__version__",
-    "docker-compose.yml:image:$version",
-    "docker-compose-buildx.yml:image:$version"
 ]
 update_changelog_on_bump = true
 name = "cz_conventional_commits"
