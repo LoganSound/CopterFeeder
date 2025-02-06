@@ -1,3 +1,9 @@
+## 0.2.12 (2025-02-06)
+
+### Fix
+
+- actually added Dockerfile to versioning
+
 ## 0.2.11 (2025-02-06)
 
 ### Fix
