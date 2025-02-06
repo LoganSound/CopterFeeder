@@ -8,7 +8,6 @@ major_version_zero = true
 version_files = [
     "pyproject.toml:version",
     "__version__.py",
-    "docker-compose.yml:image:fcs:$version",
-    "docker-compose-buildx.yml:tags:registry:5000/fcs/fcs:$version",
-    "docker-compose-buildx.yml:image:registry:5000/fcs/fcs:$version"
+    "docker-compose.yml:image:$version",
+    "docker-compose-buildx.yml:image:$version"
 ]
