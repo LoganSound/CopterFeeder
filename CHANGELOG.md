@@ -1,3 +1,70 @@
+## 0.2.14 (2025-02-06)
+
+### Fix
+
+- really actually added prod dep file to versioning
+
+## 0.2.13 (2025-02-06)
+
+### Fix
+
+- actually added prod dep file to versioning
+
+## 0.2.12 (2025-02-06)
+
+### Fix
+
+- actually added Dockerfile to versioning
+
+## 0.2.11 (2025-02-06)
+
+### Fix
+
+- added Dockerfile to versioning
+
+## 0.2.10 (2025-02-06)
+
+### Fix
+
+- added fcs-deployment-prod.yaml to versioning
+
+## 0.2.9 (2025-02-06)
+
+### Fix
+
+- added fcs-deployment-dev.yaml to versioning
+
+## 0.2.8 (2025-02-06)
+
+### Fix
+
+- added docker-compose-buildx version
+
+## 0.2.7 (2025-02-06)
+
+### Fix
+
+- foo
+- **new_foo.file**: rm new_foo.file -versioning test again
+
+## 0.2.6 (2025-02-06)
+
+### Fix
+
+- versions again
+
+## 0.2.5 (2025-02-06)
+
+### Fix
+
+- changed option
+
+## 0.2.14 (2025-02-06)
+
+### Fix
+
+- really actually added prod dep file to versioning
+
 ## 0.2.13 (2025-02-06)
 
 ### Fix
