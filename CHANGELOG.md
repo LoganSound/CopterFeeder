@@ -1,3 +1,9 @@
+## 0.2.17 (2025-02-06)
+
+### Fix
+
+- foo file for fake fix commit
+
 ## 0.2.16 (2025-02-06)
 
 ### Fix
