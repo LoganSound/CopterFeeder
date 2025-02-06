@@ -1,3 +1,9 @@
+## 0.2.8 (2025-02-06)
+
+### Fix
+
+- added docker-compose-buildx version
+
 ## 0.2.7 (2025-02-06)
 
 ### Fix
