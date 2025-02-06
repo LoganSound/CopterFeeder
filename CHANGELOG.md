@@ -1,3 +1,9 @@
+## 0.2.10 (2025-02-06)
+
+### Fix
+
+- added fcs-deployment-prod.yaml to versioning
+
 ## 0.2.9 (2025-02-06)
 
 ### Fix
