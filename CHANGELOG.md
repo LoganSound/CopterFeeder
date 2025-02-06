@@ -1,3 +1,9 @@
+## 0.2.7 (2025-02-06)
+
+### Fix
+
+- **new_foo.file**: rm new_foo.file -versioning test again
+
 ## 0.2.6 (2025-02-06)
 
 ### Fix
