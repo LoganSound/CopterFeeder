@@ -3,11 +3,11 @@
 services:
 
   fcs:
-    image: registry:5000/fcs/fcs:0.2.12
+    image: registry:5000/fcs/fcs:0.2.13
     build:
       dockerfile: Dockerfile
       tags:
-        - registry:5000/fcs/fcs:0.2.12
+        - registry:5000/fcs/fcs:0.2.13
 
     x-bake:
       platforms:
