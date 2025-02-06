@@ -1,3 +1,9 @@
+## 0.2.15 (2025-02-06)
+
+### Fix
+
+- really really actually added prod dep file to versioning
+
 ## 0.2.14 (2025-02-06)
 
 ### Fix
