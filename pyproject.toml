@@ -8,6 +8,7 @@ version_files = [
     "__version__.py",
     "docker-compose-buildx.yml",
     "kube/dev/fcs-deployment-dev.yaml",
+    "kube/dev/fcs-deployment-prod.yaml",
     "Dockerfile",
     "pyproject.toml:version"
 ]
