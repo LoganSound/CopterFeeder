@@ -6,8 +6,8 @@ version_provider = "pep621"
 update_changelog_on_bump = true
 major_version_zero = true
 version_files = [
-    "__version__.py",
     "pyproject.toml:version",
+    "__version__.py",
     "docker-compose.yml:image:fcs:$version",
     "docker-compose-buildx.yml:tags:registry:5000/fcs/fcs:$version",
     "docker-compose-buildx.yml:image:registry:5000/fcs/fcs:$version"
