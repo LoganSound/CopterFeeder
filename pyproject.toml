@@ -11,3 +11,7 @@ version_files = [
     "docker-compose-buildx.yml:image:$version"
 ]
 update_changelog_on_bump = true
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "semver2"
+major_version_zero = true
