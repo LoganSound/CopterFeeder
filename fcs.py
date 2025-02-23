@@ -29,7 +29,7 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 ## YYYYMMDD_HHMM_REV
 CODE_DATE = "20250202"
-VERSION = "25.2.6"
+VERSION = "25.2.7"
 
 
 FEEDER_ID: str | None = None

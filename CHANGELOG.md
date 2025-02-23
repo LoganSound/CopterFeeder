@@ -1,3 +1,9 @@
+## 25.2.7 (2025-02-23)
+
+### Fix
+
+- **fcs.py**: Fixed prom metrics to include feeder_id
+
 ## 25.2.6 (2025-02-06)
 
 ### Fix
