@@ -32,6 +32,9 @@ CODE_DATE = "20250202"
 VERSION = "25.2.6"
 
 
+FEEDER_ID: str | None = None
+
+
 # Bills
 
 
@@ -68,7 +71,9 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 PROM_PORT = 8999
 
 fcs_update_heli_time = Summary(
-    "fcs_update_helidb_proc_secs", "Time spent updating heli db"
+    "helicopter_db_update_duration_seconds",
+    "Time spent processing and updating the helicopter database in seconds",
+    labelnames=["feeder_id"],
 )
 
 
@@ -216,7 +221,9 @@ def mongo_https_insert(mydict, dbFlags):
     except requests.exceptions.HTTPError as e:
         logger.warning("Mongo Post Error: %s ", e.response.text)
 
-    fcs_mongo_inserts.labels(status_code=response.status_code).inc()
+    fcs_mongo_inserts.labels(
+        status_code=response.status_code, feeder_id=FEEDER_ID
+    ).inc()
     return response.status_code
 
 
@@ -329,7 +336,7 @@ def clean_source(source) -> str:
         return "unkn"
 
 
-@fcs_update_heli_time.time()
+@fcs_update_heli_time.time(feeder_id=FEEDER_ID)
 def fcs_update_helidb(interval):
     """
     Process and upload rotorcraft position data to the Helicopters of DC database.
@@ -568,7 +575,7 @@ def fcs_update_helidb(interval):
                     len(recent_flights),
                     callsign,
                 )
-                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
@@ -583,13 +590,13 @@ def fcs_update_helidb(interval):
                     recent_flights[icao_hex][0],
                 )
                 recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
-                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
 
             else:
                 # increment the count
                 recent_flights[icao_hex][1] += 1
                 # Prometheus counter
-                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -745,7 +752,7 @@ def fcs_update_helidb(interval):
             # See https://github.com/wiedehopf/readsb/blob/dev/README-json.md
             source = clean_source(str(plane["type"]))
             output += " src " + source
-            fcs_sources.labels(source=source).inc(1)
+            fcs_sources.labels(source=source, feeder_id=FEEDER_ID).inc(1)
 
         except BaseException:
 
@@ -1101,19 +1108,19 @@ def init_prometheus() -> Counter:
         fcs_rx = Counter(
             name="fcs_rx_msgs",
             documentation="Messages received from aircraft",
-            labelnames=["icao", "cs"],
+            labelnames=["icao", "cs", "feeder_id"],
         )
 
         fcs_mongo_inserts = Counter(
             name="fcs_mongo_inserts",
             documentation="MongoDB insert operations by status code",
-            labelnames=["status_code"],
+            labelnames=["status_code", "feeder_id"],
         )
 
         fcs_sources = Counter(
             name="fcs_msg_srcs",
             documentation="Message sources by type (ADSB, MLAT, etc)",
-            labelnames=["source"],
+            labelnames=["source", "feeder_id"],
         )
 
         logger.info("Prometheus metrics initialized successfully")
