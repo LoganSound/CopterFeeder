@@ -60,6 +60,10 @@ sudo apt upgrade
 ```shell
 sudo apt install docker.io docker-compose docker-compose-v2
 ```
+or 
+```shell
+sudo apt install docker.io docker-compose docker-compose-plugin
+```
 
 3. To run Docker commands without sudo, add your user to the Docker group:
 
@@ -112,11 +116,9 @@ nano .env
 3. Build and run the Docker container:
 
 ```shell
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
-
-📝 **Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose`
 
 📝 **Note:** the -d flag runs the container in the background.
 
@@ -140,10 +142,10 @@ git pull
 2. Build and restart the Docker container:
 
 ```shell
-docker-compose down && docker-compose build && docker-compose up -d
+docker compose down 
+docker compose build
+docker compose up -d
 ```
-
-**Note:** If you already had docker installed through another method, newer versions use `docker compose` instead of `docker-compose` and you may need to modify these scripts
 
 <br>
 <br>
