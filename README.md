@@ -9,7 +9,7 @@
         -   [Option 2: Manual Setup with ADSB.im and Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
     -   [Configuration and Running](#configuration-and-running)
     -   [Updating Copterfeeder](#updating-copterfeeder)
--   [Running without Docker](#running-without-docker)
+-   [Legacy Read Me](#legacy-read-me)
 
 ## Prerequisites
 
@@ -150,7 +150,9 @@ docker compose up -d
 <br>
 <br>
 
-# Running without Docker
+# Legacy Read Me 
+
+## -- BELOW HERE IS NOT UPDATED --
 
 Start by running
 
