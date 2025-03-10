@@ -61,7 +61,7 @@ RUN apt-get update && \
 # Copy wheels and install dependencies
 COPY --from=builder /build/wheels /wheels
 COPY --from=builder /build/requirements.txt .
-RUN pip install --no-cache-dir /wheels/* && \
+RUN pip install --upgrade --no-cache-dir /wheels/* && \
     rm -rf /wheels
 
 # Copy application code
