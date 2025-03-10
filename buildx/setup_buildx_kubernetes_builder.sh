@@ -29,9 +29,9 @@ docker buildx use multiarch-builder ||
         --driver=kubernetes \
         --bootstrap \
         --config $DOCKER_CONFIG/buildx/buildkitd.default.toml \
-        --platform=linux/amd64 \
-        --node=multiarch-builder-amd64 \
-        --driver-opt=nodeselector="kubernetes.io/arch=amd64,namespace=multiarch-builder"
+        --platform=linux/arm64 \
+        --node=multiarch-builder-arm64 \
+        --driver-opt=nodeselector="kubernetes.io/arch=arm64,namespace=multiarch-builder"
 
     docker buildx create \
         --append \
@@ -39,12 +39,12 @@ docker buildx use multiarch-builder ||
         --driver=kubernetes \
         --bootstrap \
         --config $DOCKER_CONFIG/buildx/buildkitd.default.toml \
-        --platform=linux/arm64 \
-        --node=multiarch-builder-arm64 \
-        --driver-opt=nodeselector="kubernetes.io/arch=arm64,namespace=multiarch-builder"
+        --platform=linux/amd64 \
+        --node=multiarch-builder-amd64 \
+        --driver-opt=nodeselector="kubernetes.io/arch=amd64,namespace=multiarch-builder"
 
     # Use this to build with Kubernetes builder:
 
 }
 
-printf "Use this command: \n\tdocker buildx bake --builder=multiarch-builder --push --set *.platform=linux/amd64,linux/arm64\n"
+printf "Use this command: \n\tdocker buildx bake --builder=multiarch-builder --push --set *.platform=linux/arm64,linux/amd64\n"
