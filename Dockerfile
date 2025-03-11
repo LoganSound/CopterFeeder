@@ -1,5 +1,5 @@
 # Build stage
-FROM python:3.12-slim AS builder
+FROM python:3.12 AS builder
 
 # Add build metadata
 LABEL maintainer="CopterSpotter Team"
