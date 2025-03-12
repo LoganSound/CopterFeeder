@@ -41,10 +41,11 @@ LABEL description="Feed CopterSpotter Service"
 WORKDIR /app
 
 # Create non-root user
-RUN groupadd -r copterspotter && \
-    useradd -r -g copterspotter -s /bin/false copterspotter && \
-    mkdir -p /app/logs && \
-    chown -R copterspotter:copterspotter /app
+RUN which groupadd
+RUN groupadd -r copterspotter
+RUN useradd -r -g copterspotter -s /bin/false copterspotter
+RUN mkdir -p /app/logs
+RUN chown -R copterspotter:copterspotter /app
 
 # Install runtime dependencies
 RUN apt-get update && \
