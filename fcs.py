@@ -28,8 +28,8 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 # import __version__
 
 ## YYYYMMDD_HHMM_REV
-CODE_DATE = "20250202"
-VERSION = "25.2.7"
+CODE_DATE = "20250315"
+VERSION = "25.2.8"
 
 
 FEEDER_ID: str | None = None

@@ -1,3 +1,16 @@
+## 25.2.8 (2025-03-15)
+
+### Fix
+
+- labels on Summary decorator
+
+### Refactor
+
+- buildx builder with tolleration
+- Dockerfile
+- Dockerfile
+- foo
+
 ## 25.2.7 (2025-02-23)
 
 ### Fix

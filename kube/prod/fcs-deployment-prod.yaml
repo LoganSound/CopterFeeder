@@ -62,7 +62,7 @@ spec:
                 configMapKeyRef:
                   key: SERVER
                   name: fcs-prod-env
-          image: registry:5000/fcs/fcs:25.2.7
+          image: registry:5000/fcs/fcs:25.2.8
           name: fcs
           ports:
             - containerPort: 8999

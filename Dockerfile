@@ -3,7 +3,7 @@ FROM python:3.12 AS builder
 
 # Add build metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="25.2.7"
+LABEL version="25.2.8"
 LABEL code_date="20250202"
 LABEL description="Feed CopterSpotter Service"
 
@@ -20,7 +20,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # Install build dependencies
-RUN apt-get update 
+RUN apt-get update
 RUN apt-get install -y --no-install-recommends gcc python3-dev
 RUN    rm -rf /var/lib/apt/lists/*
 
@@ -33,7 +33,7 @@ FROM python:3.12-slim
 
 # Add runtime metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="25.2.7"
+LABEL version="25.2.8"
 LABEL code_date="20250202"
 LABEL description="Feed CopterSpotter Service"
 
