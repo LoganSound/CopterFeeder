@@ -73,7 +73,7 @@ PROM_PORT = 8999
 fcs_update_heli_time = Summary(
     "helicopter_db_update_duration_seconds",
     "Time spent processing and updating the helicopter database in seconds",
-    labelnames=["feeder_id"],
+    ["feeder_id"],
 )
 
 
@@ -336,7 +336,7 @@ def clean_source(source) -> str:
         return "unkn"
 
 
-@fcs_update_heli_time.time(feeder_id=FEEDER_ID)
+@fcs_update_heli_time.labels(feeder_id=FEEDER_ID).time()
 def fcs_update_helidb(interval):
     """
     Process and upload rotorcraft position data to the Helicopters of DC database.
