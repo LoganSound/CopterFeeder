@@ -64,6 +64,7 @@ RUN pip install --upgrade --no-cache-dir /wheels/* && \
 
 # Copy application code
 COPY --chown=copterspotter:copterspotter fcs.py .
+COPY --chown=copterspotter:copterspotter icao_heli_types.py .
 COPY --chown=copterspotter:copterspotter config/ ./config/
 
 # Create necessary directories with proper permissions
