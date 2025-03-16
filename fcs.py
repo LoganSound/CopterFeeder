@@ -891,6 +891,77 @@ def add_to_htypes(icao_hex: str, column_name: str, value: str) -> bool:
         return False
 
 
+def remove_from_htypes(icao_hex: str, column_name: str | None = None) -> bool:
+    """
+    Remove an entry or specific column from the helicopter types dictionary.
+
+    Args:
+        icao_hex (str): The ICAO hex code of the aircraft (case-insensitive)
+        column_name (str | None): The name of the field to remove. If None, removes entire ICAO entry.
+                                Defaults to None.
+
+    Returns:
+        bool: True if removal was successful, False if entry/column not found or error occurred
+
+    Example:
+        >>> remove_from_htypes('ac9f65', 'type')  # Remove specific column
+        True
+        >>> remove_from_htypes('ac9f65')  # Remove entire ICAO entry
+        True
+        >>> remove_from_htypes('invalid', 'type')  # Non-existent ICAO
+        False
+    """
+    try:
+        # Validate input
+        if not isinstance(icao_hex, str) or not icao_hex.strip():
+            raise ValueError("ICAO hex code must be a non-empty string")
+        if column_name is not None and (
+            not isinstance(column_name, str) or not column_name.strip()
+        ):
+            raise ValueError("Column name must be a non-empty string if provided")
+
+        # Normalize ICAO hex code
+        icao_hex = icao_hex.lower().strip()
+
+        # Check if ICAO exists
+        if icao_hex not in heli_types:
+            logger.debug("ICAO %s not found in heli_types", icao_hex)
+            return False
+
+        if column_name is None:
+            # Remove entire ICAO entry
+            del heli_types[icao_hex]
+            logger.debug("Removed entire entry for ICAO %s", icao_hex)
+            return True
+        else:
+            # Remove specific column
+            column_name = column_name.strip()
+            if column_name in heli_types[icao_hex]:
+                del heli_types[icao_hex][column_name]
+                logger.debug("Removed column %s for ICAO %s", column_name, icao_hex)
+
+                # If no columns left, remove entire entry
+                if not heli_types[icao_hex]:
+                    del heli_types[icao_hex]
+                    logger.debug("Removed empty entry for ICAO %s", icao_hex)
+
+                return True
+            else:
+                logger.debug("Column %s not found for ICAO %s", column_name, icao_hex)
+                return False
+
+    except ValueError as ve:
+        logger.error("Validation error for %s: %s", icao_hex, str(ve))
+        return False
+    except Exception as e:
+        logger.error(
+            "Unexpected error removing from heli_types for %s: %s",
+            icao_hex,
+            str(e),
+        )
+        return False
+
+
 def search_bills(icao_hex: str, column_name: str) -> str | None:
     """
     Search for a specific column value in the helicopter database by ICAO hex code.
@@ -1233,77 +1304,6 @@ def run_loop(interval, h_types):
         logger.debug("sleeping %s...", interval)
 
         sleep(interval)
-
-
-def remove_from_htypes(icao_hex: str, column_name: str | None = None) -> bool:
-    """
-    Remove an entry or specific column from the helicopter types dictionary.
-
-    Args:
-        icao_hex (str): The ICAO hex code of the aircraft (case-insensitive)
-        column_name (str | None): The name of the field to remove. If None, removes entire ICAO entry.
-                                Defaults to None.
-
-    Returns:
-        bool: True if removal was successful, False if entry/column not found or error occurred
-
-    Example:
-        >>> remove_from_htypes('ac9f65', 'type')  # Remove specific column
-        True
-        >>> remove_from_htypes('ac9f65')  # Remove entire ICAO entry
-        True
-        >>> remove_from_htypes('invalid', 'type')  # Non-existent ICAO
-        False
-    """
-    try:
-        # Validate input
-        if not isinstance(icao_hex, str) or not icao_hex.strip():
-            raise ValueError("ICAO hex code must be a non-empty string")
-        if column_name is not None and (
-            not isinstance(column_name, str) or not column_name.strip()
-        ):
-            raise ValueError("Column name must be a non-empty string if provided")
-
-        # Normalize ICAO hex code
-        icao_hex = icao_hex.lower().strip()
-
-        # Check if ICAO exists
-        if icao_hex not in heli_types:
-            logger.debug("ICAO %s not found in heli_types", icao_hex)
-            return False
-
-        if column_name is None:
-            # Remove entire ICAO entry
-            del heli_types[icao_hex]
-            logger.debug("Removed entire entry for ICAO %s", icao_hex)
-            return True
-        else:
-            # Remove specific column
-            column_name = column_name.strip()
-            if column_name in heli_types[icao_hex]:
-                del heli_types[icao_hex][column_name]
-                logger.debug("Removed column %s for ICAO %s", column_name, icao_hex)
-
-                # If no columns left, remove entire entry
-                if not heli_types[icao_hex]:
-                    del heli_types[icao_hex]
-                    logger.debug("Removed empty entry for ICAO %s", icao_hex)
-
-                return True
-            else:
-                logger.debug("Column %s not found for ICAO %s", column_name, icao_hex)
-                return False
-
-    except ValueError as ve:
-        logger.error("Validation error for %s: %s", icao_hex, str(ve))
-        return False
-    except Exception as e:
-        logger.error(
-            "Unexpected error removing from heli_types for %s: %s",
-            icao_hex,
-            str(e),
-        )
-        return False
 
 
 if __name__ == "__main__":
