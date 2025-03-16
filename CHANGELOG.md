@@ -1,3 +1,9 @@
+## 25.2.9 (2025-03-16)
+
+### Fix
+
+- added docker compose to versioning
+
 ## 25.2.8 (2025-03-15)
 
 ### Fix
