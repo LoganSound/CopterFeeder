@@ -1,0 +1,968 @@
+__Manufacturer,_Model,_Type Designator,_Description,_Engine Type,_Engine Count,__WTC
+ABHCO,SA-342 Gazelle,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+ABS AEROLIGHT,Xenon,XNON,Gyrocopter,Piston,1,L
+AERO ELI,Yo-Yo,R22,Helicopter,Piston,1,L
+AERO-ASTRA,Okhotnik,OKHO,Gyrocopter,Piston,1,L
+AEROKOPTER,AK-1,ZA6,Helicopter,Piston,1,L
+AEROKOPTER,ZA-6 Sanka,ZA6,Helicopter,Piston,1,L
+AEROSPATIALE,AS-332B1 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332B Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332C Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332F1 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332L1 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332L2 Super Puma Mk2,AS3B,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332L Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332L Tiger,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332M1 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-332M Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-350 AStar,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,AS-350 Ecureuil,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,AS-350 SuperStar,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,AS-355 Ecureuil 2,AS55,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,AS-355 TwinStar,AS55,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,AS-365 Dauphin 2,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,AS-366 Dolphin,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,AS-532A2 Cougar Mk2,AS3B,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-532SC Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-532U2 Cougar Mk2,AS3B,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-532UC Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-532UL Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,AS-550 Fennec,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,AS-555 Fennec,AS55,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,AS-565 Panther,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,CH-33 Puma,PUMA,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,HH-65 Dolphin,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,Hkp10 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AEROSPATIALE,SA-315 Lama,LAMA,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,SA-316 Alouette 3,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,SA-318 Alouette 2,ALO2,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,SA-319 Alouette 3,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,SA-321 Super Frelon,FREL,Helicopter,Turboprop/Turboshaft,3,M
+AEROSPATIALE,SA-330 Puma,PUMA,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,SA-341 Gazelle,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,SA-342 Gazelle,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,SA-360 Dauphin,S360,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,SA-361 Dauphin,S360,Helicopter,Turboprop/Turboshaft,1,L
+AEROSPATIALE,SA-365C Dauphin 2,S65C,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,SA-365F Dauphin 2,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,SA-365K Panther,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,SA-365M Panther,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,SA-365N Dauphin 2,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AEROSPATIALE,SA-366 Dolphin,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,A-109,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,A-109 Grand,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,A-109 Power,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,A-119 Koala,A119,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,A-129 Mangusta,A129,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AB-47G,B47G,Helicopter,Piston,1,L
+AGUSTA,AB-47J,B47J,Helicopter,Piston,1,L
+AGUSTA,AB-204,UH1,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,AB-205,UH1,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,AB-206 JetRanger,B06,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,AB-206 LongRanger,B06,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,AB-212,B212,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AB-412,B412,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AB-412 Griffon,B412,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AS-61A,S61,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTA,AS-61N,S61,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTA,AS-61R,S61R,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTA,ASH-61,S61,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTA,AW-119 Koala,A119,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,AW-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AW-109 Da Vinci,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,HH-3,S61R,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTA,Hkp3,UH1,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,Hkp6 JetRanger,B06,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,Hkp11,B412,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,Hkp15,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,MH-68 Stingray,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,NH-500,H500,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTA,SH-3,S61,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTA,AW-109,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AW-109 GrandNew,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AW-149,A149,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTA,A-109 Nexus,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AW-109 Nexus,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AW-109 Power,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AW-109 Grand,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AW-129,A129,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,T-129,A129,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,UH-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,AW-109 Trekker,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTA,ESC-2,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,AW-109,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,AW-109 Grand,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,WG-13 Super Lynx,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,AW-159 Wildcat,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,HH-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,VH-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,UH-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,EH-101 Merlin,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,SH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,UH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,HH-101 Caesar,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,MCH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,AW-101 Merlin Joint Supporter,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,AW-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,EH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,EH-101 Merlin Joint Supporter,EH10,Helicopter,Turboprop/Turboshaft,3,M
+AGUSTAWESTLAND,AW-109 Power,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,AW-109 GrandNew,A109,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,AW-119 Koala,A119,Helicopter,Turboprop/Turboshaft,1,L
+AGUSTAWESTLAND,AW-129,A129,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,AW-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,AW-149,A149,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTAWESTLAND,AW-169,A169,Helicopter,Turboprop/Turboshaft,2,L
+AGUSTAWESTLAND,AW-189,A189,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTAWESTLAND,ICH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+AGUSTAWESTLAND,AW-159 Lynx Wildcat,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+AIDC,UH-1,UH1,Helicopter,Turboprop/Turboshaft,1,L
+AIR & SPACE,18,UM18,Gyrocopter,Piston,1,L
+AIR & SPACE,Twinstar,TSTR,Gyrocopter,Piston,1,L
+AIR COMMAND,Commander 147,CMD1,Gyrocopter,Piston,1,L
+AIR COMMAND,Commander Elite Tandem,CMDT,Gyrocopter,Piston,1,L
+AIR COMMAND,Commander Elite Side-by-Side,CMDE,Gyrocopter,Piston,1,L
+AIRBUS HELICOPTERS,H-160,H160,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,H-215,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS,EC-665 Tiger,TIGR,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,EC-665 Tigre,TIGR,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,EC-135 Bluecopter,EC35,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,H-120 Colibri,EC20,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,H-125 Ecureuil,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,H-125 SuperStar,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,H-125 Fennec,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,H-130,EC30,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,H-135,EC35,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,H-155,EC55,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,H-225 Cougar Mk2+,EC25,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS,H-225 Super Puma Mk2+,EC25,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS,AS-350 Ecureuil,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,AS-350 SuperStar,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,AS-550 Fennec,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,AS-355 Ecureuil 2,AS55,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,EC-130,EC30,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,AS-365 Dauphin 2,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,AS-565 Panther,AS65,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,EC-155,EC55,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,EC-135,EC35,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,EC-635,EC35,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS,EC-120 Colibri,EC20,Helicopter,Turboprop/Turboshaft,1,L
+AIRBUS HELICOPTERS,AS-332L1 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS,AS-332C Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS,AS-532AL Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS,EC-725 Cougar Mk2+,EC25,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS,EC-225 Super Puma Mk2+,EC25,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS-HARBIN,EC-175,EC75,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS-HARBIN,Z-15,EC75,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS-HARBIN,H-175,EC75,Helicopter,Turboprop/Turboshaft,2,M
+AIRBUS HELICOPTERS-KAWASAKI,H-145,EC45,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS-KAWASAKI,BK-117C-2,EC45,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS-KAWASAKI,EC-145,EC45,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS-KAWASAKI,UH-72 Lakota,EC45,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS-KAWASAKI,EC-645,EC45,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS-KAWASAKI,BK-117D,EC45,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS-KAWASAKI,BK-117D Jupiter,EC45,Helicopter,Turboprop/Turboshaft,2,L
+AIRBUS HELICOPTERS-KAWASAKI,H-145 Jupiter,EC45,Helicopter,Turboprop/Turboshaft,2,L
+AIRCRAFT DESIGNS,Sportster Gyro,SPGY,Gyrocopter,Piston,1,L
+ALPI,AH-130 Syton,ES11,Helicopter,Turboprop/Turboshaft,1,L
+AMAX,Double Eagle,DEAG,Gyrocopter,Piston,1,L
+AMERICAN AUTOGYRO,SparrowHawk,SPHA,Gyrocopter,Piston,1,L
+AMERICAN AUTOGYRO,Spinus,SPHA,Gyrocopter,Piston,1,L
+AMERICAN SPORTSCOPTER,Ultrasport 496,ULTS,Helicopter,Piston,1,L
+ASTA,S-70 Seahawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+ATLAS,CSH-2 Rooivalk,RVAL,Helicopter,Turboprop/Turboshaft,2,M
+ATLAS,SA-330 Oryx,AS32,Helicopter,Turboprop/Turboshaft,2,M
+AUSTRALIAN AEROSPACE,EC-665 Tiger,TIGR,Helicopter,Turboprop/Turboshaft,2,L
+AUSTRALIAN AEROSPACE,MRH-90,NH90,Helicopter,Turboprop/Turboshaft,2,M
+AUTOGYRO,MT-03,MT,Gyrocopter,Piston,1,L
+AUTOGYRO,MTOSport,MT,Gyrocopter,Piston,1,L
+AUTOGYRO,Calidus,CDUS,Gyrocopter,Piston,1,L
+AUTOGYRO,Cavalon,CLON,Gyrocopter,Piston,1,L
+AVIAIMPEX,KT-112 Yanhol,YNHL,Helicopter,Piston,2,L
+AVICOPTER,AC-301,AS50,Helicopter,Turboprop/Turboshaft,1,L
+AVICOPTER,AC-311,AC31,Helicopter,Turboprop/Turboshaft,1,L
+AVICOPTER,AC-313,AC33,Helicopter,Turboprop/Turboshaft,3,M
+AVIOTECNICA,ES-101 Exec,ES11,Helicopter,Turboprop/Turboshaft,1,L
+AVIOTECNICA,ES-101 Raven,ES11,Helicopter,Turboprop/Turboshaft,1,L
+BARNETT,BRC-540,BR54,Gyrocopter,Piston,1,L
+BARNETT,J4B2,J4B2,Gyrocopter,Piston,1,L
+BELL,47D,B47G,Helicopter,Piston,1,L
+BELL,47G,B47G,Helicopter,Piston,1,L
+BELL,47G Trooper,B47G,Helicopter,Piston,1,L
+BELL,47H,B47G,Helicopter,Piston,1,L
+BELL,47J Ranger,B47J,Helicopter,Piston,1,L
+BELL,204,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,205,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,206A JetRanger,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,206B JetRanger,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,206L LongRanger,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,206LT TwinRanger,B06T,Helicopter,Turboprop/Turboshaft,2,L
+BELL,209 HueyCobra,HUCO,Helicopter,Turboprop/Turboshaft,1,L
+BELL,209 SuperCobra,SUCO,Helicopter,Turboprop/Turboshaft,2,M
+BELL,210,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,212,B212,Helicopter,Turboprop/Turboshaft,2,L
+BELL,212 Twin Two-Twelve,B212,Helicopter,Turboprop/Turboshaft,2,L
+BELL,214A Isfahan,B214,Helicopter,Turboprop/Turboshaft,1,M
+BELL,214B,B214,Helicopter,Turboprop/Turboshaft,1,M
+BELL,214C BigLifter,B214,Helicopter,Turboprop/Turboshaft,1,M
+BELL,214ST SuperTransport,BSTP,Helicopter,Turboprop/Turboshaft,2,M
+BELL,222,B222,Helicopter,Turboprop/Turboshaft,2,L
+BELL,230,B230,Helicopter,Turboprop/Turboshaft,2,L
+BELL,406,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,406 Combat Scout,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,407,B407,Helicopter,Turboprop/Turboshaft,1,L
+BELL,412,B412,Helicopter,Turboprop/Turboshaft,2,L
+BELL,412 Arapaho,B412,Helicopter,Turboprop/Turboshaft,2,L
+BELL,412 Sentinel,B412,Helicopter,Turboprop/Turboshaft,2,L
+BELL,427,B427,Helicopter,Turboprop/Turboshaft,2,L
+BELL,429 GlobalRanger,B429,Helicopter,Turboprop/Turboshaft,2,L
+BELL,430,B430,Helicopter,Turboprop/Turboshaft,2,L
+BELL,449 SuperCobra,SUCO,Helicopter,Turboprop/Turboshaft,2,M
+BELL,AH-1E HueyCobra,HUCO,Helicopter,Turboprop/Turboshaft,1,L
+BELL,AH-1F HueyCobra,HUCO,Helicopter,Turboprop/Turboshaft,1,L
+BELL,AH-1P HueyCobra,HUCO,Helicopter,Turboprop/Turboshaft,1,L
+BELL,AH-1S HueyCobra,HUCO,Helicopter,Turboprop/Turboshaft,1,L
+BELL,AH-1W SuperCobra,SUCO,Helicopter,Turboprop/Turboshaft,2,M
+BELL,AH-1Z SuperCobra,SUCO,Helicopter,Turboprop/Turboshaft,2,M
+BELL,CH-118,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,CH-136,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,CH-139,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,CH-146 Griffon,B412,Helicopter,Turboprop/Turboshaft,2,L
+BELL,COH-58,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,CUH-1H,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,EH-1 Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,HH-1 Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,HH-13,B47J,Helicopter,Piston,1,L
+BELL,OH-13 Sioux,B47G,Helicopter,Piston,1,L
+BELL,OH-58 Kiowa,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,OH-58 Kiowa Warrior,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,SH-1 Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TAH-1 HueyCobra,HUCO,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TH-1E Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,ARH-70 Arapaho,B407,Helicopter,Turboprop/Turboshaft,1,L
+BELL,YRH-70 Arapaho,B407,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TH-1F Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TH-1H Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TH-1L Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TH-1S HueyCobra,HUCO,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TH-13N,B47J,Helicopter,Piston,1,L
+BELL,TH-13T,B47G,Helicopter,Piston,1,L
+BELL,TH-57 SeaRanger,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TH-67 Creek,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,TH-206,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1A Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1B Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1C Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1D Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1E Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1F Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1H Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1L Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1M Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1N,B212,Helicopter,Turboprop/Turboshaft,2,L
+BELL,UH-1V Iroquois,UH1,Helicopter,Turboprop/Turboshaft,1,L
+BELL,UH-1Y,UH1Y,Helicopter,Turboprop/Turboshaft,2,M
+BELL,UH-13H,B47G,Helicopter,Piston,1,L
+BELL,UH-13J,B47J,Helicopter,Piston,1,L
+BELL,UH-13P,B47J,Helicopter,Piston,1,L
+BELL,UH-13R,B47J,Helicopter,Piston,1,L
+BELL,VH-1,B212,Helicopter,Turboprop/Turboshaft,2,L
+BELL,VH-4 JetRanger,B06,Helicopter,Turboprop/Turboshaft,1,L
+BELL,412 Griffin,B412,Helicopter,Turboprop/Turboshaft,2,L
+BELL,525 Relentless,B525,Helicopter,Turboprop/Turboshaft,2,M
+BELL,505 Jet Ranger X,B505,Helicopter,Turboprop/Turboshaft,1,L
+BELL-AGUSTA,AB-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+BOEING,AH-64 Longbow Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+BOEING,CH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING,HH-47,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING,MD-500,H500,Helicopter,Turboprop/Turboshaft,1,L
+BOEING,MD-500 Defender,H500,Helicopter,Turboprop/Turboshaft,1,L
+BOEING,MD-500 Nightfox,H500,Helicopter,Turboprop/Turboshaft,1,L
+BOEING,MD-520N,MD52,Helicopter,Turboprop/Turboshaft,1,L
+BOEING,MD-530F Lifter,H500,Helicopter,Turboprop/Turboshaft,1,L
+BOEING,MD-530MG Defender,H500,Helicopter,Turboprop/Turboshaft,1,L
+BOEING,MD-530MG Nightfox,H500,Helicopter,Turboprop/Turboshaft,1,L
+BOEING,MD-600N,MD60,Helicopter,Turboprop/Turboshaft,1,L
+BOEING,MD-902 Explorer,EXPL,Helicopter,Turboprop/Turboshaft,2,L
+BOEING,MH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING,AH-64 Saraf,H64,Helicopter,Turboprop/Turboshaft,2,M
+BOEING,JCH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,107,H46,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,114,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,234,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,414,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,CH-46 Sea Knight,H46,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,CH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,CH-113 Labrador,H46,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,HH-46 Sea Knight,H46,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,Hkp4,H46,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,JCH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,MH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+BOEING VERTOL,UH-46 Sea Knight,H46,Helicopter,Turboprop/Turboshaft,2,M
+BOEING-LEONARDO,MH-139 Grey Wolf,A139,Helicopter,Turboprop/Turboshaft,2,L
+BOLKOW,BO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+BRANTLY,305,B305,Helicopter,Piston,1,L
+BRANTLY,B-2,BRB2,Helicopter,Piston,1,L
+BRANTLY-HYNES,B-2,BRB2,Helicopter,Piston,1,L
+BREDANARDI,NH-300,H269,Helicopter,Piston,1,L
+BREDANARDI,NH-500,H500,Helicopter,Turboprop/Turboshaft,1,L
+BRISTOL,171 Sycamore,SYCA,Helicopter,Piston,1,L
+BUTTERFLY,Golden Butterfly,GOBU,Gyrocopter,Piston,1,L
+BUTTERFLY,Super Sky Cycle,SSC,Gyrocopter,Piston,1,L
+CA,IAR-330 Puma,PUMA,Helicopter,Turboprop/Turboshaft,2,L
+CALUMET,636 Snobird Adventurer,SNAD,Gyrocopter,Piston,1,L
+CANADIAN HOME ROTORS,Baby Belle,BABY,Helicopter,Piston,1,L
+CANADIAN HOME ROTORS,Safari,BABY,Helicopter,Piston,1,L
+CARTER,PAV-4,PAV4,Gyrocopter,Piston,1,L
+CASA,AS-532 Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+CASA,AS-332 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+CASA,BK-117,BK17,Helicopter,Turboprop/Turboshaft,2,L
+CASA,BO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+CASA,HR-15,B105,Helicopter,Turboprop/Turboshaft,2,L
+CELIER,Xenon,XNON,Gyrocopter,Piston,1,L
+CHANGHE,Z-8,FREL,Helicopter,Turboprop/Turboshaft,3,M
+CHANGHE,Z-11,AS50,Helicopter,Turboprop/Turboshaft,1,L
+CHANGHE,WZ-10,WZ10,Helicopter,Turboprop/Turboshaft,2,L
+CHAYAIR,Sycamore,CHSY,Gyrocopter,Piston,1,L
+CICARE,CH-12,CH12,Helicopter,Piston,1,L
+CICARE,CH-14 Aguilucho,CH14,Helicopter,Turboprop/Turboshaft,1,L
+COMMONWEALTH (1),BA-206 Kiowa,B06,Helicopter,Turboprop/Turboshaft,1,L
+COMMONWEALTH (1),CA-32 Kiowa,B06,Helicopter,Turboprop/Turboshaft,1,L
+CONTINENTAL COPTERS,El Tomcat,ELTO,Helicopter,Piston,1,L
+CRAE,Dragon Fly,DRAG,Helicopter,Piston,1,L
+CURTI,Zefhir,ZEFR,Helicopter,Turboprop/Turboshaft,1,L
+DENEL,A-109,A109,Helicopter,Turboprop/Turboshaft,2,L
+DENEL,A-119 Koala,A119,Helicopter,Turboprop/Turboshaft,1,L
+DENEL,AH-2 Rooivalk,RVAL,Helicopter,Turboprop/Turboshaft,2,M
+DENEL,CSH-2 Rooivalk,RVAL,Helicopter,Turboprop/Turboshaft,2,M
+DF HELICOPTERS,Dragon,DRAG,Helicopter,Piston,1,L
+DIRGANTARA INDONESIA,NAS-332 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+DIRGANTARA INDONESIA,NBO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+DIRGANTARA INDONESIA,NBell-412,B412,Helicopter,Turboprop/Turboshaft,2,L
+DORNIER,UH-1,UH1,Helicopter,Turboprop/Turboshaft,1,L
+DRAGON FLY,Dragon Fly,DRAG,Helicopter,Piston,1,L
+DTA,J-RO,JRO,Gyrocopter,Piston,1,L
+DYNALI,H-3 EasyFlyer,DYH3,Helicopter,Piston,1,L
+DYNALI,H-3 Sport,DYH3,Helicopter,Piston,1,L
+DYNALI,H-2,DYH2,Helicopter,Piston,1,L
+EAGLE COPTERS,212S Eagle Single,UH1,Helicopter,Turboprop/Turboshaft,1,L
+EHI,CH-149 Cormorant,EH10,Helicopter,Turboprop/Turboshaft,3,M
+EHI,EH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+EHI,EH-101 Merlin,EH10,Helicopter,Turboprop/Turboshaft,3,M
+EHI,SH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+EHI,UH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+EICH,JE-2 Gyroplane,JE2,Gyrocopter,Piston,1,L
+ELA AVIACION,ELA-07,ELA7,Gyrocopter,Piston,1,L
+ELA AVIACION,ELA-07 Cougar,ELA7,Gyrocopter,Piston,1,L
+ELA AVIACION,ELA-07 Scorpion,ELA7,Gyrocopter,Piston,1,L
+ELA AVIACION,ELA-07 Agro,ELA7,Gyrocopter,Piston,1,L
+ELA AVIACION,ELA-10 Eclipse,EL10,Gyrocopter,Piston,1,L
+ELA AVIACION,ELA-08,ELA7,Gyrocopter,Piston,1,L
+ELA AVIACION,ELA-G8 Cruser,ELA7,Gyrocopter,Piston,1,L
+ENSTROM,280 Shark,EN28,Helicopter,Piston,1,L
+ENSTROM,480,EN48,Helicopter,Turboprop/Turboshaft,1,L
+ENSTROM,F-28,EN28,Helicopter,Piston,1,L
+ENSTROM,F-28 Falcon,EN28,Helicopter,Piston,1,L
+ENSTROM,F-28 Sentinel,EN28,Helicopter,Piston,1,L
+ENSTROM,TH-28,EN48,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,EC-725 Caracal,EC25,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-350 Stylence,AS50,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,AS-355 Stylence,AS55,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,EC-120 Stylence,EC20,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,EC-130 Stylence,EC30,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,AS-332C Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-350 Squirrel,AS50,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,AS-355 Twin Squirrel,AS55,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,AS-332L1 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-332L2 Super Puma Mk2,AS3B,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-332M1 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-350 AStar,AS50,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,AS-350 Ecureuil,AS50,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,AS-350 SuperStar,AS50,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,AS-355 Ecureuil 2,AS55,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,AS-355 TwinStar,AS55,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,AS-365 Dauphin 2,AS65,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,AS-532A2 Cougar Mk2,AS3B,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-532AL Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-532SC Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-532U2 Cougar Mk2,AS3B,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-532UC Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-532UL Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,AS-550 Fennec,AS50,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,AS-555 Fennec,AS55,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,AS-565 Atalef,AS65,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,AS-565 Panther,AS65,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,BO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,BO-105 Super Five,B105,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,EC-120 Colibri,EC20,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,EC-130,EC30,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,EC-135,EC35,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,EC-155,EC55,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,EC-225 Super Puma Mk2+,EC25,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,EC-635,EC35,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,EC-665 Tiger,TIGR,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,EC-665 Tigre,TIGR,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,EC-725 Cougar Mk2+,EC25,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,Hkp10 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER,HM-1 Panther,AS65,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER,SA-315 Lama,LAMA,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,SA-342 Gazelle,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+EUROCOPTER,X-3,X3,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER-HARBIN,EC-175,EC75,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER-HARBIN,Z-15,EC75,Helicopter,Turboprop/Turboshaft,2,M
+EUROCOPTER-KAWASAKI,EC-145 Stylence,EC45,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER-KAWASAKI,H-72 Lakota,EC45,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER-KAWASAKI,BK-117B,BK17,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER-KAWASAKI,BK-117C-1,BK17,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER-KAWASAKI,BK-117C-2,EC45,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER-KAWASAKI,EC-145,EC45,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER-KAWASAKI,UH-145,EC45,Helicopter,Turboprop/Turboshaft,2,L
+EUROCOPTER-KAWASAKI,UH-72 Lakota,EC45,Helicopter,Turboprop/Turboshaft,2,L
+F+W EMMEN,SE-3160 Alouette 3,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+FAIRCHILD (1),FH-1100,FH11,Helicopter,Turboprop/Turboshaft,1,L
+FAIRCHILD (1),F-18 Flymobil,UM18,Gyrocopter,Piston,1,L
+FAIRCHILD HILLER,E4,UH12,Helicopter,Piston,1,L
+FAIRCHILD HILLER,FH-1100,FH11,Helicopter,Turboprop/Turboshaft,1,L
+FAIRCHILD HILLER,L3,UH12,Helicopter,Piston,1,L
+FAIRCHILD HILLER,L4,UH12,Helicopter,Piston,1,L
+FAIRCHILD HILLER,OH-23 Raven,UH12,Helicopter,Piston,1,L
+FAIRCHILD HILLER,SL3,UH12,Helicopter,Piston,1,L
+FAIRCHILD HILLER,SL4,UH12,Helicopter,Piston,1,L
+FAIRCHILD HILLER,UH-12E,UH12,Helicopter,Piston,1,L
+FAMA,K-209 KISS,K209,Helicopter,Turboprop/Turboshaft,1,L
+FARRINGTON,Twinstar,TSTR,Gyrocopter,Piston,1,L
+FD-COMPOSITES,ArrowCopter,AC10,Gyrocopter,Piston,1,L
+FINMECCANICA,AW-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+FINMECCANICA,HH-101 Caesar,EH10,Helicopter,Turboprop/Turboshaft,3,M
+FINMECCANICA,AW-189,A189,Helicopter,Turboprop/Turboshaft,2,M
+FINMECCANICA,AW-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+FINMECCANICA,AW-119 Koala,A119,Helicopter,Turboprop/Turboshaft,1,L
+FINMECCANICA,AW-159 Lynx Wildcat,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+FINMECCANICA,AW-159 Wildcat,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+FINMECCANICA,AW-109 Power,A109,Helicopter,Turboprop/Turboshaft,2,L
+FINMECCANICA,AW-109 GrandNew,A109,Helicopter,Turboprop/Turboshaft,2,L
+FINMECCANICA,AW-169,A169,Helicopter,Turboprop/Turboshaft,2,L
+FINMECCANICA,ICH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+FUJI,204,UH1,Helicopter,Turboprop/Turboshaft,1,L
+FUJI,205,UH1,Helicopter,Turboprop/Turboshaft,1,L
+FUJI,AH-1 HueyCobra,HUCO,Helicopter,Turboprop/Turboshaft,1,L
+FUJI,AH-64 Longbow Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+FUJI,UH-1,UH1,Helicopter,Turboprop/Turboshaft,1,L
+GLOBAL,Huey 800,UH1,Helicopter,Turboprop/Turboshaft,1,L
+GROEN,H2X Hawk 3,HAW3,Gyrocopter,Piston,1,L
+GROEN,Hawk 4,HW4P,Gyrocopter,Piston,1,L
+GROEN,Jet Hawk 4T,HW4T,Gyrocopter,Turboprop/Turboshaft,1,L
+GROEN,Revcon 6G,REV6,Gyrocopter,Turboprop/Turboshaft,1,L
+GUIMBAL,G-2 Cabri,G2CA,Helicopter,Piston,1,L
+HALLEY,Apollo AG-1 Gyro,AG1,Gyrocopter,Piston,1,L
+HARBIN,H-410 Haitun,AS65,Helicopter,Turboprop/Turboshaft,2,L
+HARBIN,H-425 Haitun,AS65,Helicopter,Turboprop/Turboshaft,2,L
+HARBIN,HC-120,EC20,Helicopter,Turboprop/Turboshaft,1,L
+HARBIN,WZ-9 Haitun,AS65,Helicopter,Turboprop/Turboshaft,2,L
+HARBIN,Z-5,MI4,Helicopter,Piston,1,L
+HARBIN,Z-5 Xuanfeng,MI4,Helicopter,Piston,1,L
+HARBIN,Z-9 Haitun,AS65,Helicopter,Turboprop/Turboshaft,2,L
+HAWKER DE HAVILLAND,S-70 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+HELI-SPORT,CH-7 Kompress,CH7,Helicopter,Piston,1,L
+HELIBRAS,AS-365 Dauphin 2,AS65,Helicopter,Turboprop/Turboshaft,2,L
+HELIBRAS,AS-565 Panther,AS65,Helicopter,Turboprop/Turboshaft,2,L
+HELIBRAS,CH-55 Esquilo,AS55,Helicopter,Turboprop/Turboshaft,2,L
+HELIBRAS,HA-1 Esquilo,AS50,Helicopter,Turboprop/Turboshaft,1,L
+HELIBRAS,HB-315 Gaviao,LAMA,Helicopter,Turboprop/Turboshaft,1,L
+HELIBRAS,HB-350 Esquilo,AS50,Helicopter,Turboprop/Turboshaft,1,L
+HELIBRAS,HB-355 Esquilo,AS55,Helicopter,Turboprop/Turboshaft,2,L
+HELIBRAS,HM-1 Panther,AS65,Helicopter,Turboprop/Turboshaft,2,L
+HELIBRAS,UH-12 Esquilo,AS50,Helicopter,Turboprop/Turboshaft,1,L
+HELIBRAS,UH-13 Esquilo,AS55,Helicopter,Turboprop/Turboshaft,2,L
+HELIBRAS,VH-55 Esquilo,AS55,Helicopter,Turboprop/Turboshaft,2,L
+HELIBRAS,H-50 Esquilo,AS50,Helicopter,Turboprop/Turboshaft,1,L
+HELICOM,H-1 Commuter,COMU,Helicopter,Piston,1,L
+HELIPRO,S-61 Shortsky,S61,Helicopter,Turboprop/Turboshaft,2,M
+HELIVERT,AW-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+HELOWERKS,HX-2 Wasp,HX2,Helicopter,Turboprop/Turboshaft,1,L
+HESA,Shahed 278,S278,Helicopter,Turboprop/Turboshaft,1,L
+HESA,Shahed OH-78,S278,Helicopter,Turboprop/Turboshaft,1,L
+HESA,Shahed 285,S285,Helicopter,Turboprop/Turboshaft,1,L
+HESA,Shahed AH-85,S285,Helicopter,Turboprop/Turboshaft,1,L
+HILLBERG,EH1-01 Rotormouse,RMOU,Helicopter,Turboprop/Turboshaft,1,L
+HILLER,FH-1100,FH11,Helicopter,Turboprop/Turboshaft,1,L
+HILLER,H-23 Raven,UH12,Helicopter,Piston,1,L
+HILLER,HTE Raven,UH12,Helicopter,Piston,1,L
+HILLER,OH-23 Raven,UH12,Helicopter,Piston,1,L
+HILLER,UH-12B,UH12,Helicopter,Piston,1,L
+HILLER,UH-12C,UH12,Helicopter,Piston,1,L
+HILLER,UH-12E,UH12,Helicopter,Piston,1,L
+HILLER,UH-12E3,UH12,Helicopter,Piston,1,L
+HILLER,UH-12E3T,H12T,Helicopter,Turboprop/Turboshaft,1,L
+HILLER,UH-12E4,UH12,Helicopter,Piston,1,L
+HILLER,UH-12E4T,H12T,Helicopter,Turboprop/Turboshaft,1,L
+HILLER,UH-12E5,UH12,Helicopter,Piston,1,L
+HILLER,UH-12ET,H12T,Helicopter,Turboprop/Turboshaft,1,L
+HILLER,UH-12L3,UH12,Helicopter,Piston,1,L
+HILLER,UH-12L4,UH12,Helicopter,Piston,1,L
+HILLER,UH-12SL3,UH12,Helicopter,Piston,1,L
+HILLER,UH-12SL4,UH12,Helicopter,Piston,1,L
+HINDUSTAN,ALH Dhruv,ALH,Helicopter,Turboprop/Turboshaft,2,L
+HINDUSTAN,SA-315 Cheetah,LAMA,Helicopter,Turboprop/Turboshaft,1,L
+HINDUSTAN,SA-315 Cheetal,LAMA,Helicopter,Turboprop/Turboshaft,1,L
+HINDUSTAN,SA-315 Lancer,LAMA,Helicopter,Turboprop/Turboshaft,1,L
+HINDUSTAN,SA-316 Chetak,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+HINDUSTAN,SA-316 Chetan,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+HINDUSTAN,SE-3160 Chetak,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+HINDUSTAN,LCH,LCH,Helicopter,Turboprop/Turboshaft,2,L
+HOLLMANN,HA-2 Sportster,HA2,Gyrocopter,Piston,1,L
+HONGDU MD HELICOPTERS,MD-600N,MD60,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,269 Sky Knight,H269,Helicopter,Piston,1,L
+HUGHES,280,H269,Helicopter,Piston,1,L
+HUGHES,300,H269,Helicopter,Piston,1,L
+HUGHES,300 Sky Knight,H269,Helicopter,Piston,1,L
+HUGHES,369,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,500,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,500 Defender,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,530F,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,AH-6C,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,AH-6G,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,AH-64 Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+HUGHES,Hkp5,H269,Helicopter,Piston,1,L
+HUGHES,JAH-64 Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+HUGHES,MH-6B,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,MH-6C,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,MH-6E,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,MH-6H,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,OH-6 Cayuse,H500,Helicopter,Turboprop/Turboshaft,1,L
+HUGHES,TH-55 Osage,H269,Helicopter,Piston,1,L
+HUGHES,TH-300,H269,Helicopter,Piston,1,L
+HUGHES,77 Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+HUGHES,200,H269,Helicopter,Piston,1,L
+HUGHES,269,H269,Helicopter,Piston,1,L
+HUZHOU TAIXIANG,Exec,EXEC,Helicopter,Piston,1,L
+HYNES,H-2,BRB2,Helicopter,Piston,1,L
+HYUNDAI,BK-117,BK17,Helicopter,Turboprop/Turboshaft,2,L
+IAR,IAR-330 Puma,PUMA,Helicopter,Turboprop/Turboshaft,2,L
+ICA,Ka-126,K126,Helicopter,Turboprop/Turboshaft,1,L
+ICA,IAR-316 Alouette 3,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+INSTYTUT LOTNICTWA,IS-2,IS2,Helicopter,Piston,1,L
+INTERNATIONAL HELICOPTERS,H-1 Commuter,COMU,Helicopter,Piston,1,L
+IRGC,Shahed 274,S274,Helicopter,Turboprop/Turboshaft,1,L
+IRKUT,A-002,A002,Gyrocopter,Piston,1,L
+JAG HELICOPTER,JAG,JAG2,Helicopter,Turboprop/Turboshaft,1,L
+JIANGXI CHANGHE-AGUSTA,CA-109 Power,A109,Helicopter,Turboprop/Turboshaft,2,L
+KAMAN,H-43A,H43A,Helicopter,Piston,1,L
+KAMAN,HH-43A,H43A,Helicopter,Piston,1,L
+KAMAN,HH-43B Huskie,H43B,Helicopter,Turboprop/Turboshaft,1,L
+KAMAN,HH-43F Huskie,H43B,Helicopter,Turboprop/Turboshaft,1,L
+KAMAN,HOK,H43A,Helicopter,Piston,1,L
+KAMAN,HUK,H43A,Helicopter,Piston,1,L
+KAMAN,K-20 Seasprite,H2,Helicopter,Turboprop/Turboshaft,2,L
+KAMAN,K-600,H43A,Helicopter,Piston,1,L
+KAMAN,K-600-3 Huskie,H43B,Helicopter,Turboprop/Turboshaft,1,L
+KAMAN,K-600-5 Huskie,H43B,Helicopter,Turboprop/Turboshaft,1,L
+KAMAN,K-894 Super Seasprite,H2,Helicopter,Turboprop/Turboshaft,2,L
+KAMAN,K-1200 K-Max,KMAX,Helicopter,Turboprop/Turboshaft,1,L
+KAMAN,OH-43,H43A,Helicopter,Piston,1,L
+KAMAN,SH-2 Seasprite,H2,Helicopter,Turboprop/Turboshaft,2,L
+KAMAN,SH-2 Super Seasprite,H2,Helicopter,Turboprop/Turboshaft,2,L
+KAMAN,UH-43,H43A,Helicopter,Piston,1,L
+KAMOV,Ka-25,KA25,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-26,KA26,Helicopter,Piston,2,L
+KAMOV,Ka-27,KA27,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-28,KA27,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-29,KA27,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-31,KA27,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-32,KA27,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-50 Black Shark,KA50,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-50 Chernaya Akula,KA50,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-50 Werewolf,KA50,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-52 Alligator,KA52,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-60 Kasatka,KA62,Helicopter,Turboprop/Turboshaft,2,L
+KAMOV,Ka-62,KA62,Helicopter,Turboprop/Turboshaft,2,L
+KAMOV,Ka-126,K126,Helicopter,Turboprop/Turboshaft,1,L
+KAMOV,Ka-226 Sergei,K226,Helicopter,Turboprop/Turboshaft,2,L
+KAMOV,HH-32,KA27,Helicopter,Turboprop/Turboshaft,2,M
+KAMOV,Ka-252,KA27,Helicopter,Turboprop/Turboshaft,2,M
+KAWASAKI,47G,B47G,Helicopter,Piston,1,L
+KAWASAKI,369,H500,Helicopter,Turboprop/Turboshaft,1,L
+KAWASAKI,500,H500,Helicopter,Turboprop/Turboshaft,1,L
+KAWASAKI,CH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+KAWASAKI,Hkp4,H46,Helicopter,Turboprop/Turboshaft,2,M
+KAWASAKI,KH-4,KH4,Helicopter,Piston,1,L
+KAWASAKI,KHI-01,EH10,Helicopter,Turboprop/Turboshaft,3,M
+KAWASAKI,KV-107,H46,Helicopter,Turboprop/Turboshaft,2,M
+KAWASAKI,OH-1,OH1,Helicopter,Turboprop/Turboshaft,2,L
+KAWASAKI,OH-6,H500,Helicopter,Turboprop/Turboshaft,1,L
+KAWASAKI,TH-55,H269,Helicopter,Piston,1,L
+KAWASAKI,CH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+KAWASAKI,MCH-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+KAZAN,Ansat,ANST,Helicopter,Turboprop/Turboshaft,2,L
+KAZAN,Ansat 2RT,A2RT,Helicopter,Turboprop/Turboshaft,2,L
+KEYSTONE,S-76,S76,Helicopter,Turboprop/Turboshaft,2,L
+KOPTER,SH-09,SH09,Helicopter,Turboprop/Turboshaft,1,L
+KOREA AEROSPACE,BO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+KOREA AEROSPACE,SB-427,B427,Helicopter,Turboprop/Turboshaft,2,L
+KOREA AEROSPACE,KUH-1 Surion,SURN,Helicopter,Turboprop/Turboshaft,2,M
+KOREA AEROSPACE,MUH-1 Marineon,SURN,Helicopter,Turboprop/Turboshaft,2,M
+KOREA AEROSPACE,LAH,EC55,Helicopter,Turboprop/Turboshaft,2,L
+KOREA AEROSPACE,LCH,EC55,Helicopter,Turboprop/Turboshaft,2,L
+KOREAN AIR,369,H500,Helicopter,Turboprop/Turboshaft,1,L
+KOREAN AIR,500,H500,Helicopter,Turboprop/Turboshaft,1,L
+KOREAN AIR,500 Defender,H500,Helicopter,Turboprop/Turboshaft,1,L
+KOREAN AIR,520MK Black Tiger,H500,Helicopter,Turboprop/Turboshaft,1,L
+KOREAN AIR,UH-60 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+LEONARDO,MH-139 Grey Wolf,A139,Helicopter,Turboprop/Turboshaft,2,L
+LEONARDO,TH-73 Thrasher,A119,Helicopter,Turboprop/Turboshaft,1,L
+LEONARDO,ICH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+LEONARDO,AW-109 GrandNew,A109,Helicopter,Turboprop/Turboshaft,2,L
+LEONARDO,AW-109 Trekker,A109,Helicopter,Turboprop/Turboshaft,2,L
+LEONARDO,AW-159 Lynx Wildcat,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+LEONARDO,AW-159 Wildcat,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+LEONARDO,AW-119 Koala,A119,Helicopter,Turboprop/Turboshaft,1,L
+LEONARDO,AW-139,A139,Helicopter,Turboprop/Turboshaft,2,L
+LEONARDO,AW-189,A189,Helicopter,Turboprop/Turboshaft,2,M
+LEONARDO,AW-101,EH10,Helicopter,Turboprop/Turboshaft,3,M
+LEONARDO,HH-101 Caesar,EH10,Helicopter,Turboprop/Turboshaft,3,M
+LEONARDO,AW-149,A149,Helicopter,Turboprop/Turboshaft,2,M
+LEONARDO,AW-169,A169,Helicopter,Turboprop/Turboshaft,2,L
+LICHTWERK,SE-3160 Alouette 3,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+LITTLE WING,LW-4 Roto-Pup,RPUP,Gyrocopter,Piston,1,L
+LITTLE WING,LW-5 Roto-Pup,RPUP,Gyrocopter,Piston,1,L
+LOAD RANGER,2000,LR2T,Helicopter,Turboprop/Turboshaft,1,L
+LOT,AS-350 Ecureuil,AS50,Helicopter,Turboprop/Turboshaft,1,L
+MAD MAX AERO,Mad Max,MMAX,Gyrocopter,Piston,1,L
+MAGNI,M-14 Scout,MM14,Gyrocopter,Piston,1,L
+MAGNI,M-16 Tandem Trainer,MM16,Gyrocopter,Piston,1,L
+MAGNI,M-19 Shark,MM19,Gyrocopter,Piston,1,L
+MAGNI,M-21,MM21,Gyrocopter,Piston,1,L
+MAGNI,M-22 Voyager,MM22,Gyrocopter,Piston,1,L
+MAGNI,M-24 Orion,MM24,Gyrocopter,Piston,1,L
+MBB,BO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+MBB,BO-105 Twin Jet,B105,Helicopter,Turboprop/Turboshaft,2,L
+MBB,Hkp9,B105,Helicopter,Turboprop/Turboshaft,2,L
+MBB-KAWASAKI,BK-117,BK17,Helicopter,Turboprop/Turboshaft,2,L
+MCDONNELL DOUGLAS,AH-6G,H500,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,AH-6J,MD52,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,AH-64 Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+MCDONNELL DOUGLAS,AH-64 Longbow Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+MCDONNELL DOUGLAS,AH-64 Pethen,H64,Helicopter,Turboprop/Turboshaft,2,M
+MCDONNELL DOUGLAS,JAH-64 Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+MCDONNELL DOUGLAS,MD-500,H500,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-500 Defender,H500,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-500 Nightfox,H500,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-520N,MD52,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-530F Lifter,H500,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-530MG Defender,H500,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-530MG Nightfox,H500,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-530N,MD52,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-600N,MD60,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MD-900 Combat Explorer,EXPL,Helicopter,Turboprop/Turboshaft,2,L
+MCDONNELL DOUGLAS,MD-900 Explorer,EXPL,Helicopter,Turboprop/Turboshaft,2,L
+MCDONNELL DOUGLAS,MD-902 Explorer,EXPL,Helicopter,Turboprop/Turboshaft,2,L
+MCDONNELL DOUGLAS,MH-6H,H500,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MH-6J,MD52,Helicopter,Turboprop/Turboshaft,1,L
+MCDONNELL DOUGLAS,MH-90 Enforcer,EXPL,Helicopter,Turboprop/Turboshaft,2,L
+MD HELICOPTERS,MD-500,H500,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,AH-6I,H500,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,MD-500 Defender,H500,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,MD-500 Nightfox,H500,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,MD-520N,MD52,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,MD-530F Lifter,H500,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,MD-530MG Defender,H500,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,MD-530MG Nightfox,H500,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,MD-600N,MD60,Helicopter,Turboprop/Turboshaft,1,L
+MD HELICOPTERS,MD-902 Explorer,EXPL,Helicopter,Turboprop/Turboshaft,2,L
+MERIDIONALI,CH-47 Chinook,H47,Helicopter,Turboprop/Turboshaft,2,M
+MESSERSCHMITT-BOLKOW,BO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+MIL,AH-2 Sabre,MI24,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-35 Caribe,MI24,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-2,MI2,Helicopter,Turboprop/Turboshaft,2,L
+MIL,Mi-4,MI4,Helicopter,Piston,1,L
+MIL,Mi-6,MI6,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-8,MI8,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-9,MI8,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-10,MI10,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-14,MI14,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-17,MI8,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-19,MI8,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-22,MI6,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-24,MI24,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-25,MI24,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-26,MI26,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-28,MI28,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-34,MI34,Helicopter,Piston,1,L
+MIL,Mi-35,MI24,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-38,MI38,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-171,MI8,Helicopter,Turboprop/Turboshaft,2,M
+MIL,Mi-172,MI8,Helicopter,Turboprop/Turboshaft,2,M
+MITSUBISHI,HSS-2,S61,Helicopter,Turboprop/Turboshaft,2,M
+MITSUBISHI,MH-2000,MH20,Helicopter,Turboprop/Turboshaft,2,L
+MITSUBISHI,RP-1,RP1,Helicopter,Turboprop/Turboshaft,2,L
+MITSUBISHI,S-61A,S61,Helicopter,Turboprop/Turboshaft,2,M
+MITSUBISHI,S-61B,S61,Helicopter,Turboprop/Turboshaft,2,M
+MITSUBISHI,S-70 Seahawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+MITSUBISHI,SH-60 Seahawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+MITSUBISHI,UH-60,H60,Helicopter,Turboprop/Turboshaft,2,M
+MITSUBISHI,USH-60 Seahawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+NARDI,NH-300,H269,Helicopter,Piston,1,L
+NHI,NH-90,NH90,Helicopter,Turboprop/Turboshaft,2,M
+NHI,NH-90 Ca•man,NH90,Helicopter,Turboprop/Turboshaft,2,M
+NHI,Hkp 14,NH90,Helicopter,Turboprop/Turboshaft,2,M
+NHI,MRH-90,NH90,Helicopter,Turboprop/Turboshaft,2,M
+NURTANIO,NAS-332 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+NURTANIO,NBO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+NURTANIO,NSA-330 Puma,PUMA,Helicopter,Turboprop/Turboshaft,2,L
+NUSANTARA,NAS-332 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+NUSANTARA,NBell-407,B407,Helicopter,Turboprop/Turboshaft,1,L
+NUSANTARA,NBell-412,B412,Helicopter,Turboprop/Turboshaft,2,L
+NUSANTARA,NBK-117,BK17,Helicopter,Turboprop/Turboshaft,2,L
+NUSANTARA,NBO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+OSKBES-MAI,MAI-205,A205,Gyrocopter,Piston,1,L
+PADC,BO-105,B105,Helicopter,Turboprop/Turboshaft,2,L
+PANHA,2061,B06,Helicopter,Turboprop/Turboshaft,1,L
+PANHA,2091,SUCO,Helicopter,Turboprop/Turboshaft,2,M
+PANHA,Shabaviz 2-75,UH1,Helicopter,Turboprop/Turboshaft,1,L
+PATRIA,NH-90,NH90,Helicopter,Turboprop/Turboshaft,2,M
+PATRIA,Hkp 14,NH90,Helicopter,Turboprop/Turboshaft,2,M
+PAWNEE,Chief,CHIF,Helicopter,Piston,1,L
+PHENIX,Phenix,PHIX,Gyrocopter,Piston,1,L
+PIASECKI,X-49 SpeedHawk,X49,Helicopter,Turboprop/Turboshaft,2,M
+PITCAIRN-CIERVA,PCA-2,PCA2,Gyrocopter,Piston,1,L
+PZL-SWIDNIK,Mi-2,MI2,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,Mi-2 Bazant,MI2,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,Mi-2 Kania,MI2,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,Mi-2 Kitty Hawk,MI2,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,S-1 Procjon,W3,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,SRR-10 Procjon,W3,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,SW-4 Maluch,PSW4,Helicopter,Turboprop/Turboshaft,1,L
+PZL-SWIDNIK,W-3 Anakonda,W3,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,W-3 Erka,W3,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,W-3 Gipsowka,W3,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,W-3 Huzar,W3,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,W-3 Sok—l,W3,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,AW-009,PSW4,Helicopter,Turboprop/Turboshaft,1,L
+PZL-SWIDNIK,W-3 Gluszec,W3,Helicopter,Turboprop/Turboshaft,2,L
+PZL-SWIDNIK,SW-4,PSW4,Helicopter,Turboprop/Turboshaft,1,L
+PZL-SWIDNIK,SW-4 Puszczyk,PSW4,Helicopter,Turboprop/Turboshaft,1,L
+QINGDAO,B-2,BRB2,Helicopter,Piston,1,L
+RACA,500,H500,Helicopter,Turboprop/Turboshaft,1,L
+REPUBLIC,SE-3130 Alouette 2,ALO2,Helicopter,Turboprop/Turboshaft,1,L
+REVOLUTION (1),Voyager-500,V500,Helicopter,Piston,1,L
+ROBINSON,R-22,R22,Helicopter,Piston,1,L
+ROBINSON,R-22 Beta,R22,Helicopter,Piston,1,L
+ROBINSON,R-22 Mariner,R22,Helicopter,Piston,1,L
+ROBINSON,R-44 Astro,R44,Helicopter,Piston,1,L
+ROBINSON,R-44 Clipper,R44,Helicopter,Piston,1,L
+ROBINSON,R-44 Raven,R44,Helicopter,Piston,1,L
+ROBINSON,R-66,R66,Helicopter,Turboprop/Turboshaft,1,L
+ROGERSON HILLER,RH-1100 Hornet,FH11,Helicopter,Turboprop/Turboshaft,1,L
+ROGERSON HILLER,RH-1100 Pegasus,FH11,Helicopter,Turboprop/Turboshaft,1,L
+ROGERSON HILLER,UH-12E Hauler,UH12,Helicopter,Piston,1,L
+ROTARY AIR FORCE,RAF-2000,RAF2,Gyrocopter,Piston,1,L
+ROTORSMART,HeliSmart,HSMT,Helicopter,Piston,1,L
+ROTORSPORT,MT-03,MT,Gyrocopter,Piston,1,L
+ROTORSPORT,MTOSport,MT,Gyrocopter,Piston,1,L
+ROTORSPORT,Calidus,CDUS,Gyrocopter,Piston,1,L
+ROTORSPORT,Cavalon,CLON,Gyrocopter,Piston,1,L
+ROTORTEC,Cloud Dancer 2,CLD2,Gyrocopter,Piston,1,L
+ROTORWAY,A-600 Talon,A600,Helicopter,Piston,1,L
+ROTORWAY,Eagle 300T,EGL3,Helicopter,Turboprop/Turboshaft,1,L
+ROTORWAY,Exec,EXEC,Helicopter,Piston,1,L
+ROTORWAY,JetExec,EXEJ,Helicopter,Turboprop/Turboshaft,1,L
+ROTORWAY,Scorpion,SCOR,Helicopter,Piston,1,L
+RUAG,AS-532 Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+SABCA,A-109,A109,Helicopter,Turboprop/Turboshaft,2,L
+SAFAT,2,ZA6,Helicopter,Piston,1,L
+SCHWEIZER,269,H269,Helicopter,Piston,1,L
+SCHWEIZER,269A,H269,Helicopter,Piston,1,L
+SCHWEIZER,269B,H269,Helicopter,Piston,1,L
+SCHWEIZER,269C,H269,Helicopter,Piston,1,L
+SCHWEIZER,269C Sky Knight,H269,Helicopter,Piston,1,L
+SCHWEIZER,269D 330,S330,Helicopter,Turboprop/Turboshaft,1,L
+SCHWEIZER,269D 333,S330,Helicopter,Turboprop/Turboshaft,1,L
+SCHWEIZER,300,H269,Helicopter,Piston,1,L
+SCHWEIZER,300 Sky Knight,H269,Helicopter,Piston,1,L
+SCHWEIZER,Hkp5,H269,Helicopter,Piston,1,L
+SCHWEIZER,TH-55 Osage,H269,Helicopter,Piston,1,L
+SCHWEIZER,TH-300,H269,Helicopter,Piston,1,L
+SF,AS-532 Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+SHANGHAI SIKORSKY,Shen 2,H269,Helicopter,Piston,1,L
+SHANGHAI SIKORSKY,Shen 3,H269,Helicopter,Piston,1,L
+SHANGHAI SIKORSKY,Shen 4,S330,Helicopter,Turboprop/Turboshaft,1,L
+SICHUAN LANTIAN,Mi-17,MI8,Helicopter,Turboprop/Turboshaft,2,M
+SICHUAN LANTIAN,Mi-171,MI8,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-300,H269,Helicopter,Piston,1,L
+SIKORSKY,S-333,S330,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,S-434,S434,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,CH-148 Cyclone,S92,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,H-92 Superhawk,S92,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,X-2,X2,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,X-49 SpeedHawk,X49,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,CH-53K King Stallion,H53S,Helicopter,Turboprop/Turboshaft,3,M
+SIKORSKY,S-97 Raider,S97,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,HM-2 Blackhawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-100 Defiant,SB1,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,VH-92,S92,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,VH-92 Patriot,S92,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-92,S92,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,AH-60 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,AUH-76,S76,Helicopter,Turboprop/Turboshaft,2,L
+SIKORSKY,CH-3,S61R,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,CH-19,S55P,Helicopter,Piston,1,L
+SIKORSKY,CH-34 Chocktaw,S58P,Helicopter,Piston,1,L
+SIKORSKY,CH-53A Sea Stallion,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,CH-53A Yasur,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,CH-53C,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,CH-53D Sea Stallion,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,CH-53E Super Stallion,H53S,Helicopter,Turboprop/Turboshaft,3,M
+SIKORSKY,CH-53G,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,CH-54 Tarhe,S64,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,CH-124 Sea King,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,EH-60 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,H-4 Hoverfly,R4,Helicopter,Piston,1,L
+SIKORSKY,H-5,S51,Helicopter,Piston,1,L
+SIKORSKY,H-19,S55P,Helicopter,Piston,1,L
+SIKORSKY,MH-53E Sea Dragon,H53S,Helicopter,Turboprop/Turboshaft,3,M
+SIKORSKY,MH-53H,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,MH-53J,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,MH-60 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,MH-60 Knighthawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,MH-60 Strikehawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,NSH-60 Seahawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,R-4 Hoverfly,R4,Helicopter,Piston,1,L
+SIKORSKY,R-5,S51,Helicopter,Piston,1,L
+SIKORSKY,RH-53 Sea Stallion,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-51,S51,Helicopter,Piston,1,L
+SIKORSKY,S-52,S52,Helicopter,Piston,1,L
+SIKORSKY,S-55,S55P,Helicopter,Piston,1,L
+SIKORSKY,S-55A,S55P,Helicopter,Piston,1,L
+SIKORSKY,S-55C,S55P,Helicopter,Piston,1,L
+SIKORSKY,S-55T,S55T,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,S-58,S58P,Helicopter,Piston,1,L
+SIKORSKY,S-58B,S58P,Helicopter,Piston,1,L
+SIKORSKY,H-19 Chickasaw,S55P,Helicopter,Piston,1,L
+SIKORSKY,H-76 Eagle,S76,Helicopter,Turboprop/Turboshaft,2,L
+SIKORSKY,HH-3,S61R,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,HH-3 Pelican,S61R,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,HH-19,S55P,Helicopter,Piston,1,L
+SIKORSKY,HH-34 Seahorse,S58P,Helicopter,Piston,1,L
+SIKORSKY,HH-52 Seaguard,S62,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,HH-53,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,HH-60 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,HH-60 Jayhawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,HH-60 Pave Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,HH-60 Rescue Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,HO3S,S51,Helicopter,Piston,1,L
+SIKORSKY,HO4S,S55P,Helicopter,Piston,1,L
+SIKORSKY,HO5S,S52,Helicopter,Piston,1,L
+SIKORSKY,HRS,S55P,Helicopter,Piston,1,L
+SIKORSKY,HSS-1 Seabat,S58P,Helicopter,Piston,1,L
+SIKORSKY,HSS-2 Sea King,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,HUS Seahorse,S58P,Helicopter,Piston,1,L
+SIKORSKY,JUH-60 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-58C,S58P,Helicopter,Piston,1,L
+SIKORSKY,S-58D,S58P,Helicopter,Piston,1,L
+SIKORSKY,S-58DT,S58T,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,S-58ET,S58T,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,S-58T,S58T,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,S-61A,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-61A Nuri,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-61B,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-61D,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-61L,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-61N,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-61R,S61R,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-62,S62,Helicopter,Turboprop/Turboshaft,1,L
+SIKORSKY,S-64 Skycrane,S64,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-65,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-65 Yasur,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-70,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-70 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-70 Desert Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-70 Firehawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-70 Super Blue Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-70 Thunderhawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,S-76,S76,Helicopter,Turboprop/Turboshaft,2,L
+SIKORSKY,S-76 Spirit,S76,Helicopter,Turboprop/Turboshaft,2,L
+SIKORSKY,S-80,H53S,Helicopter,Turboprop/Turboshaft,3,M
+SIKORSKY,S-92 Helibus,S92,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,SH-3 Sea King,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,SH-34 Seabat,S58P,Helicopter,Piston,1,L
+SIKORSKY,SH-60 Ocean Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,SH-60 Seahawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,TH-53,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,UH-3 Sea King,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,UH-19,S55P,Helicopter,Piston,1,L
+SIKORSKY,UH-19 Chickasaw,S55P,Helicopter,Piston,1,L
+SIKORSKY,UH-34 Seahorse,S58P,Helicopter,Piston,1,L
+SIKORSKY,UH-60 Black Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,UH-60 Firehawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,UH-60 Yanshuf,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,VH-3 Sea King,S61,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,VH-53 Sea Stallion,H53,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY,VH-60 White Hawk,H60,Helicopter,Turboprop/Turboshaft,2,M
+SIKORSKY-BOEING,SB-1 Defiant,SB1,Helicopter,Turboprop/Turboshaft,2,M
+SILVERCRAFT,SH-4,SH4,Helicopter,Piston,1,L
+SILVERLIGHT,AR-1 American Ranger 1,AR1,Gyrocopter,Piston,1,L
+SINGAPORE,AS-332 Super Puma,AS32,Helicopter,Turboprop/Turboshaft,2,M
+SNOBIRD,636 Snobird Adventurer,SNAD,Gyrocopter,Piston,1,L
+SOKO,H-45 Partizan,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+SOKO,HN-42 Partizan,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+SOKO,HN-45 Partizan,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+SOKO,HO-42 Partizan,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+SOKO,SA-341 Partizan,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+SOKO,SA-342 Partizan,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+SOLOY,Bell 47,B47T,Helicopter,Turboprop/Turboshaft,1,L
+SOLOY,Hiller UH-12,H12T,Helicopter,Turboprop/Turboshaft,1,L
+SPORT COPTER,SportCopter 2,SCII,Gyrocopter,Piston,1,L
+SUD,S-58,S58P,Helicopter,Piston,1,L
+SUD,SA-315 Lama,LAMA,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SA-316 Alouette 3,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SA-318 Alouette 2,ALO2,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SA-319 Alouette 3,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SA-321 Super Frelon,FREL,Helicopter,Turboprop/Turboshaft,3,M
+SUD,SA-330 Puma,PUMA,Helicopter,Turboprop/Turboshaft,2,L
+SUD,SA-341 Gazelle,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SA-342 Gazelle,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SA-3180 Alouette 2,ALO2,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SE-313 Alouette 2,ALO2,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SE-3130 Alouette 2,ALO2,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SE-3160 Alouette 3,ALO3,Helicopter,Turboprop/Turboshaft,1,L
+SUD,SO-1221 Djinn,DJIN,Helicopter,Turboprop/Turboshaft,1,L
+SUD-EST,SE-3130 Alouette 2,ALO2,Helicopter,Turboprop/Turboshaft,1,L
+SUD-OUEST,SO-1221 Djinn,DJIN,Helicopter,Turboprop/Turboshaft,1,L
+TAI,AS-532 Cougar,AS32,Helicopter,Turboprop/Turboshaft,2,M
+TAI,T-129,A129,Helicopter,Turboprop/Turboshaft,2,L
+TAMARIND,H-1 Commuter,COMU,Helicopter,Piston,1,L
+TEXAS HELICOPTER,M-74 Wasp,M74,Helicopter,Piston,1,L
+TRIDAIR,206L-ST Gemini ST,B06T,Helicopter,Turboprop/Turboshaft,2,L
+UFO,HeliThruster,UFHT,Gyrocopter,Piston,1,L
+UMBAUGH,18,UM18,Gyrocopter,Piston,1,L
+UNC,Ultra Huey,UH1,Helicopter,Turboprop/Turboshaft,1,L
+UNIS,NA-40 Bongo,NA40,Helicopter,Turboprop/Turboshaft,2,L
+UNITED CANADA,CH-124 Sea King,S61,Helicopter,Turboprop/Turboshaft,2,M
+USTINOV,Adel,ADEL,Gyrocopter,Piston,1,L
+VAT,Elite,S55T,Helicopter,Turboprop/Turboshaft,1,L
+VAT,Hummingbird,S52,Helicopter,Piston,1,L
+VERTOL,42 Work Horse,H21,Helicopter,Piston,1,L
+VERTOL,107,H46,Helicopter,Turboprop/Turboshaft,2,M
+VERTOL,CH-21 Work horse,H21,Helicopter,Piston,1,L
+VFW,CH-53G,H53,Helicopter,Turboprop/Turboshaft,2,M
+VOUGHT,SA-366 Panther 800,AS65,Helicopter,Turboprop/Turboshaft,2,L
+VTOL AIRCRAFT,Phillicopter,PHIL,Helicopter,Piston,1,L
+WESTLAND,AH-11 Super Lynx,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+WESTLAND,Gazelle,GAZL,Helicopter,Turboprop/Turboshaft,1,L
+WESTLAND,AW-159 Lynx Wildcat,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+WESTLAND,Puma,PUMA,Helicopter,Turboprop/Turboshaft,2,L
+WESTLAND,Scout,SCOU,Helicopter,Turboprop/Turboshaft,1,L
+WESTLAND,Sioux,B47G,Helicopter,Piston,1,L
+WESTLAND,Wasp,WASP,Helicopter,Turboprop/Turboshaft,1,L
+WESTLAND,WG-13 Battlefield Lynx,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+WESTLAND,WG-13 Lynx,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+WESTLAND,WG-13 Super Lynx,LYNX,Helicopter,Turboprop/Turboshaft,2,L
+WESTLAND,WS-55 Whirlwind 3,S55T,Helicopter,Turboprop/Turboshaft,1,L
+WESTLAND,WS-58 Wessex,WESX,Helicopter,Turboprop/Turboshaft,2,L
+WESTLAND,WS-61 Commando,S61,Helicopter,Turboprop/Turboshaft,2,M
+WESTLAND,WS-61 Sea King,S61,Helicopter,Turboprop/Turboshaft,2,M
+WESTLAND,WS-70,H60,Helicopter,Turboprop/Turboshaft,2,M
+WESTLAND,WAH-64 Apache,H64,Helicopter,Turboprop/Turboshaft,2,M
+WINNER,B-150,B150,Helicopter,Turboprop/Turboshaft,1,L
+WUHAN,280,EN28,Helicopter,Piston,1,L
+WUHAN,TH-28,EN48,Helicopter,Turboprop/Turboshaft,1,L
