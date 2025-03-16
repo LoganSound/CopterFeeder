@@ -31,7 +31,7 @@ from icao_heli_types import icao_heli_types
 # import __version__
 
 ## YYYYMMDD_HHMM_REV
-CODE_DATE = "20250315"
+CODE_DATE = "20250316"
 VERSION = "25.2.9"
 
 
