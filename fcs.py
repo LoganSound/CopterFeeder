@@ -25,6 +25,9 @@ from prometheus_client import Counter, Gauge, Summary, start_http_server
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, OperationFailure
 
+from icao_heli_types import icao_heli_types
+
+
 # import __version__
 
 ## YYYYMMDD_HHMM_REV
@@ -486,7 +489,12 @@ def fcs_update_helidb(interval):
 
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
 
-        if (search_bills(icao_hex, "hex") != None) or category == "A7":
+        if "t" in plane and plane["t"] in icao_heli_types:
+            logger.debug(f"ICAO Type {plane['t']} found in icao_heli_types")
+            # else:
+            #   logger.debug(f"ICAO Type {plane['t']} not found in icao_heli_types")
+
+            # if (search_bills(icao_hex, "hex") != None) or category == "A7":
 
             try:
                 # icao_hex = str(plane["hex"]).lower()
