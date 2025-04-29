@@ -1,0 +1,21 @@
+[project]
+name = "FeedCopterSpotter"
+version = "25.2.9"
+
+[tool.commitizen]
+version_provider = "pep621"
+version_files = [
+    "__version__.py",
+    "fcs.py:VERSION",
+    "docker-compose-buildx.yml",
+    "docker-compose.yml",
+    "kube/dev/fcs-deployment-dev.yaml",
+    "kube/prod/fcs-deployment-prod.yaml",
+    "Dockerfile",
+    "pyproject.toml:version"
+]
+update_changelog_on_bump = true
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "semver2"
+#major_version_zero = true

@@ -32,9 +32,7 @@ docker buildx use multiarch-builder ||
         --config $DOCKER_CONFIG/buildx/buildkitd.default.toml \
         --platform=linux/arm64 \
         --node=multiarch-builder-arm64 \
-        --driver-opt nodeselector="kubernetes.io/arch=arm64"\
-        --driver-opt namespace="multiarch-builder"\
-
+        '--driver-opt="nodeselector=kubernetes.io/arch=arm64","namespace=multiarch-builder","tolerations=key=arm64,value=true,effect=NoSchedule"'
 
     docker buildx create \
         --append \

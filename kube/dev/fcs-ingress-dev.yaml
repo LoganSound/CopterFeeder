@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fcs-ingress-dev
+  namespace: fcs-dev
+  annotations:
+    spec.ingressClassName: nginx
+spec:
+  rules:
+    - host: fcs.brauhausdc.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fcs-service-dev
+                port:
+                  number: 8999

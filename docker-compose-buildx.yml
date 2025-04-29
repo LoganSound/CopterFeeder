@@ -1,17 +1,19 @@
 
+
 services:
 
   fcs:
-    image: fcs
+    image: registry.brauhausdc.org:5000/fcs/fcs:25.2.9
     build:
       dockerfile: Dockerfile
       tags:
-        - registry:5000/fcs/fcs:20250201-01
+        - registry.brauhausdc.org:5000/fcs/fcs:25.2.9
 
     x-bake:
       platforms:
-        - linux/amd64
         - linux/arm64
+        - linux/amd64
+#        - linux/arm/v7
 
     container_name: fcs
     # privileged: true

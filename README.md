@@ -60,7 +60,7 @@ sudo apt upgrade
 ```shell
 sudo apt install docker.io docker-compose docker-compose-v2
 ```
-or 
+or
 ```shell
 sudo apt install docker.io docker-compose docker-compose-plugin
 ```
@@ -142,7 +142,7 @@ git pull
 2. Build and restart the Docker container:
 
 ```shell
-docker compose down 
+docker compose down
 docker compose build
 docker compose up -d
 ```
@@ -150,7 +150,7 @@ docker compose up -d
 <br>
 <br>
 
-# Legacy Read Me 
+# Legacy Read Me
 
 ## -- BELOW HERE IS NOT UPDATED --
 

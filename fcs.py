@@ -4,46 +4,40 @@
 Upload rotorcraft positions to Helicopters of DC
 """
 
-import json
-import csv
-
-# unused
-
-# from datetime import timezone
-
-# import datetime
-import logging
+# Standard library imports
 import argparse
-import sys
+import csv
+import json
+import logging
 import os
-from time import sleep, ctime, time, strftime, gmtime
 import signal
-
-import requests
-import validators
-import daemon
-
+import sys
 from datetime import datetime, timezone
+from time import ctime, gmtime, sleep, strftime, time
 from zoneinfo import ZoneInfo
 
-from prometheus_client import start_http_server, Counter, Gauge, Summary
-
-# used for getting MONGOPW and MONGOUSER
-from dotenv import dotenv_values  # , set_key
-
-
-# only need one of these
+# Third party imports
+import daemon
+import requests
+import validators
+from dotenv import dotenv_values
+from prometheus_client import Counter, Gauge, Summary, start_http_server
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, OperationFailure
 
-# from pymongo import MongoClient
+from icao_heli_types import icao_heli_types
 
+
+# import __version__
 
 ## YYYYMMDD_HHMM_REV
-VERSION = "20250201-01"
+CODE_DATE = "20250316"
+VERSION = "25.2.9"
+
+
+FEEDER_ID: str | None = None
 
 # Bills
-
 
 BILLS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEyC5hDeD-ag4hC1Zy9m-GT8kqO4f35Bj9omB0v2LmV1FrH1aHGc-i0fOXoXmZvzGTccW609Yv3iUs/pub?gid=0&single=true&output=csv"
 
@@ -78,7 +72,9 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 PROM_PORT = 8999
 
 fcs_update_heli_time = Summary(
-    "fcs_update_helidb_proc_secs", "Time spent updating heli db"
+    "helicopter_db_update_duration_seconds",
+    "Time spent processing and updating the helicopter database in seconds",
+    ["feeder_id"],
 )
 
 
@@ -226,7 +222,9 @@ def mongo_https_insert(mydict, dbFlags):
     except requests.exceptions.HTTPError as e:
         logger.warning("Mongo Post Error: %s ", e.response.text)
 
-    fcs_mongo_inserts.labels(status_code=response.status_code).inc()
+    fcs_mongo_inserts.labels(
+        status_code=response.status_code, feeder_id=FEEDER_ID
+    ).inc()
     return response.status_code
 
 
@@ -258,18 +256,16 @@ def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
         # Log summary header with timestamp
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logger.info("=== Recent Flights Dump at %s ===", current_time)
-        logger.info("Total aircraft being tracked: %d", len(recent_flights))
+        logger.info(
+            "Total aircraft being tracked: %d since %s", len(recent_flights), start_time
+        )
 
         # Sort and dump detailed aircraft information
         for hex_icao in sorted(recent_flights):
             flight, seen_count = recent_flights[hex_icao]
             aircraft_type = heli_types.get(hex_icao, {}).get("type", "Unknown")
             logger.info(
-                "Aircraft: %s | Type: %s | Flight: %s | Times seen: %d",
-                hex_icao.upper(),
-                aircraft_type,
-                flight or "No Callsign",
-                seen_count,
+                f"Aircraft: {hex_icao.upper():6} | Type: {aircraft_type:4} | Flight: {(flight or "No Callsign"):8} | Times seen: {seen_count}"
             )
 
         logger.info("=== End of Dump ===")
@@ -341,9 +337,32 @@ def clean_source(source) -> str:
         return "unkn"
 
 
-@fcs_update_heli_time.time()
+@fcs_update_heli_time.labels(feeder_id=FEEDER_ID).time()
 def fcs_update_helidb(interval):
-    """Main"""
+    """
+    Process and upload rotorcraft position data to the Helicopters of DC database.
+
+    This function is the main processing loop that:
+    1. Retrieves aircraft data from either a local file or URL endpoint
+    2. Filters for rotorcraft based on category or known ICAO codes
+    3. Processes position and flight data
+    4. Uploads valid entries to MongoDB
+    5. Updates tracking metrics
+
+    Args:
+        interval (int): Maximum age in seconds for position data to be considered valid
+
+    Returns:
+        None: Function runs continuously unless an error occurs
+        Exception: Returns error object if a critical error occurs during processing
+
+    Metrics:
+        - Updates Prometheus metrics for monitoring
+        - Maintains recent_flights global dictionary for tracking
+
+    Note:
+        Function is decorated with @fcs_update_heli_time.time() for performance monitoring
+    """
 
     # local_time = datetime.now().astimezone()
 
@@ -469,7 +488,13 @@ def fcs_update_helidb(interval):
             category = "Unk"
 
         # Should identify anything reporting itself as Wake Category A7 / Rotorcraft or listed in Bills
-        if (search_bills(icao_hex, "hex") != None) or category == "A7":
+
+        if "t" in plane and plane["t"] in icao_heli_types:
+            logger.debug(f"ICAO Type {plane['t']} found in icao_heli_types")
+            # else:
+            #   logger.debug(f"ICAO Type {plane['t']} not found in icao_heli_types")
+
+            # if (search_bills(icao_hex, "hex") != None) or category == "A7":
 
             try:
                 # icao_hex = str(plane["hex"]).lower()
@@ -557,7 +582,7 @@ def fcs_update_helidb(interval):
                     len(recent_flights),
                     callsign,
                 )
-                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign
@@ -572,13 +597,13 @@ def fcs_update_helidb(interval):
                     recent_flights[icao_hex][0],
                 )
                 recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
-                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
 
             else:
                 # increment the count
                 recent_flights[icao_hex][1] += 1
                 # Prometheus counter
-                fcs_rx.labels(icao=icao_hex, cs=callsign).inc(1)
+                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -734,7 +759,7 @@ def fcs_update_helidb(interval):
             # See https://github.com/wiedehopf/readsb/blob/dev/README-json.md
             source = clean_source(str(plane["type"]))
             output += " src " + source
-            fcs_sources.labels(source=source).inc(1)
+            fcs_sources.labels(source=source, feeder_id=FEEDER_ID).inc(1)
 
         except BaseException:
 
@@ -822,15 +847,127 @@ def find_helis(icao_hex) -> str | None:
         return None
 
 
-def add_to_htypes(icao_hex: str, column_name: str, value: str):
+def add_to_htypes(icao_hex: str, column_name: str, value: str) -> bool:
+    """
+    Add or update a value in the helicopter types dictionary.
+
+    Args:
+        icao_hex (str): The ICAO hex code of the aircraft (case-insensitive)
+        column_name (str): The name of the field to add/update (e.g., 'type', 'tail')
+        value (str): The value to store
+
+    Returns:
+        bool: True if operation was successful, False if an error occurred
+
+    Example:
+        >>> add_to_htypes('ac9f65', 'type', 'MD52')
+        True
+        >>> add_to_htypes('invalid!', 'type', 'MD52')
+        False
+    """
     try:
+        # Validate inputs
+        if not isinstance(icao_hex, str) or not icao_hex.strip():
+            raise ValueError("ICAO hex code must be a non-empty string")
+        if not isinstance(column_name, str) or not column_name.strip():
+            raise ValueError("Column name must be a non-empty string")
+        if not isinstance(value, str):
+            raise ValueError("Value must be a string")
+
+        # Normalize ICAO hex code to lowercase
+        icao_hex = icao_hex.lower().strip()
+
+        # Initialize dictionary for new ICAO or update existing entry
         if icao_hex not in heli_types:
             heli_types[icao_hex] = {column_name: value}
         else:
             heli_types[icao_hex][column_name] = value
 
+        logger.debug("Successfully updated %s[%s] = %s", icao_hex, column_name, value)
+        return True
+
+    except ValueError as ve:
+        logger.error("Validation error for %s: %s", icao_hex, str(ve))
+        return False
     except Exception as e:
-        logger.error("Error adding to heli_types for %s: %s", icao_hex, str(e))
+        logger.error(
+            "Unexpected error adding to heli_types for %s[%s]: %s",
+            icao_hex,
+            column_name,
+            str(e),
+        )
+        return False
+
+
+def remove_from_htypes(icao_hex: str, column_name: str | None = None) -> bool:
+    """
+    Remove an entry or specific column from the helicopter types dictionary.
+
+    Args:
+        icao_hex (str): The ICAO hex code of the aircraft (case-insensitive)
+        column_name (str | None): The name of the field to remove. If None, removes entire ICAO entry.
+                                Defaults to None.
+
+    Returns:
+        bool: True if removal was successful, False if entry/column not found or error occurred
+
+    Example:
+        >>> remove_from_htypes('ac9f65', 'type')  # Remove specific column
+        True
+        >>> remove_from_htypes('ac9f65')  # Remove entire ICAO entry
+        True
+        >>> remove_from_htypes('invalid', 'type')  # Non-existent ICAO
+        False
+    """
+    try:
+        # Validate input
+        if not isinstance(icao_hex, str) or not icao_hex.strip():
+            raise ValueError("ICAO hex code must be a non-empty string")
+        if column_name is not None and (
+            not isinstance(column_name, str) or not column_name.strip()
+        ):
+            raise ValueError("Column name must be a non-empty string if provided")
+
+        # Normalize ICAO hex code
+        icao_hex = icao_hex.lower().strip()
+
+        # Check if ICAO exists
+        if icao_hex not in heli_types:
+            logger.debug("ICAO %s not found in heli_types", icao_hex)
+            return False
+
+        if column_name is None:
+            # Remove entire ICAO entry
+            del heli_types[icao_hex]
+            logger.debug("Removed entire entry for ICAO %s", icao_hex)
+            return True
+        else:
+            # Remove specific column
+            column_name = column_name.strip()
+            if column_name in heli_types[icao_hex]:
+                del heli_types[icao_hex][column_name]
+                logger.debug("Removed column %s for ICAO %s", column_name, icao_hex)
+
+                # If no columns left, remove entire entry
+                if not heli_types[icao_hex]:
+                    del heli_types[icao_hex]
+                    logger.debug("Removed empty entry for ICAO %s", icao_hex)
+
+                return True
+            else:
+                logger.debug("Column %s not found for ICAO %s", column_name, icao_hex)
+                return False
+
+    except ValueError as ve:
+        logger.error("Validation error for %s: %s", icao_hex, str(ve))
+        return False
+    except Exception as e:
+        logger.error(
+            "Unexpected error removing from heli_types for %s: %s",
+            icao_hex,
+            str(e),
+        )
+        return False
 
 
 def search_bills(icao_hex: str, column_name: str) -> str | None:
@@ -885,7 +1022,26 @@ def search_bills(icao_hex: str, column_name: str) -> str | None:
 
 def load_helis_from_url(bills_url):
     """
-    Loads helis dictionary with bills_operators pulled from URL
+    Load helicopter data from a remote URL into a dictionary.
+
+    Downloads and processes helicopter operator data from a specified URL, saves a local
+    copy of the data, and builds a dictionary mapping ICAO hex codes to helicopter details.
+
+    Args:
+        bills_url (str): URL pointing to the CSV file containing helicopter operator data
+
+    Returns:
+        tuple[dict, float | None]:
+            - dict: Mapping of lowercase ICAO hex codes to helicopter details
+            - float: Timestamp of when the data was downloaded, or None if download failed
+
+    Raises:
+        requests.exceptions.RequestException: If there's an error downloading the data
+
+    Note:
+        - Creates backup of existing bills_operators.csv before updating
+        - Retries with increasing delay on timeout
+        - Saves downloaded data to local CSV file for future use
     """
     helis_dict = {}
 
@@ -956,8 +1112,27 @@ def load_helis_from_url(bills_url):
 
 def load_helis_from_file():
     """
-    Read Bills catalog of DC Helicopters into array
-    returns dictionary of helis and types
+    Load helicopter data from the local bills_operators CSV file.
+
+    Reads the local bills_operators.csv file containing helicopter operator data and
+    builds a dictionary mapping ICAO hex codes to helicopter details. Also checks
+    the age of the file to warn about outdated data.
+
+    Returns:
+        tuple[dict, float]:
+            - dict: Mapping of lowercase ICAO hex codes to helicopter details
+                   (including type, tail number, and operator information)
+            - float: Unix timestamp of when the file was last modified
+
+    Note:
+        - Requires bills_operators global variable to be set with valid file path
+        - Logs warnings if file is more than 24 hours old
+        - All ICAO hex codes are converted to lowercase for consistency
+
+    Example:
+        >>> helis_dict, file_age = load_helis_from_file()
+        >>> print(helis_dict['ac9f65']['type'])
+        'MD52'
     """
     helis_dict = {}
 
@@ -1052,19 +1227,19 @@ def init_prometheus() -> Counter:
         fcs_rx = Counter(
             name="fcs_rx_msgs",
             documentation="Messages received from aircraft",
-            labelnames=["icao", "cs"],
+            labelnames=["icao", "cs", "feeder_id"],
         )
 
         fcs_mongo_inserts = Counter(
             name="fcs_mongo_inserts",
             documentation="MongoDB insert operations by status code",
-            labelnames=["status_code"],
+            labelnames=["status_code", "feeder_id"],
         )
 
         fcs_sources = Counter(
             name="fcs_msg_srcs",
             documentation="Message sources by type (ADSB, MLAT, etc)",
-            labelnames=["source"],
+            labelnames=["source", "feeder_id"],
         )
 
         logger.info("Prometheus metrics initialized successfully")
@@ -1086,7 +1261,23 @@ def init_prometheus() -> Counter:
 
 def run_loop(interval, h_types):
     """
-    Run as loop and sleep specified interval
+    Main processing loop for helicopter data collection and monitoring.
+
+    Continuously runs the helicopter data collection process at specified intervals,
+    updating the bills database when needed and periodically dumping status information.
+
+    Args:
+        interval (int): Number of seconds to sleep between processing cycles
+        h_types (dict): Dictionary containing helicopter type information keyed by ICAO hex
+
+    Note:
+        - Checks bills_operators.csv age and updates from URL if older than BILLS_TIMEOUT
+        - Dumps helicopter status information once per hour by default
+        - Runs indefinitely until interrupted
+        - Uses global variables: BILLS_URL, BILLS_TIMEOUT
+
+    Example:
+        >>> run_loop(60, heli_types_dict)  # Run with 60-second intervals
     """
     dump_clock = 0
     # process_prometheus(random.random())
@@ -1227,7 +1418,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.version:
-        print("{parser.prog} version: {VERSION}")
+        print("{parser.prog} version: {VERSION} from: {CODE_DATE}")
         sys.exit()
 
     logging.basicConfig(level=logging.WARN)
@@ -1373,6 +1564,10 @@ if __name__ == "__main__":
         else:
             port = 8080
 
+    # Logging should be running by now
+    logger.info(f"Starting {parser.prog} version: {VERSION} from: {CODE_DATE}")
+    start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     if server and port:
         AIRCRAFT_URL = f"http://{server}:{port}/data/aircraft.json"
 
@@ -1391,7 +1586,7 @@ if __name__ == "__main__":
         AIRCRAFT_URL = None
         logger.debug("AIRCRAFT_URL set to None")
 
-    # probably need to have an option for different file names
+        # probably need to have an option for different file names
 
     heli_types = {}
     recent_flights = {}
