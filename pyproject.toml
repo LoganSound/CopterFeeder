@@ -1,6 +1,6 @@
 [project]
 name = "FeedCopterSpotter"
-version = "25.2.9"
+version = "25.2.10"
 
 [tool.commitizen]
 version_provider = "pep621"

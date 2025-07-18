@@ -1,3 +1,11 @@
+## 25.2.10 (2025-07-18)
+
+### Fix
+
+- add V22
+-  Readme diffs - hopefully does not clobber
+- 20250426 - gitignore for configmap
+
 ## 25.2.9 (2025-03-16)
 
 ### Fix
