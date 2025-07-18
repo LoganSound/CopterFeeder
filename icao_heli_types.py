@@ -971,4 +971,5 @@ icao_heli_types = [
     "B150",
     "EN28",
     "EN48",
+    "V22",
 ]
