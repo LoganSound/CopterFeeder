@@ -1497,19 +1497,22 @@ if __name__ == "__main__":
         "API-KEY" in config
         and config["API-KEY"] != "BigLongRandomStringOfLettersAndNumbers"
     ):
-        logger.debug("Mongo API Key found - using https api ")
-        MONGO_API_KEY = config["API-KEY"]
-        mongo_insert = mongo_https_insert
-        if "MONGO_URL" in config:
-            MONGO_URL = config["MONGO_URL"]
+        logger.debug("Mongo API Key found - using https api is deprecated ")
+        sys.exit(
+            "Mongo API Key found butmongo_https_insert function is deprecated. Exiting."
+        )
+        # MONGO_API_KEY = config["API-KEY"]
+        # mongo_insert = mongo_https_insert
+        # if "MONGO_URL" in config:
+        #     MONGO_URL = config["MONGO_URL"]
 
-        elif args.mongourl:
-            MONGO_URL = args.mongourl
+        # elif args.mongourl:
+        #     MONGO_URL = args.mongourl
 
-        else:
-            MONGO_URL = None
-            logger.error("API-Key found but No Mongo Endpoint URL specified - Exiting")
-            sys.exit()
+        # else:
+        #     MONGO_URL = None
+        #     logger.error("API-Key found but No Mongo Endpoint URL specified - Exiting")
+        #     sys.exit()
 
     # 20241226 - why is this section here? dhb
     # elif (
@@ -1539,7 +1542,21 @@ if __name__ == "__main__":
             logger.error("No Mongo User Found - Exiting")
             sys.exit()
 
-        logger.debug("Mongo User and Password found - using MongoClient")
+        if args.mongo_host:
+            MONGO_HOST = args.mongo_host
+        elif "MONGO_HOST" in config:
+            MONGO_HOST = config["MONGO_HOST"]
+        else:
+            MONGO_HOST = None
+            logger.error("No Mongo Host Found - Exiting")
+            sys.exit()
+
+        logger.debug(
+            "Mongo User, Password and Host found: %s, %s, %s",
+            MONGOUSER,
+            MONGOPW,
+            MONGO_HOST,
+        )
         mongo_insert = mongo_client_insert
 
     if args.feederid:
