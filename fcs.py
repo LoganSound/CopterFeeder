@@ -48,7 +48,8 @@ BILLS_TIMEOUT = 3600  # Standard is 1 hour as of 20240811
 # Default Mongo URL
 # See -M option in arg parse section
 #    "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
-MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
+# MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
+MONGO_HOST = "helicoptersofdc-2023.a2cmzsn.mongodb.net"
 
 # curl -v -H "api-key:BigLongRandomStringOfLettersAndNumbers" \
 #  -H "Content-Type: application/json" \-d '{"foo":"bar"}' \
@@ -155,8 +156,9 @@ def mongo_client_insert(mydict, dbFlags):
             + MONGOUSER
             + ":"
             + MONGOPW
-            + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/"
-            + "?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
+            + "@"
+            + MONGO_HOST
+            + "/?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
         )
 
         # Connect with timeout and retry options
@@ -209,23 +211,30 @@ def mongo_https_insert(mydict, dbFlags):
     Insert into Mongo using HTTPS requests call
     This will be deprecated September 2024
     """
-    # url = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+    sys.exit("mongo_https_insert function is deprecated. Exiting.")
 
-    headers = {"api-key": MONGO_API_KEY, "Content-Type": "application/json"}
+    # return None
 
-    try:
-        response = requests.post(MONGO_URL, headers=headers, json=mydict, timeout=7.5)
-        response.raise_for_status()
-        logger.debug("Response: %s", response)
-        logger.info("Mongo Insert Status: %s", response.status_code)
+    # # This is the old URL - we should be using the new one
+    # # url = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb"
+    # # This is the new URL
+    # url = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpoint/feedadsb_2023"
 
-    except requests.exceptions.HTTPError as e:
-        logger.warning("Mongo Post Error: %s ", e.response.text)
+    # headers = {"api-key": MONGO_API_KEY, "Content-Type": "application/json"}
 
-    fcs_mongo_inserts.labels(
-        status_code=response.status_code, feeder_id=FEEDER_ID
-    ).inc()
-    return response.status_code
+    # try:
+    #     response = requests.post(MONGO_URL, headers=headers, json=mydict, timeout=7.5)
+    #     response.raise_for_status()
+    #     logger.debug("Response: %s", response)
+    #     logger.info("Mongo Insert Status: %s", response.status_code)
+
+    # except requests.exceptions.HTTPError as e:
+    #     logger.warning("Mongo Post Error: %s ", e.response.text)
+
+    # fcs_mongo_inserts.labels(
+    #     status_code=response.status_code, feeder_id=FEEDER_ID
+    # ).inc()
+    # return response.status_code
 
 
 def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
@@ -1391,10 +1400,10 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "-M",
-        "--mongourl",
-        help="MONGO DB Endpoint URL",
+        "--mongo-host",
+        help="MONGO DB Host",
         action="store",
-        default=MONGO_URL,
+        default=MONGO_HOST,
     )
     parser.add_argument(
         "-u", "--mongouser", help="MONGO DB User", action="store", default=None
