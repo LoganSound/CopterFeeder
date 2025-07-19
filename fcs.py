@@ -1542,10 +1542,12 @@ if __name__ == "__main__":
             logger.error("No Mongo User Found - Exiting")
             sys.exit()
 
-        if args.mongo_host:
-            MONGO_HOST = args.mongo_host
-        elif "MONGO_HOST" in config:
+        if "MONGO_HOST" in config:
+            logger.debug("Mongo Host Found in .env file: %s", config["MONGO_HOST"])
             MONGO_HOST = config["MONGO_HOST"]
+        elif args.mongo_host:
+            logger.debug("Mongo Host Found in args: %s", args.mongo_host)
+            MONGO_HOST = args.mongo_host
         else:
             MONGO_HOST = None
             logger.error("No Mongo Host Found - Exiting")
