@@ -567,7 +567,7 @@ def fcs_update_helidb(interval):
             if "dbFlags" in plane:
                 dbFlags = plane["dbFlags"]
             else:
-                dbFlags = ""
+                dbFlags = None
 
             if "ownOp" in plane:
                 ownOp = plane["ownOp"]
