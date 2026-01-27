@@ -468,6 +468,7 @@ def fcs_update_helidb(interval):
 
         output += str(dt_stamp)
         callsign = ""
+        call_payload = None
         heli_type = ""
         heli_tail = ""
 
@@ -555,14 +556,17 @@ def fcs_update_helidb(interval):
                 heli_tail = "no reg"
                 output += " no reg"
 
-            callsign = str(plane.get("flight", "")).strip()
-            if callsign:
+            raw_flight = str(plane.get("flight", "")).strip()
+            if raw_flight:
+                callsign = raw_flight
+                call_payload = raw_flight
                 logger.debug("Flight: %s", callsign)
             else:
                 # callsign = "no_call"
                 # callsign = ""
                 # callsign = None
-                callsign = heli_tail or None
+                callsign = heli_tail
+                call_payload = None
 
             if "dbFlags" in plane:
                 dbFlags = plane["dbFlags"]
@@ -671,7 +675,7 @@ def fcs_update_helidb(interval):
             if not callsign:
                 # should never get here - should be handled above
                 logger.warning("Callsign is empty or None")
-                callsign = heli_tail or None
+                callsign = heli_tail
 
             output += " <" + callsign + ">"
         except BaseException:
@@ -790,7 +794,7 @@ def fcs_update_helidb(interval):
                     "icao": icao_hex,
                     "type": heli_type,
                     "tail": heli_tail,
-                    "call": callsign,
+                    "call": call_payload,
                     "heading": head,
                     "squawk": squawk,
                     "altitude_baro": alt_baro,
