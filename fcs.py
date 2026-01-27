@@ -467,7 +467,8 @@ def fcs_update_helidb(interval):
         # dt_stamp = datetime.datetime.now().timestamp()
 
         output += str(dt_stamp)
-        callsign = ""
+        callsign = None
+        callsign_label = "no_call"
         call_payload = None
         heli_type = ""
         heli_tail = ""
@@ -559,13 +560,15 @@ def fcs_update_helidb(interval):
             raw_flight = str(plane.get("flight", "")).strip()
             if raw_flight:
                 callsign = raw_flight
+                callsign_label = raw_flight
                 call_payload = raw_flight
                 logger.debug("Flight: %s", callsign)
             else:
                 # callsign = "no_call"
                 # callsign = ""
                 # callsign = None
-                callsign = heli_tail
+                callsign = None
+                callsign_label = "no_call"
                 call_payload = None
 
             if "dbFlags" in plane:
@@ -579,35 +582,41 @@ def fcs_update_helidb(interval):
                 ownOp = None
 
             if icao_hex not in recent_flights:
-                recent_flights[icao_hex] = [callsign, 1]
+                recent_flights[icao_hex] = [callsign_label, 1]
                 logger.debug(
                     "Added %s to recents (%d) as %s",
                     icao_hex,
                     len(recent_flights),
-                    callsign,
+                    callsign_label,
                 )
-                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
+                fcs_rx.labels(
+                    icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
+                ).inc(1)
             elif (
                 icao_hex in recent_flights
-                and recent_flights[icao_hex][0] != callsign
-                # and callsign != "no_call"
-                # and callsign != ""
-                and callsign is not None
+                and recent_flights[icao_hex][0] != callsign_label
             ):
                 logger.debug(
                     "Updating %s in recents as: %s - was:  %s",
                     icao_hex,
-                    callsign,
+                    callsign_label,
                     recent_flights[icao_hex][0],
                 )
-                recent_flights[icao_hex] = [callsign, recent_flights[icao_hex][1] + 1]
-                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
+                recent_flights[icao_hex] = [
+                    callsign_label,
+                    recent_flights[icao_hex][1] + 1,
+                ]
+                fcs_rx.labels(
+                    icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
+                ).inc(1)
 
             else:
                 # increment the count
                 recent_flights[icao_hex][1] += 1
                 # Prometheus counter
-                fcs_rx.labels(icao=icao_hex, cs=callsign, feeder_id=FEEDER_ID).inc(1)
+                fcs_rx.labels(
+                    icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
+                ).inc(1)
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -675,13 +684,13 @@ def fcs_update_helidb(interval):
             if not callsign:
                 # should never get here - should be handled above
                 logger.warning("Callsign is empty or None")
-                callsign = heli_tail
+                callsign_label = "no_call"
 
-            output += " <" + callsign + ">"
+            output += " <" + callsign_label + ">"
         except BaseException:
-            logger.debug("No 'flight' field - using tail number: %s", heli_tail)
-            callsign = heli_tail
-            output += " no call (" + heli_tail + ")"
+            logger.debug("No 'flight' field or bad callsign data")
+            callsign_label = "no_call"
+            output += " <no_call>"
 
         try:
             # Assumtion is made that negative altitude is unlikely
