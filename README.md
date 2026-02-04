@@ -150,18 +150,19 @@ docker compose up -d
 
 ## Makefile
 
-The project includes a Makefile for common tasks. Run `make` with no arguments to build the container (same as `make build`).
+The project includes a Makefile for common tasks. Run `make` with no arguments to build the container (same as `make build`). Run `make help` to list all targets.
 
 | Target         | Description                                                                 |
 |----------------|-----------------------------------------------------------------------------|
 | `make` / `make build` | Build the container using `docker-compose.yml`                              |
-| `make up`             | Start containers (`docker compose up`)                                     |
-| `make down`           | Stop and remove containers (`docker compose down`)                        |
-| `make setup-buildx`   | Set up the buildx multi-arch builder (see `buildx/` scripts)               |
+| `make up`             | Start containers in background; builds first if needed (`docker compose up -d --build`) |
+| `make down`           | Stop and remove containers (`docker compose down`)                         |
+| `make setup-buildx`   | Set up the buildx multi-arch builder (see `buildx/` scripts)                |
 | `make bake`           | Build and push multi-arch images (arm64, amd64) via buildx                 |
 | `make black`          | Run the Black code formatter on the project                                |
 | `make pre-commit`     | Run pre-commit hooks on all files                                          |
-| `make bump`           | Bump version with commitizen (updates version files and CHANGELOG)         |
+| `make bump`           | Bump version with commitizen (updates version files and CHANGELOG)          |
+| `make help`           | List all Makefile targets and descriptions                                 |
 
 <br>
 <br>
