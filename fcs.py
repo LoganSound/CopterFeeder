@@ -6,6 +6,7 @@ Upload rotorcraft positions to Helicopters of DC
 
 # Standard library imports
 import argparse
+import atexit
 import csv
 import json
 import logging
@@ -36,6 +37,11 @@ VERSION = "25.2.11"
 
 
 FEEDER_ID: str | None = None
+
+DEFAULT_MONGO_APP_NAME = "CopterFeeder"
+
+_mongo_client: MongoClient | None = None
+_mongo_client_key: tuple[str, str] | None = None  # (mongo_uri, mongo_app_name)
 
 # Bills
 
@@ -136,6 +142,77 @@ CONF_FOLDERS = [
 # Readsb location: readsb
 
 
+def build_mongo_uri() -> str:
+    """
+    Build a MongoDB connection URI from configured globals.
+
+    Note:
+        We intentionally do not set appName in the URI. Use MongoClient(appname=...)
+        so the value is a single source of truth and easier to override for Atlas.
+    """
+    return (
+        "mongodb+srv://"
+        + MONGOUSER
+        + ":"
+        + MONGOPW
+        + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/"
+        + "?retryWrites=true&w=majority"
+    )
+
+
+def get_mongo_client(mongo_uri: str, mongo_app_name: str) -> MongoClient:
+    """
+    Return a process-wide MongoClient, creating it once and reusing pooled connections.
+    """
+    global _mongo_client, _mongo_client_key
+
+    desired_key = (mongo_uri, mongo_app_name)
+    if _mongo_client is None or _mongo_client_key != desired_key:
+        if _mongo_client is not None:
+            try:
+                _mongo_client.close()
+            except Exception:
+                pass
+
+        client = MongoClient(
+            mongo_uri,
+            serverSelectionTimeoutMS=5000,  # 5 second timeout
+            connectTimeoutMS=5000,
+            retryWrites=True,
+            appname=mongo_app_name,
+        )
+
+        # Fail fast on initial connect; avoids per-insert ping.
+        try:
+            client.admin.command("ping")
+        except Exception:
+            try:
+                client.close()
+            except Exception:
+                pass
+            raise
+
+        _mongo_client = client
+        _mongo_client_key = desired_key
+        logger.info("MongoClient created/reused; appname=%s", mongo_app_name)
+
+    return _mongo_client
+
+
+def close_mongo_client() -> None:
+    global _mongo_client, _mongo_client_key
+    if _mongo_client is None:
+        return
+    try:
+        _mongo_client.close()
+        logger.debug("MongoClient closed")
+    except Exception:
+        logger.debug("Error closing MongoClient", exc_info=True)
+    finally:
+        _mongo_client = None
+        _mongo_client_key = None
+
+
 def mongo_client_insert(mydict, dbFlags):
     """
     Insert one entry into MongoDB using the MongoDB client.
@@ -147,28 +224,9 @@ def mongo_client_insert(mydict, dbFlags):
     Returns:
         ObjectId or None: Returns the inserted document's ID if successful, None if failed
     """
-    myclient = None
     try:
-        # Construct MongoDB connection URI
-        mongo_uri = (
-            "mongodb+srv://"
-            + MONGOUSER
-            + ":"
-            + MONGOPW
-            + "@helicoptersofdc-2023.a2cmzsn.mongodb.net/"
-            + "?retryWrites=true&w=majority&appName=HelicoptersofDC-2023"
-        )
-
-        # Connect with timeout and retry options
-        myclient = MongoClient(
-            mongo_uri,
-            serverSelectionTimeoutMS=5000,  # 5 second timeout
-            connectTimeoutMS=5000,
-            retryWrites=True,
-        )
-
-        # Test connection
-        myclient.admin.command("ping")
+        mongo_uri = build_mongo_uri()
+        myclient = get_mongo_client(mongo_uri, DEFAULT_MONGO_APP_NAME)
 
         # Select database and collection
         mydb = myclient["HelicoptersofDC-2023"]
@@ -198,10 +256,6 @@ def mongo_client_insert(mydict, dbFlags):
     except Exception as e:
         logger.error("Unexpected error during MongoDB operation: %s", e)
         return None
-    finally:
-        if myclient:
-            myclient.close()
-            logger.debug("MongoDB connection closed")
 
 
 def mongo_https_insert(mydict, dbFlags):
@@ -265,7 +319,7 @@ def dump_recents(signum=signal.SIGUSR1, frame="") -> None:
             flight, seen_count = recent_flights[hex_icao]
             aircraft_type = heli_types.get(hex_icao, {}).get("type", "Unknown")
             logger.info(
-                f"Aircraft: {hex_icao.upper():6} | Type: {aircraft_type:4} | Flight: {(flight or "No Callsign"):8} | Times seen: {seen_count}"
+                f"Aircraft: {hex_icao.upper():6} | Type: {aircraft_type:4} | Flight: {(flight or 'No Callsign'):8} | Times seen: {seen_count}"
             )
 
         logger.info("=== End of Dump ===")
@@ -1481,6 +1535,13 @@ if __name__ == "__main__":
         logger.setLevel(logging.DEBUG)
         logger.debug("Debug Mode Enabled")
 
+    def handle_sigterm(signum, frame):
+        logger.info("Received SIGTERM (%s) -- Exiting...", signum)
+        close_mongo_client()
+        raise SystemExit(0)
+
+    atexit.register(close_mongo_client)
+
     # Should be pulling these from env
 
     # If we find the API-Key - use that. Otherwise try login/password method.
@@ -1629,6 +1690,7 @@ if __name__ == "__main__":
         #            log_handles += getLogFileHandles(logger.parent)
 
         with daemon.DaemonContext(files_preserve=log_handles):
+            signal.signal(signal.SIGTERM, handle_sigterm)
             init_prometheus()
             start_http_server(PROM_PORT)
             run_loop(args.interval, heli_types)
@@ -1636,6 +1698,7 @@ if __name__ == "__main__":
     else:
         try:
             logger.debug("Starting main processing loop")
+            signal.signal(signal.SIGTERM, handle_sigterm)
             init_prometheus()
             start_http_server(PROM_PORT)
             run_loop(args.interval, heli_types)

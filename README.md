@@ -215,7 +215,8 @@ Copy example_env_file to .env ( this should only have to be done for the first i
 cp  example_dot_env .env
 ```
 
-Add your credentials or API-key, and Feeder-ID type to the .env file
+Add your credentials or API-key, and Feeder-ID type to the .env file.
+MongoDB Atlas connections from this service are labeled with app name `CopterFeeder`.
 
 ```Shell
 nano .env
