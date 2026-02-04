@@ -159,6 +159,7 @@ The project includes a Makefile for common tasks. Run `make` with no arguments t
 | `make bake`           | Build and push multi-arch images (arm64, amd64) via buildx                 |
 | `make black`          | Run the Black code formatter on the project                                |
 | `make pre-commit`     | Run pre-commit hooks on all files                                          |
+| `make bump`           | Bump version with commitizen (updates version files and CHANGELOG)         |
 
 <br>
 <br>
