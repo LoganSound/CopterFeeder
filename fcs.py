@@ -28,7 +28,6 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 
 from icao_heli_types import icao_heli_types
 
-
 # import __version__
 
 ## YYYYMMDD_HHMM_REV
@@ -1345,7 +1344,7 @@ def run_loop(interval, h_types):
                 "bills_operators.csv not found or older than timeout value: %s",
                 ctime(bills_age),
             )
-            (h_types, bills_age) = load_helis_from_url(BILLS_URL)
+            h_types, bills_age = load_helis_from_url(BILLS_URL)
             logger.info("Updated bills_operators.csv at: %s", ctime(bills_age))
         else:
             logger.debug(
@@ -1658,12 +1657,12 @@ if __name__ == "__main__":
 
     if args.web:
         logger.debug("Loading bills_operators from URL: %s ", BILLS_URL)
-        (heli_types, bills_age) = load_helis_from_url(BILLS_URL)
+        heli_types, bills_age = load_helis_from_url(BILLS_URL)
         logger.info("Loaded bills_operators from URL: %s ", BILLS_URL)
 
     elif bills_age > 0:
         logger.debug("Loading bills_operators from file: %s ", bills_operators)
-        (heli_types, bills_age) = load_helis_from_file()
+        heli_types, bills_age = load_helis_from_file()
         logger.info("Loaded bills_operators from file: %s ", bills_operators)
 
     else:

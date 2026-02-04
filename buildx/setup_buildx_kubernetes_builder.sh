@@ -20,7 +20,7 @@ kubectl get namespace multiarch-builder > /dev/null 2>&1 ||  {
     kubectl create namespace multiarch-builder
 }
 
-echo foo 
+echo foo
 
 docker buildx use multiarch-builder ||
 {
