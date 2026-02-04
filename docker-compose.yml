@@ -4,7 +4,7 @@
 services:
 
   fcs:
-    image: fcs:25.2.11
+    image: fcs:25.2.12
     build:
       context: .
 
