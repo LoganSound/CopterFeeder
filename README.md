@@ -155,8 +155,9 @@ The project includes a Makefile for common tasks. Run `make` with no arguments t
 | Target         | Description                                                                 |
 |----------------|-----------------------------------------------------------------------------|
 | `make` / `make build` | Build the container using `docker-compose.yml`                              |
-| `make up`             | Start containers in background; builds first if needed (`docker compose up -d --build`) |
+| `make up`             | Start containers in background (`docker compose up -d`; run `make build` first if image is missing) |
 | `make down`           | Stop and remove containers (`docker compose down`)                         |
+| `make clean`          | Stop containers and remove build sentinel (next `make up` will rebuild)   |
 | `make setup-buildx`   | Set up the buildx multi-arch builder (see `buildx/` scripts)                |
 | `make bake`           | Build and push multi-arch images (arm64, amd64) via buildx                 |
 | `make black`          | Run the Black code formatter on the project                                |

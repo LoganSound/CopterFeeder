@@ -2,8 +2,9 @@
 help:
 	@echo "Targets:"
 	@echo "  make / make build   - Build the container (docker-compose.yml)"
-	@echo "  make up             - Start containers in background (docker compose up -d --build)"
+	@echo "  make up             - Start containers in background (docker compose up -d)"
 	@echo "  make down           - Stop and remove containers"
+	@echo "  make clean          - Stop containers, remove build sentinel and other cleanup"
 	@echo "  make setup-buildx   - Set up buildx multi-arch builder (buildx/ scripts)"
 	@echo "  make bake           - Build and push multi-arch images (arm64, amd64)"
 	@echo "  make black          - Run Black code formatter"
@@ -15,13 +16,21 @@ help:
 build:
 	docker compose build
 
-# Start containers (docker compose up -d); builds first if image is missing or out of date
-up:
-	docker compose up -d --build
+# Sentinel: build only when Dockerfile or app sources are newer than last build
+.build.done: Dockerfile docker-compose.yml requirements.txt fcs.py icao_heli_types.py config
+	docker compose build && touch .build.done
+
+# Start containers in background; builds first only when inputs have changed
+up: .build.done
+	docker compose up -d
 
 # Stop and remove containers
 down:
 	docker compose down
+
+# Stop containers and remove build sentinel so next 'make up' will rebuild
+clean: down
+	rm -f .build.done
 
 # Setup buildx multi-arch builder using scripts under buildx/
 setup-buildx:
