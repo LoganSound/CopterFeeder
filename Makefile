@@ -17,3 +17,7 @@ black:
 # Run pre-commit on all files
 pre-commit:
 	pre-commit run --all-files
+
+# Bump version using commitizen (updates version files and CHANGELOG)
+bump:
+	cz bump
