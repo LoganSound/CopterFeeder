@@ -2,6 +2,14 @@
 build:
 	docker compose build
 
+# Start containers (docker compose up)
+up: build
+	docker compose up
+
+# Stop and remove containers
+down: build
+	docker compose down
+
 # Setup buildx multi-arch builder using scripts under buildx/
 setup-buildx:
 	./buildx/setup_buildx_kubernetes_builder.sh
