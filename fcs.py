@@ -14,6 +14,7 @@ import os
 import signal
 import sys
 from datetime import datetime, timezone
+from threading import Lock
 from time import ctime, gmtime, sleep, strftime, time
 from zoneinfo import ZoneInfo
 
@@ -23,7 +24,7 @@ import requests
 import validators
 from dotenv import dotenv_values
 from prometheus_client import Counter, Gauge, Summary, start_http_server
-from pymongo import MongoClient
+from pymongo import MongoClient, monitoring
 from pymongo.errors import ConnectionFailure, OperationFailure
 
 from icao_heli_types import icao_heli_types
@@ -41,6 +42,56 @@ DEFAULT_MONGO_APP_NAME = "CopterFeeder"
 
 _mongo_client: MongoClient | None = None
 _mongo_client_key: tuple[str, str] | None = None  # (mongo_uri, mongo_app_name)
+
+DEFAULT_MONGO_CONN_LOG_ENABLED = True
+DEFAULT_MONGO_CONN_LOG_INTERVAL_SECS = 60
+
+MONGO_CONN_LOG_ENABLED = DEFAULT_MONGO_CONN_LOG_ENABLED
+MONGO_CONN_LOG_INTERVAL_SECS = DEFAULT_MONGO_CONN_LOG_INTERVAL_SECS
+MONGO_CONN_TRACKING_ACTIVE = False
+_mongo_conn_log_next_ts = 0.0
+
+
+class MongoConnectionTracker:
+    """Track current and lifetime MongoClient connection counts."""
+
+    def __init__(self) -> None:
+        self._lock = Lock()
+        self._open_connections_current = 0
+        self._connections_opened_total = 0
+        self._connections_closed_total = 0
+
+    def connection_opened(self) -> None:
+        with self._lock:
+            self._open_connections_current += 1
+            self._connections_opened_total += 1
+
+    def connection_closed(self) -> None:
+        with self._lock:
+            self._connections_closed_total += 1
+            self._open_connections_current = max(0, self._open_connections_current - 1)
+
+    def snapshot(self) -> tuple[int, int, int]:
+        with self._lock:
+            return (
+                self._open_connections_current,
+                self._connections_opened_total,
+                self._connections_closed_total,
+            )
+
+
+class MongoConnectionPoolListener(monitoring.ConnectionPoolListener):
+    """CMAP listener used to maintain per-process connection counters."""
+
+    def connection_created(self, event) -> None:
+        _mongo_connection_tracker.connection_opened()
+
+    def connection_closed(self, event) -> None:
+        _mongo_connection_tracker.connection_closed()
+
+
+_mongo_connection_tracker = MongoConnectionTracker()
+_mongo_connection_listener = MongoConnectionPoolListener()
 
 # Bills
 
@@ -179,6 +230,7 @@ def get_mongo_client(mongo_uri: str, mongo_app_name: str) -> MongoClient:
             connectTimeoutMS=5000,
             retryWrites=True,
             appname=mongo_app_name,
+            event_listeners=[_mongo_connection_listener],
         )
 
         # Fail fast on initial connect; avoids per-insert ping.
@@ -210,6 +262,68 @@ def close_mongo_client() -> None:
     finally:
         _mongo_client = None
         _mongo_client_key = None
+
+
+def parse_bool_config(value, default: bool = True) -> bool:
+    """
+    Parse common truthy/falsey values from environment-style configuration.
+    """
+    if value is None:
+        return default
+    normalized = str(value).strip().lower()
+    if normalized in {"1", "true", "t", "yes", "y", "on"}:
+        return True
+    if normalized in {"0", "false", "f", "no", "n", "off"}:
+        return False
+    return default
+
+
+def parse_positive_int_config(value, default: int, setting_name: str) -> int:
+    """
+    Parse a positive integer configuration value with a safe fallback.
+    """
+    if value is None:
+        return default
+    try:
+        parsed = int(str(value).strip())
+        if parsed <= 0:
+            raise ValueError
+        return parsed
+    except (TypeError, ValueError):
+        logger.warning(
+            "Invalid %s value '%s'; falling back to %d",
+            setting_name,
+            value,
+            default,
+        )
+        return default
+
+
+def emit_mongo_connection_stats_if_due(now_ts: float | None = None) -> None:
+    """
+    Periodically emit process-level Mongo connection counts.
+    """
+    global _mongo_conn_log_next_ts
+
+    if not MONGO_CONN_TRACKING_ACTIVE or not MONGO_CONN_LOG_ENABLED:
+        return
+
+    if now_ts is None:
+        now_ts = time()
+
+    if now_ts < _mongo_conn_log_next_ts:
+        return
+
+    _mongo_conn_log_next_ts = now_ts + max(1, MONGO_CONN_LOG_INTERVAL_SECS)
+    open_current, opened_total, closed_total = _mongo_connection_tracker.snapshot()
+
+    logger.info(
+        "Mongo Connections feeder_id=%s open_connections_current=%d connections_opened_total=%d connections_closed_total=%d",
+        FEEDER_ID,
+        open_current,
+        opened_total,
+        closed_total,
+    )
 
 
 def mongo_client_insert(mydict, dbFlags):
@@ -1363,6 +1477,7 @@ def run_loop(interval, h_types):
             )
 
         fcs_update_helidb(interval)
+        emit_mongo_connection_stats_if_due()
 
         # dump 1x per hour
         if dump_clock >= (60 * 60 / interval):
@@ -1535,6 +1650,16 @@ if __name__ == "__main__":
         **os.environ,
     }
 
+    MONGO_CONN_LOG_ENABLED = parse_bool_config(
+        config.get("MONGO_CONN_LOG_ENABLED"),
+        DEFAULT_MONGO_CONN_LOG_ENABLED,
+    )
+    MONGO_CONN_LOG_INTERVAL_SECS = parse_positive_int_config(
+        config.get("MONGO_CONN_LOG_INTERVAL_SECS"),
+        DEFAULT_MONGO_CONN_LOG_INTERVAL_SECS,
+        "MONGO_CONN_LOG_INTERVAL_SECS",
+    )
+
     # somewhat redundant here but logging is bootstrapped before reading config
     if "DEBUG" in config and config["DEBUG"] == "True":
         #        ch=logging.StreamHandler()
@@ -1559,6 +1684,7 @@ if __name__ == "__main__":
         and config["API-KEY"] != "BigLongRandomStringOfLettersAndNumbers"
     ):
         logger.debug("Mongo API Key found - using https api ")
+        MONGO_CONN_TRACKING_ACTIVE = False
         MONGO_API_KEY = config["API-KEY"]
         mongo_insert = mongo_https_insert
         if "MONGO_URL" in config:
@@ -1601,6 +1727,7 @@ if __name__ == "__main__":
             sys.exit()
 
         logger.debug("Mongo User and Password found - using MongoClient")
+        MONGO_CONN_TRACKING_ACTIVE = True
         mongo_insert = mongo_client_insert
 
     if args.feederid:
@@ -1613,6 +1740,15 @@ if __name__ == "__main__":
             "No FEEDER_ID defined in command line options or .env file - Exiting"
         )
         sys.exit()
+
+    if MONGO_CONN_TRACKING_ACTIVE:
+        if MONGO_CONN_LOG_ENABLED:
+            logger.info(
+                "Mongo connection logging enabled at %d second interval(s)",
+                MONGO_CONN_LOG_INTERVAL_SECS,
+            )
+        else:
+            logger.info("Mongo connection logging disabled")
 
     if args.readlocalfiles:
         logger.debug("Using Local json files")

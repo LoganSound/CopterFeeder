@@ -236,6 +236,20 @@ cp  example_dot_env .env
 Add your credentials or API-key, and Feeder-ID type to the .env file.
 MongoDB Atlas connections from this service are labeled with app name `CopterFeeder`.
 
+MongoClient connection logging is enabled by default to help troubleshoot per-instance
+connection usage. You can control it with:
+
+```Shell
+MONGO_CONN_LOG_ENABLED=true
+MONGO_CONN_LOG_INTERVAL_SECS=60
+```
+
+Sample log line:
+
+```Code
+Mongo Connections feeder_id=Daniel-prod open_connections_current=3 connections_opened_total=5 connections_closed_total=2
+```
+
 ```Shell
 nano .env
 ```
