@@ -1,3 +1,9 @@
+.PHONY: help build up down clean setup-buildx bake black pre-commit bump
+
+# Default target: build the container
+build:
+	docker compose build
+
 # Show this help
 help:
 	@echo "Targets:"
@@ -11,10 +17,6 @@ help:
 	@echo "  make pre-commit     - Run pre-commit hooks on all files"
 	@echo "  make bump           - Bump version with commitizen"
 	@echo "  make help           - Show this help"
-
-# Build the container using standard docker-compose.yml
-build:
-	docker compose build
 
 # Sentinel: build only when Dockerfile or app sources are newer than last build
 .build.done: Dockerfile docker-compose.yml requirements.txt fcs.py icao_heli_types.py config
