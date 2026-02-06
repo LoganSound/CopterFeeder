@@ -33,7 +33,7 @@ from icao_heli_types import icao_heli_types
 
 ## YYYYMMDD_HHMM_REV
 CODE_DATE = "20250316"
-VERSION = "25.2.14"
+VERSION = "25.2.15"
 
 
 FEEDER_ID: str | None = None

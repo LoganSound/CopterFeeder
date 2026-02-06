@@ -1,3 +1,9 @@
+## 25.2.15 (2026-02-06)
+
+### Fix
+
+- Added more handlers with pass
+
 ## 25.2.14 (2026-02-06)
 
 ### Fix
