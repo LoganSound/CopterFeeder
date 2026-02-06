@@ -1,4 +1,4 @@
-.PHONY: help build up down clean setup-buildx bake black pre-commit bump
+.PHONY: help build up down clean setup-buildx bake black pre-commit bump force-bump
 
 # Default target: build the container
 build:
@@ -16,6 +16,7 @@ help:
 	@echo "  make black          - Run Black code formatter"
 	@echo "  make pre-commit     - Run pre-commit hooks on all files"
 	@echo "  make bump           - Bump version with commitizen"
+	@echo "  make force-bump    - Force a patch bump (cz bump --increment PATCH)"
 	@echo "  make help           - Show this help"
 
 # Sentinel: build only when Dockerfile or app sources are newer than last build
@@ -53,3 +54,7 @@ pre-commit:
 # Bump version using commitizen (updates version files and CHANGELOG)
 bump:
 	cz bump
+
+# Force a patch bump without requiring conventional commits
+force-bump:
+	cz bump --increment PATCH

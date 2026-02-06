@@ -9,6 +9,7 @@
         -   [Option 2: Manual Setup with ADSB.im and Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
     -   [Configuration and Running](#configuration-and-running)
     -   [Updating Copterfeeder](#updating-copterfeeder)
+-   [Logging](#logging)
 -   [Makefile](#makefile)
 -   [Legacy Read Me](#legacy-read-me)
 
@@ -131,6 +132,17 @@ docker compose logs -f
 
 📝 **Note:** `Ctrl-C` escapes you from viewing logs
 
+## Logging
+
+The application uses Python’s standard `logging` module. Log output includes timestamp, module name, level, and message.
+
+- **Default level** is WARN (only warnings and errors). Use **`-v`** / **`--verbose`** for INFO, or **`-D`** / **`--debug`** for DEBUG when running the script directly.
+- **`--log`** *filename* writes reported rotorcraft to a file (and implies verbose). Useful when running as a daemon.
+- **Mongo connection logging** can be controlled via `.env`: set **`MONGO_CONN_LOG_ENABLED`** to `true` or `false` (default: true), and **`MONGO_CONN_LOG_INTERVAL_SECS`** (default: 60) to limit how often connection status is logged.
+- Set **`DEBUG=True`** in `.env` to enable debug-level logging for the whole run.
+
+When using Docker, application logs appear in **`docker compose logs -f`**; the container runs with `-v` (verbose) by default (see `docker-compose.yml`).
+
 ## Updating CopterFeeder
 
 1. Navigate to the project folder and pull the latest
@@ -163,6 +175,7 @@ The project includes a Makefile for common tasks. Run `make` with no arguments t
 | `make black`          | Run the Black code formatter on the project                                |
 | `make pre-commit`     | Run pre-commit hooks on all files                                          |
 | `make bump`           | Bump version with commitizen (updates version files and CHANGELOG)          |
+| `make force-bump`     | Force a patch bump without requiring conventional commits                 |
 | `make help`           | List all Makefile targets and descriptions                                 |
 
 <br>
