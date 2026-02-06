@@ -9,6 +9,7 @@
         -   [Option 2: Manual Setup with ADSB.im and Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
     -   [Configuration and Running](#configuration-and-running)
     -   [Updating Copterfeeder](#updating-copterfeeder)
+-   [Makefile](#makefile)
 -   [Legacy Read Me](#legacy-read-me)
 
 ## Prerequisites
@@ -116,11 +117,11 @@ nano .env
 3. Build and run the Docker container:
 
 ```shell
-docker compose build
+make build
 docker compose up -d
 ```
 
-📝 **Note:** the -d flag runs the container in the background.
+Or run `make` (which defaults to `make build`). The -d flag runs the container in the background.
 
 4. (Optional) View logs:
 
@@ -143,9 +144,26 @@ git pull
 
 ```shell
 docker compose down
-docker compose build
+make build
 docker compose up -d
 ```
+
+## Makefile
+
+The project includes a Makefile for common tasks. Run `make` with no arguments to build the container (same as `make build`). Run `make help` to list all targets.
+
+| Target         | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| `make` / `make build` | Build the container using `docker-compose.yml`                              |
+| `make up`             | Start containers in background; builds first only when inputs have changed |
+| `make down`           | Stop and remove containers (`docker compose down`)                         |
+| `make clean`          | Stop containers and remove build sentinel (next `make up` will rebuild)   |
+| `make setup-buildx`   | Set up the buildx multi-arch builder (see `buildx/` scripts)                |
+| `make bake`           | Build and push multi-arch images (arm64, amd64) via buildx                 |
+| `make black`          | Run the Black code formatter on the project                                |
+| `make pre-commit`     | Run pre-commit hooks on all files                                          |
+| `make bump`           | Bump version with commitizen (updates version files and CHANGELOG)          |
+| `make help`           | List all Makefile targets and descriptions                                 |
 
 <br>
 <br>
@@ -215,7 +233,8 @@ Copy example_env_file to .env ( this should only have to be done for the first i
 cp  example_dot_env .env
 ```
 
-Add your credentials or API-key, and Feeder-ID type to the .env file
+Add your credentials or API-key, and Feeder-ID type to the .env file.
+MongoDB Atlas connections from this service are labeled with app name `CopterFeeder`.
 
 ```Shell
 nano .env
@@ -378,13 +397,7 @@ cd CopterFeeder
 
 Next - setup the .env file as outlined above, using the credentials you've been provided for copter-spotter.
 
-Run docker-compose to build the container:
-
-```Shell
-docker compose build
-```
-
-And then run the container:
+Build the container with `make build` (or `docker compose build`), then run the container:
 
 ```Shell
 docker compose up -d
