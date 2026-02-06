@@ -13,7 +13,7 @@ help:
 	@echo "  make clean          - Stop containers, remove build sentinel and other cleanup"
 	@echo "  make setup-buildx   - Set up buildx multi-arch builder (buildx/ scripts)"
 	@echo "  make setup-commitizen - Install commitizen and set up pre-commit hooks if needed"
-	@echo "  make check-version-tag - Verify git tag exists and matches current version (pyproject.toml)"
+	@echo "  make check-version-tag - Verify git tag exists for current version; create if missing"
 	@echo "  make bake           - Build and push multi-arch images (arm64, amd64)"
 	@echo "  make black          - Run Black code formatter"
 	@echo "  make pre-commit     - Run pre-commit hooks on all files"
@@ -47,15 +47,15 @@ setup-commitizen:
 	pre-commit install
 	pre-commit install --hook-type commit-msg
 
-# Verify git tag exists and matches current version (from pyproject.toml / commitizen)
+# Verify git tag exists for current version; create if missing (from pyproject.toml / commitizen)
 check-version-tag:
 	@ver=$$(command -v cz >/dev/null 2>&1 && cz version --project 2>/dev/null || grep -E '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/'); \
 	if git rev-parse "$$ver" >/dev/null 2>&1; then \
 		echo "Version tag $$ver exists and aligns with current version"; \
 	else \
-		echo "ERROR: Version $$ver has no matching git tag."; \
-		echo "  Run 'make bump' (or 'make force-bump') to bump and tag, or create tag: git tag $$ver"; \
-		exit 1; \
+		echo "Version tag $$ver missing; creating annotated tag at HEAD"; \
+		git tag -a "$$ver" -m "Version $$ver"; \
+		echo "Created tag $$ver. Push with: git push origin $$ver"; \
 	fi
 
 # Build and push multi-arch images using docker-compose-buildx.yml
