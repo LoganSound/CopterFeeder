@@ -15,7 +15,7 @@ Typical deployment: Raspberry Pi or Ubuntu host with an SDR, often via [ADSB.im]
 ## Key files and directories
 
 | Path | Purpose |
-|------|--------|
+| ---- | ------- |
 | `fcs.py` | Main application entrypoint and logic (~1800+ lines) |
 | `icao_heli_types.py` | ICAO helicopter type lookups |
 | `get_bills.py` | Fetches/updates Bills operators data |
