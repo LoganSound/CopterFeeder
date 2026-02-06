@@ -3,11 +3,11 @@
 services:
 
   fcs:
-    image: registry.brauhausdc.org:5000/fcs/fcs:25.2.15
+    image: registry.brauhausdc.org:5000/fcs/fcs:25.2.16
     build:
       dockerfile: Dockerfile
       tags:
-        - registry.brauhausdc.org:5000/fcs/fcs:25.2.15
+        - registry.brauhausdc.org:5000/fcs/fcs:25.2.16
 
     x-bake:
       platforms:

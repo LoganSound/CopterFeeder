@@ -1,3 +1,9 @@
+## 25.2.16 (2026-02-06)
+
+### Fix
+
+- add missing pool_ready no-op CMAP handler
+
 ## 25.2.15 (2026-02-06)
 
 ### Fix
