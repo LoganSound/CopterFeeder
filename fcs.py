@@ -107,6 +107,9 @@ class MongoConnectionPoolListener(monitoring.ConnectionPoolListener):
     def pool_created(self, event) -> None:
         pass
 
+    def pool_ready(self, event) -> None:
+        pass
+
     def pool_closed(self, event) -> None:
         pass
 
