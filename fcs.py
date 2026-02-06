@@ -89,6 +89,9 @@ class MongoConnectionPoolListener(monitoring.ConnectionPoolListener):
     def connection_closed(self, event) -> None:
         _mongo_connection_tracker.connection_closed()
 
+    def connection_ready(self, event) -> None:
+        pass
+
     def connection_check_out_started(self, event) -> None:
         pass  # No-op; we only track created/closed
 
@@ -96,6 +99,18 @@ class MongoConnectionPoolListener(monitoring.ConnectionPoolListener):
         pass
 
     def connection_checked_in(self, event) -> None:
+        pass
+
+    def connection_check_out_failed(self, event) -> None:
+        pass
+
+    def pool_created(self, event) -> None:
+        pass
+
+    def pool_closed(self, event) -> None:
+        pass
+
+    def pool_cleared(self, event) -> None:
         pass
 
 
