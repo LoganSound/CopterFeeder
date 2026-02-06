@@ -1,3 +1,9 @@
+## 25.2.13 (2026-02-06)
+
+### Fix
+
+- Added logging for mongo connections updated README and Makefile
+
 ## 25.2.12 (2026-02-04)
 
 ## 25.2.11 (2025-07-18)
