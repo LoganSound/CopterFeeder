@@ -171,6 +171,7 @@ The project includes a Makefile for common tasks. Run `make` with no arguments t
 | `make down`           | Stop and remove containers (`docker compose down`)                         |
 | `make clean`          | Stop containers and remove build sentinel (next `make up` will rebuild)   |
 | `make setup-buildx`   | Set up the buildx multi-arch builder (see `buildx/` scripts)                |
+| `make setup-commitizen` | Install commitizen and set up pre-commit hooks (idempotent)                |
 | `make bake`           | Build and push multi-arch images (arm64, amd64) via buildx                 |
 | `make black`          | Run the Black code formatter on the project                                |
 | `make pre-commit`     | Run pre-commit hooks on all files                                          |
