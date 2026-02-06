@@ -43,7 +43,13 @@ setup-buildx:
 
 # Install commitizen and set up pre-commit hooks (idempotent)
 setup-commitizen:
-	@command -v cz >/dev/null 2>&1 || pip install -r requirements-dev.txt
+	@command -v cz >/dev/null 2>&1 || { \
+		if command -v brew >/dev/null 2>&1; then \
+			brew install commitizen || pip install -r requirements-dev.txt; \
+		else \
+			pip install -r requirements-dev.txt; \
+		fi; \
+	}
 	pre-commit install
 	pre-commit install --hook-type commit-msg
 
