@@ -877,7 +877,7 @@ def fcs_update_helidb(interval):
             # if "flight" in plane and not callsign or callsign is None:
             if not callsign:
                 # should never get here - should be handled above
-                logger.warning("Callsign is empty or None")
+                logger.debug("Callsign is empty or None")
                 callsign_label = "no_call"
 
             output += " <" + callsign_label + ">"
