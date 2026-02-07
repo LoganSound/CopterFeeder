@@ -31,9 +31,9 @@ services:
       - PYTHONDONTWRITEBYTECODE=1
       - TZ=UTC
       - OTEL_SERVICE_NAME=copterfeeder
-      - OTEL_TRACES_EXPORTER=console
-      - OTEL_METRICS_EXPORTER=console
-      - OTEL_LOGS_EXPORTER=console
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_LOGS_EXPORTER=otlp
     env_file: ".env"
     extra_hosts:
       #- host.docker.internal:172.17.0.1

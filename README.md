@@ -142,13 +142,13 @@ The application uses Python’s standard `logging` module. Log output includes t
 
 When using Docker, application logs appear in **`docker compose logs -f`**; the container runs with `-v` (verbose) by default (see `docker-compose.yml`).
 
-**OpenTelemetry:** The container uses OpenTelemetry zero-code auto-instrumentation (traces, metrics, logs for pymongo, requests, and Python logging). By default, telemetry is exported to stdout. To send to Grafana Cloud OTLP (HTTP endpoint), set in `.env`:
+**OpenTelemetry:** The container uses OpenTelemetry zero-code auto-instrumentation (traces, metrics, logs for pymongo, requests, and Python logging). By default, telemetry is exported to OTLP. Set in `.env` for Grafana Cloud:
 
 - `GRAFANA_OTLP_ENDPOINT` – OTLP HTTP endpoint URL (e.g. `https://otlp-gateway-prod-us-central-0.grafana.net/otlp`)
 - `GRAFANA_OTLP_USERNAME` – Grafana Cloud instance ID
 - `GRAFANA_OTLP_API_KEY` – Grafana Cloud API key
 
-Also set `OTEL_TRACES_EXPORTER=console,otlp`, `OTEL_METRICS_EXPORTER=console,otlp`, and `OTEL_LOGS_EXPORTER=console,otlp`. The entrypoint automatically sets `OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf` for Grafana's otlphttp endpoint.
+Override to add `console` for local debugging (e.g. `OTEL_TRACES_EXPORTER=console,otlp`). The entrypoint automatically sets `OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf` for Grafana's otlphttp endpoint.
 
 ## Updating CopterFeeder
 
