@@ -170,6 +170,8 @@ The project includes a Makefile for common tasks. Run `make` with no arguments t
 | `make up`             | Start containers in background; builds first only when inputs have changed |
 | `make down`           | Stop and remove containers (`docker compose down`)                         |
 | `make clean`          | Stop containers and remove build sentinel (next `make up` will rebuild)   |
+| `make pull`           | Run git pull                                                              |
+| `make install-docker` | Install Docker and Docker Compose (Debian/Ubuntu; see [Installation](#option-2-manual-setup-with-adsbim-and-ubuntu)) |
 | `make setup-buildx`   | Set up the buildx multi-arch builder (see `buildx/` scripts)                |
 | `make setup-commitizen` | Install commitizen and set up pre-commit hooks (idempotent)                |
 | `make bake`           | Build and push multi-arch images (arm64, amd64) via buildx                 |

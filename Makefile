@@ -11,6 +11,8 @@ help:
 	@echo "  make up             - Start containers in background (docker compose up -d)"
 	@echo "  make down           - Stop and remove containers"
 	@echo "  make clean          - Stop containers, remove build sentinel and other cleanup"
+	@echo "  make pull           - Run git pull"
+	@echo "  make install-docker - Install Docker and Docker Compose (Debian/Ubuntu; see README)"
 	@echo "  make setup-buildx   - Set up buildx multi-arch builder (buildx/ scripts)"
 	@echo "  make setup-commitizen - Install commitizen and set up pre-commit hooks if needed"
 	@echo "  make check-version-tag - Verify git tag exists for current version; create if missing"
@@ -37,6 +39,21 @@ down:
 # Stop containers and remove build sentinel so next 'make up' will rebuild
 clean: down
 	rm -f .build.done
+
+# Pull latest changes from the remote
+pull:
+	git pull
+
+# Install Docker and Docker Compose (Debian/Ubuntu). After running, add your user to the docker group:
+#   sudo usermod -aG docker $$USER
+# Then log out and back in, or run: newgrp docker
+install-docker:
+	sudo apt-get update
+	sudo apt-get install -y docker.io docker-compose
+	sudo apt-get install -y docker-compose-v2 || sudo apt-get install -y docker-compose-plugin
+	@echo ""
+	@echo "Add your user to the docker group, then log out and back in (or run: newgrp docker):"
+	@echo "  sudo usermod -aG docker $$USER"
 
 # Setup buildx multi-arch builder using scripts under buildx/
 setup-buildx:
