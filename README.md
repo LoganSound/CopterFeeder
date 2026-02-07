@@ -142,6 +142,26 @@ The application uses Python’s standard `logging` module. Log output includes t
 
 When using Docker, application logs appear in **`docker compose logs -f`**; the container runs with `-v` (verbose) by default (see `docker-compose.yml`).
 
+## Connection Efficiency
+
+CopterFeeder now applies explicit, conservative MongoDB connection defaults to reduce aggregate Atlas connection pressure when many feeders run at once:
+
+- `MONGO_MAX_POOL_SIZE=2`
+- `MONGO_MIN_POOL_SIZE=0`
+- `MONGO_MAX_IDLE_TIME_MS=15000`
+- `MONGO_WAIT_QUEUE_TIMEOUT_MS=1000`
+- `MONGO_SERVER_SELECTION_TIMEOUT_MS=5000`
+- `MONGO_CONNECT_TIMEOUT_MS=5000`
+- `MONGO_SOCKET_TIMEOUT_MS=8000`
+
+Operational tradeoffs:
+
+- Prioritizes lower connection footprint over maximum burst throughput.
+- Small pools can briefly queue inserts under local spikes.
+- Timeouts fail quickly on unhealthy networks, which improves recovery behavior but may surface transient errors sooner.
+
+Atlas app-name attribution uses `CopterFeeder/<FEEDER_ID>` (fallback: `CopterFeeder/unknown`) so each feeder can be identified in MongoDB monitoring.
+
 **OpenTelemetry:** The container uses OpenTelemetry zero-code auto-instrumentation (traces, metrics, logs for pymongo, requests, and Python logging). By default, telemetry is exported to OTLP. The `feeder_id` Resource attribute is automatically set from `FEEDER_ID`. Set in `.env` for Grafana Cloud:
 
 - `GRAFANA_OTLP_ENDPOINT` – OTLP HTTP endpoint URL (e.g. `https://otlp-gateway-prod-us-central-0.grafana.net/otlp`)
@@ -257,7 +277,7 @@ cp  example_dot_env .env
 ```
 
 Add your credentials or API-key, and Feeder-ID type to the .env file.
-MongoDB Atlas connections from this service are labeled with app name `CopterFeeder`.
+MongoDB Atlas connections from this service are labeled with app name `CopterFeeder/<FEEDER_ID>` (fallback `CopterFeeder/unknown`).
 
 MongoClient connection logging is enabled by default to help troubleshoot per-instance
 connection usage. You can control it with:

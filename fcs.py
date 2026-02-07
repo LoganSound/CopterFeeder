@@ -44,6 +44,22 @@ DEFAULT_MONGO_APP_NAME = "CopterFeeder"
 _mongo_client: MongoClient | None = None
 _mongo_client_key: tuple[str, str] | None = None  # (mongo_uri, mongo_app_name)
 
+DEFAULT_MONGO_MAX_POOL_SIZE = 2
+DEFAULT_MONGO_MIN_POOL_SIZE = 0
+DEFAULT_MONGO_MAX_IDLE_TIME_MS = 15000
+DEFAULT_MONGO_WAIT_QUEUE_TIMEOUT_MS = 1000
+DEFAULT_MONGO_SERVER_SELECTION_TIMEOUT_MS = 5000
+DEFAULT_MONGO_CONNECT_TIMEOUT_MS = 5000
+DEFAULT_MONGO_SOCKET_TIMEOUT_MS = 8000
+
+MONGO_MAX_POOL_SIZE = DEFAULT_MONGO_MAX_POOL_SIZE
+MONGO_MIN_POOL_SIZE = DEFAULT_MONGO_MIN_POOL_SIZE
+MONGO_MAX_IDLE_TIME_MS = DEFAULT_MONGO_MAX_IDLE_TIME_MS
+MONGO_WAIT_QUEUE_TIMEOUT_MS = DEFAULT_MONGO_WAIT_QUEUE_TIMEOUT_MS
+MONGO_SERVER_SELECTION_TIMEOUT_MS = DEFAULT_MONGO_SERVER_SELECTION_TIMEOUT_MS
+MONGO_CONNECT_TIMEOUT_MS = DEFAULT_MONGO_CONNECT_TIMEOUT_MS
+MONGO_SOCKET_TIMEOUT_MS = DEFAULT_MONGO_SOCKET_TIMEOUT_MS
+
 DEFAULT_MONGO_CONN_LOG_ENABLED = True
 DEFAULT_MONGO_CONN_LOG_INTERVAL_SECS = 60
 
@@ -261,8 +277,13 @@ def get_mongo_client(mongo_uri: str, mongo_app_name: str) -> MongoClient:
 
         client = MongoClient(
             mongo_uri,
-            serverSelectionTimeoutMS=5000,  # 5 second timeout
-            connectTimeoutMS=5000,
+            maxPoolSize=MONGO_MAX_POOL_SIZE,
+            minPoolSize=MONGO_MIN_POOL_SIZE,
+            maxIdleTimeMS=MONGO_MAX_IDLE_TIME_MS,
+            waitQueueTimeoutMS=MONGO_WAIT_QUEUE_TIMEOUT_MS,
+            serverSelectionTimeoutMS=MONGO_SERVER_SELECTION_TIMEOUT_MS,
+            connectTimeoutMS=MONGO_CONNECT_TIMEOUT_MS,
+            socketTimeoutMS=MONGO_SOCKET_TIMEOUT_MS,
             retryWrites=True,
             appname=mongo_app_name,
             event_listeners=[_mongo_connection_listener],
@@ -334,6 +355,37 @@ def parse_positive_int_config(value, default: int, setting_name: str) -> int:
         return default
 
 
+def parse_non_negative_int_config(value, default: int, setting_name: str) -> int:
+    """
+    Parse a non-negative integer configuration value with a safe fallback.
+    """
+    if value is None:
+        return default
+    try:
+        parsed = int(str(value).strip())
+        if parsed < 0:
+            raise ValueError
+        return parsed
+    except (TypeError, ValueError):
+        logger.warning(
+            "Invalid %s value '%s'; falling back to %d",
+            setting_name,
+            value,
+            default,
+        )
+        return default
+
+
+def build_mongo_app_name(feeder_id: str | None) -> str:
+    """
+    Build per-feeder MongoDB appName for Atlas attribution.
+    """
+    normalized_feeder_id = str(feeder_id).strip() if feeder_id is not None else ""
+    if not normalized_feeder_id:
+        normalized_feeder_id = "unknown"
+    return f"{DEFAULT_MONGO_APP_NAME}/{normalized_feeder_id}"
+
+
 def emit_mongo_connection_stats_if_due(now_ts: float | None = None) -> None:
     """
     Periodically emit process-level Mongo connection counts.
@@ -374,7 +426,7 @@ def mongo_client_insert(mydict, dbFlags):
     """
     try:
         mongo_uri = build_mongo_uri()
-        myclient = get_mongo_client(mongo_uri, DEFAULT_MONGO_APP_NAME)
+        myclient = get_mongo_client(mongo_uri, build_mongo_app_name(FEEDER_ID))
 
         # Select database and collection
         mydb = myclient["HelicoptersofDC-2023"]
@@ -1775,6 +1827,51 @@ if __name__ == "__main__":
         DEFAULT_MONGO_CONN_LOG_INTERVAL_SECS,
         "MONGO_CONN_LOG_INTERVAL_SECS",
     )
+    MONGO_MAX_POOL_SIZE = parse_positive_int_config(
+        config.get("MONGO_MAX_POOL_SIZE"),
+        DEFAULT_MONGO_MAX_POOL_SIZE,
+        "MONGO_MAX_POOL_SIZE",
+    )
+    MONGO_MIN_POOL_SIZE = parse_non_negative_int_config(
+        config.get("MONGO_MIN_POOL_SIZE"),
+        DEFAULT_MONGO_MIN_POOL_SIZE,
+        "MONGO_MIN_POOL_SIZE",
+    )
+    MONGO_MAX_IDLE_TIME_MS = parse_positive_int_config(
+        config.get("MONGO_MAX_IDLE_TIME_MS"),
+        DEFAULT_MONGO_MAX_IDLE_TIME_MS,
+        "MONGO_MAX_IDLE_TIME_MS",
+    )
+    MONGO_WAIT_QUEUE_TIMEOUT_MS = parse_positive_int_config(
+        config.get("MONGO_WAIT_QUEUE_TIMEOUT_MS"),
+        DEFAULT_MONGO_WAIT_QUEUE_TIMEOUT_MS,
+        "MONGO_WAIT_QUEUE_TIMEOUT_MS",
+    )
+    MONGO_SERVER_SELECTION_TIMEOUT_MS = parse_positive_int_config(
+        config.get("MONGO_SERVER_SELECTION_TIMEOUT_MS"),
+        DEFAULT_MONGO_SERVER_SELECTION_TIMEOUT_MS,
+        "MONGO_SERVER_SELECTION_TIMEOUT_MS",
+    )
+    MONGO_CONNECT_TIMEOUT_MS = parse_positive_int_config(
+        config.get("MONGO_CONNECT_TIMEOUT_MS"),
+        DEFAULT_MONGO_CONNECT_TIMEOUT_MS,
+        "MONGO_CONNECT_TIMEOUT_MS",
+    )
+    MONGO_SOCKET_TIMEOUT_MS = parse_positive_int_config(
+        config.get("MONGO_SOCKET_TIMEOUT_MS"),
+        DEFAULT_MONGO_SOCKET_TIMEOUT_MS,
+        "MONGO_SOCKET_TIMEOUT_MS",
+    )
+    if MONGO_MIN_POOL_SIZE > MONGO_MAX_POOL_SIZE:
+        logger.warning(
+            "Invalid pool size combination: MONGO_MIN_POOL_SIZE (%d) is greater than MONGO_MAX_POOL_SIZE (%d); falling back to defaults (%d/%d)",
+            MONGO_MIN_POOL_SIZE,
+            MONGO_MAX_POOL_SIZE,
+            DEFAULT_MONGO_MIN_POOL_SIZE,
+            DEFAULT_MONGO_MAX_POOL_SIZE,
+        )
+        MONGO_MIN_POOL_SIZE = DEFAULT_MONGO_MIN_POOL_SIZE
+        MONGO_MAX_POOL_SIZE = DEFAULT_MONGO_MAX_POOL_SIZE
 
     # somewhat redundant here but logging is bootstrapped before reading config
     if "DEBUG" in config and config["DEBUG"] == "True":
@@ -1858,6 +1955,7 @@ if __name__ == "__main__":
         sys.exit()
 
     if MONGO_CONN_TRACKING_ACTIVE:
+        conn_log_state = "enabled" if MONGO_CONN_LOG_ENABLED else "disabled"
         if MONGO_CONN_LOG_ENABLED:
             logger.info(
                 "Mongo connection logging enabled at %d second interval(s)",
@@ -1865,6 +1963,18 @@ if __name__ == "__main__":
             )
         else:
             logger.info("Mongo connection logging disabled")
+        logger.info(
+            "Mongo connection policy appname=%s maxPoolSize=%d minPoolSize=%d maxIdleTimeMS=%d waitQueueTimeoutMS=%d serverSelectionTimeoutMS=%d connectTimeoutMS=%d socketTimeoutMS=%d connLog=%s",
+            build_mongo_app_name(FEEDER_ID),
+            MONGO_MAX_POOL_SIZE,
+            MONGO_MIN_POOL_SIZE,
+            MONGO_MAX_IDLE_TIME_MS,
+            MONGO_WAIT_QUEUE_TIMEOUT_MS,
+            MONGO_SERVER_SELECTION_TIMEOUT_MS,
+            MONGO_CONNECT_TIMEOUT_MS,
+            MONGO_SOCKET_TIMEOUT_MS,
+            conn_log_state,
+        )
 
     if args.readlocalfiles:
         logger.debug("Using Local json files")
