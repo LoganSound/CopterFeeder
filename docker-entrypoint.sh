@@ -13,4 +13,9 @@ if [ -n "$GRAFANA_OTLP_ENDPOINT" ]; then
     export OTEL_EXPORTER_OTLP_ENDPOINT="$GRAFANA_OTLP_ENDPOINT"
 fi
 
+# Grafana Cloud OTLP uses HTTP (not gRPC); required for otlphttp endpoint
+if [ -n "$GRAFANA_OTLP_USERNAME" ] || [ -n "$GRAFANA_OTLP_ENDPOINT" ]; then
+    export OTEL_EXPORTER_OTLP_PROTOCOL="${OTEL_EXPORTER_OTLP_PROTOCOL:-http/protobuf}"
+fi
+
 exec opentelemetry-instrument "$@"
