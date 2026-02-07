@@ -142,7 +142,7 @@ The application uses Python’s standard `logging` module. Log output includes t
 
 When using Docker, application logs appear in **`docker compose logs -f`**; the container runs with `-v` (verbose) by default (see `docker-compose.yml`).
 
-**OpenTelemetry:** The container uses OpenTelemetry zero-code auto-instrumentation (traces, metrics, logs for pymongo, requests, and Python logging). By default, telemetry is exported to OTLP. Set in `.env` for Grafana Cloud:
+**OpenTelemetry:** The container uses OpenTelemetry zero-code auto-instrumentation (traces, metrics, logs for pymongo, requests, and Python logging). By default, telemetry is exported to OTLP. The `feeder_id` Resource attribute is automatically set from `FEEDER_ID`. Set in `.env` for Grafana Cloud:
 
 - `GRAFANA_OTLP_ENDPOINT` – OTLP HTTP endpoint URL (e.g. `https://otlp-gateway-prod-us-central-0.grafana.net/otlp`)
 - `GRAFANA_OTLP_USERNAME` – Grafana Cloud instance ID

@@ -3,6 +3,15 @@
 # When GRAFANA_OTLP_USERNAME and GRAFANA_OTLP_API_KEY are set, constructs
 # OTEL_EXPORTER_OTLP_HEADERS with Basic auth. When GRAFANA_OTLP_ENDPOINT is set,
 # uses it for OTEL_EXPORTER_OTLP_ENDPOINT.
+# Set OTEL Resource attribute feeder_id from FEEDER_ID when present.
+
+if [ -n "$FEEDER_ID" ]; then
+    if [ -n "$OTEL_RESOURCE_ATTRIBUTES" ]; then
+        export OTEL_RESOURCE_ATTRIBUTES="${OTEL_RESOURCE_ATTRIBUTES},feeder_id=${FEEDER_ID}"
+    else
+        export OTEL_RESOURCE_ATTRIBUTES="feeder_id=${FEEDER_ID}"
+    fi
+fi
 
 if [ -n "$GRAFANA_OTLP_USERNAME" ] && [ -n "$GRAFANA_OTLP_API_KEY" ]; then
     creds=$(printf '%s:%s' "$GRAFANA_OTLP_USERNAME" "$GRAFANA_OTLP_API_KEY")
