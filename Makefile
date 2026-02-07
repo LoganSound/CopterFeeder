@@ -28,6 +28,7 @@ help:
 # Start containers in background; builds first only when inputs have changed
 up: .build.done
 	docker compose up -d
+	docker compose ps
 
 # Stop and remove containers
 down:
