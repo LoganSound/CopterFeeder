@@ -1,3 +1,10 @@
+## 25.2.17 (2026-02-07)
+
+### Fix
+
+- updated to use http/protobuf for otel
+- add otel configs
+
 ## 25.2.16 (2026-02-06)
 
 ### Fix
