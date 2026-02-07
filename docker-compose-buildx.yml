@@ -30,6 +30,10 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTHONDONTWRITEBYTECODE=1
       - TZ=UTC
+      - OTEL_SERVICE_NAME=copterfeeder
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_LOGS_EXPORTER=otlp
     env_file: ".env"
     extra_hosts:
       #- host.docker.internal:172.17.0.1

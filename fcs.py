@@ -15,7 +15,7 @@ import signal
 import sys
 from datetime import datetime, timezone
 from threading import Lock
-from time import ctime, gmtime, sleep, strftime, time
+from time import ctime, gmtime, perf_counter, sleep, strftime, time
 from zoneinfo import ZoneInfo
 
 # Third party imports
@@ -23,6 +23,7 @@ import daemon
 import requests
 import validators
 from dotenv import dotenv_values
+from opentelemetry import metrics
 from prometheus_client import Counter, Gauge, Summary, start_http_server
 from pymongo import MongoClient, monitoring
 from pymongo.errors import ConnectionFailure, OperationFailure
@@ -150,9 +151,16 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 #   "feeder":
 
 
-# Prometheus
+# Prometheus and OpenTelemetry metrics (both exported: Prometheus /metrics, OTel to OTLP)
 
 PROM_PORT = 8999
+
+# OTel meter and instruments (created in init_prometheus; used for OTLP export)
+_otel_meter = metrics.get_meter("copterfeeder", version=VERSION)
+_otel_fcs_rx = None
+_otel_fcs_mongo_inserts = None
+_otel_fcs_sources = None
+_otel_fcs_update_heli_duration = None
 
 fcs_update_heli_time = Summary(
     "helicopter_db_update_duration_seconds",
@@ -419,6 +427,14 @@ def mongo_https_insert(mydict, dbFlags):
     fcs_mongo_inserts.labels(
         status_code=response.status_code, feeder_id=FEEDER_ID
     ).inc()
+    if _otel_fcs_mongo_inserts is not None:
+        _otel_fcs_mongo_inserts.add(
+            1,
+            {
+                "status_code": str(response.status_code),
+                "feeder_id": FEEDER_ID or "unknown",
+            },
+        )
     return response.status_code
 
 
@@ -531,6 +547,24 @@ def clean_source(source) -> str:
         return "unkn"
 
 
+def _record_otel_update_duration(func):
+    """Decorator to record fcs_update_helidb duration to OTel histogram."""
+
+    def wrapper(*args, **kwargs):
+        start = perf_counter()
+        try:
+            return func(*args, **kwargs)
+        finally:
+            if _otel_fcs_update_heli_duration is not None:
+                duration = perf_counter() - start
+                _otel_fcs_update_heli_duration.record(
+                    duration, {"feeder_id": FEEDER_ID or "unknown"}
+                )
+
+    return wrapper
+
+
+@_record_otel_update_duration
 @fcs_update_heli_time.labels(feeder_id=FEEDER_ID).time()
 def fcs_update_helidb(interval):
     """
@@ -786,6 +820,15 @@ def fcs_update_helidb(interval):
                 fcs_rx.labels(
                     icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
                 ).inc(1)
+                if _otel_fcs_rx is not None:
+                    _otel_fcs_rx.add(
+                        1,
+                        {
+                            "icao": icao_hex,
+                            "cs": callsign_label,
+                            "feeder_id": FEEDER_ID or "unknown",
+                        },
+                    )
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign_label
@@ -803,6 +846,15 @@ def fcs_update_helidb(interval):
                 fcs_rx.labels(
                     icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
                 ).inc(1)
+                if _otel_fcs_rx is not None:
+                    _otel_fcs_rx.add(
+                        1,
+                        {
+                            "icao": icao_hex,
+                            "cs": callsign_label,
+                            "feeder_id": FEEDER_ID or "unknown",
+                        },
+                    )
 
             else:
                 # increment the count
@@ -811,6 +863,15 @@ def fcs_update_helidb(interval):
                 fcs_rx.labels(
                     icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
                 ).inc(1)
+                if _otel_fcs_rx is not None:
+                    _otel_fcs_rx.add(
+                        1,
+                        {
+                            "icao": icao_hex,
+                            "cs": callsign_label,
+                            "feeder_id": FEEDER_ID or "unknown",
+                        },
+                    )
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -964,6 +1025,11 @@ def fcs_update_helidb(interval):
             source = clean_source(str(plane["type"]))
             output += " src " + source
             fcs_sources.labels(source=source, feeder_id=FEEDER_ID).inc(1)
+            if _otel_fcs_sources is not None:
+                _otel_fcs_sources.add(
+                    1,
+                    {"source": source, "feeder_id": FEEDER_ID or "unknown"},
+                )
 
         except BaseException:
 
@@ -1426,8 +1492,9 @@ def init_prometheus() -> Counter:
     try:
         # Declare globals to be modified
         global fcs_rx, fcs_mongo_inserts, fcs_sources, fcs_update_heli_time
+        global _otel_fcs_rx, _otel_fcs_mongo_inserts, _otel_fcs_sources, _otel_fcs_update_heli_duration
 
-        # Initialize counters with descriptive labels
+        # Initialize Prometheus counters with descriptive labels
         fcs_rx = Counter(
             name="fcs_rx_msgs",
             documentation="Messages received from aircraft",
@@ -1446,7 +1513,29 @@ def init_prometheus() -> Counter:
             labelnames=["source", "feeder_id"],
         )
 
-        logger.info("Prometheus metrics initialized successfully")
+        # Initialize OpenTelemetry metrics (exported to OTLP)
+        _otel_fcs_rx = _otel_meter.create_counter(
+            name="fcs_rx_msgs",
+            description="Messages received from aircraft",
+            unit="1",
+        )
+        _otel_fcs_mongo_inserts = _otel_meter.create_counter(
+            name="fcs_mongo_inserts",
+            description="MongoDB insert operations by status code",
+            unit="1",
+        )
+        _otel_fcs_sources = _otel_meter.create_counter(
+            name="fcs_msg_srcs",
+            description="Message sources by type (ADSB, MLAT, etc)",
+            unit="1",
+        )
+        _otel_fcs_update_heli_duration = _otel_meter.create_histogram(
+            name="helicopter_db_update_duration_seconds",
+            description="Time spent processing and updating the helicopter database in seconds",
+            unit="s",
+        )
+
+        logger.info("Prometheus and OTel metrics initialized successfully")
         return fcs_rx
 
     except Exception as e:
