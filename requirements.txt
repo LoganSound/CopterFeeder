@@ -1,4 +1,9 @@
 certifi==2024.7.4
+opentelemetry-distro
+opentelemetry-exporter-otlp
+opentelemetry-instrumentation-logging
+opentelemetry-instrumentation-pymongo
+opentelemetry-instrumentation-requests
 charset-normalizer==3.3.2
 dnspython==2.6.1
 docutils==0.21.2

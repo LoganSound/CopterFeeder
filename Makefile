@@ -94,10 +94,16 @@ black:
 pre-commit:
 	pre-commit run --all-files
 
-# Bump version using commitizen (updates version files and CHANGELOG)
+# Bump version using commitizen (updates version files and CHANGELOG); also updates code_date
 bump:
+	@code_date=$$(date +%Y%m%d); \
+	sed -i.bak "s/CODE_DATE = \"[0-9]*\"/CODE_DATE = \"$$code_date\"/" fcs.py && rm -f fcs.py.bak; \
+	sed -i.bak "s/code_date=\"[0-9]*\"/code_date=\"$$code_date\"/" Dockerfile && rm -f Dockerfile.bak; \
 	cz bump
 
-# Force a patch bump without requiring conventional commits
+# Force a patch bump without requiring conventional commits; also updates code_date
 force-bump:
+	@code_date=$$(date +%Y%m%d); \
+	sed -i.bak "s/CODE_DATE = \"[0-9]*\"/CODE_DATE = \"$$code_date\"/" fcs.py && rm -f fcs.py.bak; \
+	sed -i.bak "s/code_date=\"[0-9]*\"/code_date=\"$$code_date\"/" Dockerfile && rm -f Dockerfile.bak; \
 	cz bump --increment PATCH

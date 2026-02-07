@@ -2,47 +2,42 @@
 
 ## Table of Contents
 
--   [Prerequisites](#prerequisites)
--   [Running with Docker](#running-with-docker)
-    -   [Installation](#installation)
-        -   [Option 1: Using ADSB.IM Image](#option-1-using-adsbim-image)
-        -   [Option 2: Manual Setup with ADSB.im and Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
-    -   [Configuration and Running](#configuration-and-running)
-    -   [Updating Copterfeeder](#updating-copterfeeder)
--   [Logging](#logging)
--   [Makefile](#makefile)
--   [Legacy Read Me](#legacy-read-me)
+- [Prerequisites](#prerequisites)
+- [Running with Docker](#running-with-docker)
+  - [Installation](#installation)
+    - [Option 1: Using ADSB.IM Image](#option-1-using-adsbim-image)
+    - [Option 2: Manual Setup with ADSB.im and Ubuntu](#option-2-manual-setup-with-adsbim-and-ubuntu)
+  - [Configuration and Running](#configuration-and-running)
+  - [Updating Copterfeeder](#updating-copterfeeder)
+- [Logging](#logging)
+- [Makefile](#makefile)
+- [Legacy Read Me](#legacy-read-me)
 
 ## Prerequisites
 
--   A Raspberry Pi or another host with Ubuntu or a similar Linux distribution
--   A supported SDR, see the ADSB.im [supported list](https://www.adsb.im/supported#sdrs)
+- A Raspberry Pi or another host with Ubuntu or a similar Linux distribution
+- A supported SDR, see the ADSB.im [supported list](https://www.adsb.im/supported#sdrs)
 
-<br>
-
-# Running with Docker
+## Running with Docker
 
 ## Installation
 
 ### Option 1: Using ADSB.IM Image
 
-1.  Download and install the [ADSB.im](https://adsb.im) image on your device
-2.  Follow their [how-to guide](https://www.adsb.im/howto) for hardware setup and image loading
+1. Download and install the [ADSB.im](https://adsb.im) image on your device
+2. Follow their [how-to guide](https://www.adsb.im/howto) for hardware setup and image loading
+3. Delete the userland-proxy line from docker's daemon.json:
 
-3.  Delete the userland-proxy line from docker's daemon.json:
+   1. Navigate to the Docker directory and open the `daemon.json` file in a text editor:
 
-    1. Navigate to the Docker directory and open the `daemon.json` file in a text editor:
+   ```shell
+   cd /etc/docker
+   sudo nano daemon.json
+   ```
 
-    ```shell
-    cd /etc/docker
-    sudo nano daemon.json
-    ```
-
-    3. Locate the line containing `"userland-proxy": false,` and delete it.
-
-    4. Save the changes and exit the editor (in nano, press `CTRL + O`, then `Enter`, then `Ctrl+X`).
-
-4.  Proceed to the [Configuration and Running](#configuration-and-running) section
+   1. Locate the line containing `"userland-proxy": false,` and delete it.
+   1. Save the changes and exit the editor (in nano, press `CTRL+O`, then `Enter`, then `Ctrl+X`).
+4. Proceed to the [Configuration and Running](#configuration-and-running) section
 
 ### Option 2: Manual Setup with ADSB.im and Ubuntu
 
@@ -55,19 +50,21 @@ sudo apt update
 sudo apt upgrade
 ```
 
-2. Install Docker and docker-compose:
+1. Install Docker and docker-compose:
 
 **Note:** Some OS's have "docker-compose-v2" others use "docker-compose-plugin" Use the one which exists for your os - either will install the newer version of docker compose.
 
 ```shell
 sudo apt install docker.io docker-compose docker-compose-v2
 ```
+
 or
+
 ```shell
 sudo apt install docker.io docker-compose docker-compose-plugin
 ```
 
-3. To run Docker commands without sudo, add your user to the Docker group:
+1. To run Docker commands without sudo, add your user to the Docker group:
 
 ```shell
 sudo usermod -aG docker $USERNAME
@@ -75,19 +72,21 @@ sudo usermod -aG docker $USERNAME
 
 📝 **Note:** fill in your username like `JOHNDOE`
 
-4. Apply the new group membership:
+1. Apply the new group membership:
 
 ```shell
 newgrp docker
 ```
 
-5. Install Git
+1. Install Git
 
 ```shell
 sudo apt install git
 ```
 
-6. #### Install ADSB.im:
+1. Install ADSB.im
+
+### Install ADSB.im
 
 ```shell
 curl https://raw.githubusercontent.com/dirkhh/adsb-feeder-image/main/src/tools/app-install.sh | sudo bash
@@ -102,7 +101,7 @@ git clone https://github.com/LoganSound/CopterFeeder.git
 cd CopterFeeder
 ```
 
-2. Set up the environment file:
+1. Set up the environment file:
 
 ```shell
 cp .env.example .env
@@ -115,7 +114,7 @@ nano .env
 
 💡 **Nano tips:** Save: `Ctrl+O`, `Enter` | Exit: `Ctrl+X`
 
-3. Build and run the Docker container:
+1. Build and run the Docker container:
 
 ```shell
 make build
@@ -124,7 +123,7 @@ docker compose up -d
 
 Or run `make` (which defaults to `make build`). The -d flag runs the container in the background.
 
-4. (Optional) View logs:
+1. (Optional) View logs:
 
 ```shell
 docker compose logs -f
@@ -143,6 +142,14 @@ The application uses Python’s standard `logging` module. Log output includes t
 
 When using Docker, application logs appear in **`docker compose logs -f`**; the container runs with `-v` (verbose) by default (see `docker-compose.yml`).
 
+**OpenTelemetry:** The container uses OpenTelemetry zero-code auto-instrumentation (traces, metrics, logs for pymongo, requests, and Python logging). By default, telemetry is exported to stdout. Logs go to both console and OTLP (`OTEL_LOGS_EXPORTER=console,otlp`). To send to Grafana Cloud OTLP, set in `.env`:
+
+- `GRAFANA_OTLP_ENDPOINT` – OTLP endpoint URL
+- `GRAFANA_OTLP_USERNAME` – Grafana Cloud instance ID
+- `GRAFANA_OTLP_API_KEY` – Grafana Cloud API key
+
+Also set `OTEL_TRACES_EXPORTER=otlp` and `OTEL_METRICS_EXPORTER=otlp` (logs already include otlp).
+
 ## Updating CopterFeeder
 
 1. Navigate to the project folder and pull the latest
@@ -152,7 +159,7 @@ cd ./CopterFeeder
 git pull
 ```
 
-2. Build and restart the Docker container:
+1. Build and restart the Docker container:
 
 ```shell
 docker compose down
@@ -164,27 +171,27 @@ docker compose up -d
 
 The project includes a Makefile for common tasks. Run `make` with no arguments to build the container (same as `make build`). Run `make help` to list all targets.
 
-| Target         | Description                                                                 |
-|----------------|-----------------------------------------------------------------------------|
-| `make` / `make build` | Build the container using `docker-compose.yml`                              |
-| `make up`             | Start containers in background; builds first only when inputs have changed |
-| `make down`           | Stop and remove containers (`docker compose down`)                         |
-| `make clean`          | Stop containers and remove build sentinel (next `make up` will rebuild)   |
-| `make pull`           | Run git pull                                                              |
-| `make install-docker` | Install Docker and Docker Compose (Debian/Ubuntu; see [Installation](#option-2-manual-setup-with-adsbim-and-ubuntu)) |
-| `make setup-buildx`   | Set up the buildx multi-arch builder (see `buildx/` scripts)                |
-| `make setup-commitizen` | Install commitizen and set up pre-commit hooks (idempotent)                |
-| `make bake`           | Build and push multi-arch images (arm64, amd64) via buildx                 |
-| `make black`          | Run the Black code formatter on the project                                |
-| `make pre-commit`     | Run pre-commit hooks on all files                                          |
-| `make bump`           | Bump version with commitizen (updates version files and CHANGELOG)          |
-| `make force-bump`     | Force a patch bump without requiring conventional commits                 |
-| `make help`           | List all Makefile targets and descriptions                                 |
+| Target                  | Description                                                               |
+| ----------------------- | ------------------------------------------------------------------------- |
+| `make` / `make build`   | Build the container using `docker-compose.yml`                            |
+| `make up`               | Start containers in background; builds first when inputs have changed     |
+| `make down`             | Stop and remove containers (`docker compose down`)                        |
+| `make clean`            | Stop containers and remove build sentinel (next `make up` will rebuild)   |
+| `make pull`             | Run git pull                                                              |
+| `make install-docker`   | Install Docker & Compose                                                  |
+|                         |      ([Installation](#option-2-manual-setup-with-adsbim-and-ubuntu))      |
+| `make setup-buildx`     | Set up the buildx multi-arch builder (see `buildx/` scripts)              |
+| `make setup-commitizen` | Install commitizen and set up pre-commit hooks (idempotent)               |
+| `make bake`             | Build and push multi-arch images (arm64, amd64) via buildx                |
+| `make black`            | Run the Black code formatter on the project                               |
+| `make pre-commit`       | Run pre-commit hooks on all files                                         |
+| `make bump`             | Bump version with commitizen (updates version files and CHANGELOG)        |
+| `make force-bump`       | Force a patch bump without requiring conventional commits                 |
+| `make help`             | List all Makefile targets and descriptions                                |
 
-<br>
-<br>
+---
 
-# Legacy Read Me
+## Legacy Read Me
 
 ## -- BELOW HERE IS NOT UPDATED --
 
@@ -206,7 +213,7 @@ or
 sudo apt-get dist-upgrade
 ```
 
-The following is required if you don't have pip3 installed (eg: FR24 feeder images ) - Note that in later OS releases, it is not recommended to use "sudo pip3" to install libraries, rather either using the OS tools like apt to install python-XYZ or using a "venv" is preferred. See: https://packaging.python.org/en/latest/tutorials/installing-packages/ for more detailed information.
+The following is required if you don't have pip3 installed (eg: FR24 feeder images ) - Note that in later OS releases, it is not recommended to use "sudo pip3" to install libraries, rather either using the OS tools like apt to install python-XYZ or using a "venv" is preferred. See: <https://packaging.python.org/en/latest/tutorials/installing-packages/> for more detailed information.
 
 ```Shell
 sudo apt-get install python3-pip
@@ -313,9 +320,7 @@ Or run on the command line, so that you can watch debugging output (-D option):
 
 If you want to run from Crontab, use the -o (one shot) option.
 
-#type:
-
-```Shell
+```shell
 crontab -e
 ```
 
@@ -410,7 +415,7 @@ optional arguments:
 
 This script can be (arguably, should be as it simplifies many things) run as a Docker container, using docker-compose or docker compose, depending on which version of docker you have installed. Running CopterFeeder using Docker will simplify setup as a dameon, and will help simplify Python configs, especially under recent OS releases, which push using venv to avoid library conflicts. This is a bit more advanced method - detailing all of the tasks needed for installing and setting up Docker is out of the scope of this readme. There is plenty of documentation available elsewhere, from Docker, from OS maintainers and from other 3rd parties.
 
-Note: If you're using (recommended!) https://adsb.im/home image - docker-ce (community edition) is already installed. It includes the "compoose" command, so you don't need to install anything extra. Just setup ssh or shell access, login, clone the CopterFeeder github repository and skip to the "setup the .env" step below.
+Note: If you're using (recommended!) <https://adsb.im/home> image - docker-ce (community edition) is already installed. It includes the "compoose" command, so you don't need to install anything extra. Just setup ssh or shell access, login, clone the CopterFeeder github repository and skip to the "setup the .env" step below.
 
 If you are not using the adsb.im, to use this script with docker you will first need to install Docker and docker compose on your machine. If you need help for this step, search the web for your version of Linux, etc. It could be as simple as:
 
