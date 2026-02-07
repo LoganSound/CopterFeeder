@@ -4,7 +4,7 @@
 services:
 
   fcs:
-    image: fcs:25.2.12
+    image: fcs:25.2.17
     build:
       context: .
 
@@ -21,6 +21,10 @@ services:
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
+      - OTEL_SERVICE_NAME=copterfeeder
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_LOGS_EXPORTER=otlp
     env_file: ".env"
     extra_hosts:
       #- host.docker.internal:172.17.0.1

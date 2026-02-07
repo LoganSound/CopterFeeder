@@ -14,7 +14,8 @@ import os
 import signal
 import sys
 from datetime import datetime, timezone
-from time import ctime, gmtime, sleep, strftime, time
+from threading import Lock
+from time import ctime, gmtime, perf_counter, sleep, strftime, time
 from zoneinfo import ZoneInfo
 
 # Third party imports
@@ -22,8 +23,9 @@ import daemon
 import requests
 import validators
 from dotenv import dotenv_values
+from opentelemetry import metrics
 from prometheus_client import Counter, Gauge, Summary, start_http_server
-from pymongo import MongoClient
+from pymongo import MongoClient, monitoring
 from pymongo.errors import ConnectionFailure, OperationFailure
 
 from icao_heli_types import icao_heli_types
@@ -31,8 +33,8 @@ from icao_heli_types import icao_heli_types
 # import __version__
 
 ## YYYYMMDD_HHMM_REV
-CODE_DATE = "20250316"
-VERSION = "25.2.12"
+CODE_DATE = "20260207"
+VERSION = "25.2.17"
 
 
 FEEDER_ID: str | None = None
@@ -41,6 +43,83 @@ DEFAULT_MONGO_APP_NAME = "CopterFeeder"
 
 _mongo_client: MongoClient | None = None
 _mongo_client_key: tuple[str, str] | None = None  # (mongo_uri, mongo_app_name)
+
+DEFAULT_MONGO_CONN_LOG_ENABLED = True
+DEFAULT_MONGO_CONN_LOG_INTERVAL_SECS = 60
+
+MONGO_CONN_LOG_ENABLED = DEFAULT_MONGO_CONN_LOG_ENABLED
+MONGO_CONN_LOG_INTERVAL_SECS = DEFAULT_MONGO_CONN_LOG_INTERVAL_SECS
+MONGO_CONN_TRACKING_ACTIVE = False
+_mongo_conn_log_next_ts = 0.0
+
+
+class MongoConnectionTracker:
+    """Track current and lifetime MongoClient connection counts."""
+
+    def __init__(self) -> None:
+        self._lock = Lock()
+        self._open_connections_current = 0
+        self._connections_opened_total = 0
+        self._connections_closed_total = 0
+
+    def connection_opened(self) -> None:
+        with self._lock:
+            self._open_connections_current += 1
+            self._connections_opened_total += 1
+
+    def connection_closed(self) -> None:
+        with self._lock:
+            self._connections_closed_total += 1
+            self._open_connections_current = max(0, self._open_connections_current - 1)
+
+    def snapshot(self) -> tuple[int, int, int]:
+        with self._lock:
+            return (
+                self._open_connections_current,
+                self._connections_opened_total,
+                self._connections_closed_total,
+            )
+
+
+class MongoConnectionPoolListener(monitoring.ConnectionPoolListener):
+    """CMAP listener used to maintain per-process connection counters."""
+
+    def connection_created(self, event) -> None:
+        _mongo_connection_tracker.connection_opened()
+
+    def connection_closed(self, event) -> None:
+        _mongo_connection_tracker.connection_closed()
+
+    def connection_ready(self, event) -> None:
+        pass
+
+    def connection_check_out_started(self, event) -> None:
+        pass  # No-op; we only track created/closed
+
+    def connection_checked_out(self, event) -> None:
+        pass
+
+    def connection_checked_in(self, event) -> None:
+        pass
+
+    def connection_check_out_failed(self, event) -> None:
+        pass
+
+    def pool_created(self, event) -> None:
+        pass
+
+    def pool_ready(self, event) -> None:
+        pass
+
+    def pool_closed(self, event) -> None:
+        pass
+
+    def pool_cleared(self, event) -> None:
+        pass
+
+
+_mongo_connection_tracker = MongoConnectionTracker()
+_mongo_connection_listener = MongoConnectionPoolListener()
 
 # Bills
 
@@ -72,9 +151,16 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 #   "feeder":
 
 
-# Prometheus
+# Prometheus and OpenTelemetry metrics (both exported: Prometheus /metrics, OTel to OTLP)
 
 PROM_PORT = 8999
+
+# OTel meter and instruments (created in init_prometheus; used for OTLP export)
+_otel_meter = metrics.get_meter("copterfeeder", version=VERSION)
+_otel_fcs_rx = None
+_otel_fcs_mongo_inserts = None
+_otel_fcs_sources = None
+_otel_fcs_update_heli_duration = None
 
 fcs_update_heli_time = Summary(
     "helicopter_db_update_duration_seconds",
@@ -179,6 +265,7 @@ def get_mongo_client(mongo_uri: str, mongo_app_name: str) -> MongoClient:
             connectTimeoutMS=5000,
             retryWrites=True,
             appname=mongo_app_name,
+            event_listeners=[_mongo_connection_listener],
         )
 
         # Fail fast on initial connect; avoids per-insert ping.
@@ -210,6 +297,68 @@ def close_mongo_client() -> None:
     finally:
         _mongo_client = None
         _mongo_client_key = None
+
+
+def parse_bool_config(value, default: bool = True) -> bool:
+    """
+    Parse common truthy/falsey values from environment-style configuration.
+    """
+    if value is None:
+        return default
+    normalized = str(value).strip().lower()
+    if normalized in {"1", "true", "t", "yes", "y", "on"}:
+        return True
+    if normalized in {"0", "false", "f", "no", "n", "off"}:
+        return False
+    return default
+
+
+def parse_positive_int_config(value, default: int, setting_name: str) -> int:
+    """
+    Parse a positive integer configuration value with a safe fallback.
+    """
+    if value is None:
+        return default
+    try:
+        parsed = int(str(value).strip())
+        if parsed <= 0:
+            raise ValueError
+        return parsed
+    except (TypeError, ValueError):
+        logger.warning(
+            "Invalid %s value '%s'; falling back to %d",
+            setting_name,
+            value,
+            default,
+        )
+        return default
+
+
+def emit_mongo_connection_stats_if_due(now_ts: float | None = None) -> None:
+    """
+    Periodically emit process-level Mongo connection counts.
+    """
+    global _mongo_conn_log_next_ts
+
+    if not MONGO_CONN_TRACKING_ACTIVE or not MONGO_CONN_LOG_ENABLED:
+        return
+
+    if now_ts is None:
+        now_ts = time()
+
+    if now_ts < _mongo_conn_log_next_ts:
+        return
+
+    _mongo_conn_log_next_ts = now_ts + max(1, MONGO_CONN_LOG_INTERVAL_SECS)
+    open_current, opened_total, closed_total = _mongo_connection_tracker.snapshot()
+
+    logger.info(
+        "Mongo Connections feeder_id=%s open_connections_current=%d connections_opened_total=%d connections_closed_total=%d",
+        FEEDER_ID,
+        open_current,
+        opened_total,
+        closed_total,
+    )
 
 
 def mongo_client_insert(mydict, dbFlags):
@@ -278,6 +427,14 @@ def mongo_https_insert(mydict, dbFlags):
     fcs_mongo_inserts.labels(
         status_code=response.status_code, feeder_id=FEEDER_ID
     ).inc()
+    if _otel_fcs_mongo_inserts is not None:
+        _otel_fcs_mongo_inserts.add(
+            1,
+            {
+                "status_code": str(response.status_code),
+                "feeder_id": FEEDER_ID or "unknown",
+            },
+        )
     return response.status_code
 
 
@@ -390,6 +547,24 @@ def clean_source(source) -> str:
         return "unkn"
 
 
+def _record_otel_update_duration(func):
+    """Decorator to record fcs_update_helidb duration to OTel histogram."""
+
+    def wrapper(*args, **kwargs):
+        start = perf_counter()
+        try:
+            return func(*args, **kwargs)
+        finally:
+            if _otel_fcs_update_heli_duration is not None:
+                duration = perf_counter() - start
+                _otel_fcs_update_heli_duration.record(
+                    duration, {"feeder_id": FEEDER_ID or "unknown"}
+                )
+
+    return wrapper
+
+
+@_record_otel_update_duration
 @fcs_update_heli_time.labels(feeder_id=FEEDER_ID).time()
 def fcs_update_helidb(interval):
     """
@@ -645,6 +820,15 @@ def fcs_update_helidb(interval):
                 fcs_rx.labels(
                     icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
                 ).inc(1)
+                if _otel_fcs_rx is not None:
+                    _otel_fcs_rx.add(
+                        1,
+                        {
+                            "icao": icao_hex,
+                            "cs": callsign_label,
+                            "feeder_id": FEEDER_ID or "unknown",
+                        },
+                    )
             elif (
                 icao_hex in recent_flights
                 and recent_flights[icao_hex][0] != callsign_label
@@ -662,6 +846,15 @@ def fcs_update_helidb(interval):
                 fcs_rx.labels(
                     icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
                 ).inc(1)
+                if _otel_fcs_rx is not None:
+                    _otel_fcs_rx.add(
+                        1,
+                        {
+                            "icao": icao_hex,
+                            "cs": callsign_label,
+                            "feeder_id": FEEDER_ID or "unknown",
+                        },
+                    )
 
             else:
                 # increment the count
@@ -670,6 +863,15 @@ def fcs_update_helidb(interval):
                 fcs_rx.labels(
                     icao=icao_hex, cs=callsign_label, feeder_id=FEEDER_ID
                 ).inc(1)
+                if _otel_fcs_rx is not None:
+                    _otel_fcs_rx.add(
+                        1,
+                        {
+                            "icao": icao_hex,
+                            "cs": callsign_label,
+                            "feeder_id": FEEDER_ID or "unknown",
+                        },
+                    )
 
                 logger.debug(
                     "Incrmenting %s callsign %s to %d",
@@ -736,7 +938,7 @@ def fcs_update_helidb(interval):
             # if "flight" in plane and not callsign or callsign is None:
             if not callsign:
                 # should never get here - should be handled above
-                logger.warning("Callsign is empty or None")
+                logger.debug("Callsign is empty or None")
                 callsign_label = "no_call"
 
             output += " <" + callsign_label + ">"
@@ -823,6 +1025,11 @@ def fcs_update_helidb(interval):
             source = clean_source(str(plane["type"]))
             output += " src " + source
             fcs_sources.labels(source=source, feeder_id=FEEDER_ID).inc(1)
+            if _otel_fcs_sources is not None:
+                _otel_fcs_sources.add(
+                    1,
+                    {"source": source, "feeder_id": FEEDER_ID or "unknown"},
+                )
 
         except BaseException:
 
@@ -1285,8 +1492,9 @@ def init_prometheus() -> Counter:
     try:
         # Declare globals to be modified
         global fcs_rx, fcs_mongo_inserts, fcs_sources, fcs_update_heli_time
+        global _otel_fcs_rx, _otel_fcs_mongo_inserts, _otel_fcs_sources, _otel_fcs_update_heli_duration
 
-        # Initialize counters with descriptive labels
+        # Initialize Prometheus counters with descriptive labels
         fcs_rx = Counter(
             name="fcs_rx_msgs",
             documentation="Messages received from aircraft",
@@ -1305,7 +1513,29 @@ def init_prometheus() -> Counter:
             labelnames=["source", "feeder_id"],
         )
 
-        logger.info("Prometheus metrics initialized successfully")
+        # Initialize OpenTelemetry metrics (exported to OTLP)
+        _otel_fcs_rx = _otel_meter.create_counter(
+            name="fcs_rx_msgs",
+            description="Messages received from aircraft",
+            unit="1",
+        )
+        _otel_fcs_mongo_inserts = _otel_meter.create_counter(
+            name="fcs_mongo_inserts",
+            description="MongoDB insert operations by status code",
+            unit="1",
+        )
+        _otel_fcs_sources = _otel_meter.create_counter(
+            name="fcs_msg_srcs",
+            description="Message sources by type (ADSB, MLAT, etc)",
+            unit="1",
+        )
+        _otel_fcs_update_heli_duration = _otel_meter.create_histogram(
+            name="helicopter_db_update_duration_seconds",
+            description="Time spent processing and updating the helicopter database in seconds",
+            unit="s",
+        )
+
+        logger.info("Prometheus and OTel metrics initialized successfully")
         return fcs_rx
 
     except Exception as e:
@@ -1363,6 +1593,7 @@ def run_loop(interval, h_types):
             )
 
         fcs_update_helidb(interval)
+        emit_mongo_connection_stats_if_due()
 
         # dump 1x per hour
         if dump_clock >= (60 * 60 / interval):
@@ -1535,6 +1766,16 @@ if __name__ == "__main__":
         **os.environ,
     }
 
+    MONGO_CONN_LOG_ENABLED = parse_bool_config(
+        config.get("MONGO_CONN_LOG_ENABLED"),
+        DEFAULT_MONGO_CONN_LOG_ENABLED,
+    )
+    MONGO_CONN_LOG_INTERVAL_SECS = parse_positive_int_config(
+        config.get("MONGO_CONN_LOG_INTERVAL_SECS"),
+        DEFAULT_MONGO_CONN_LOG_INTERVAL_SECS,
+        "MONGO_CONN_LOG_INTERVAL_SECS",
+    )
+
     # somewhat redundant here but logging is bootstrapped before reading config
     if "DEBUG" in config and config["DEBUG"] == "True":
         #        ch=logging.StreamHandler()
@@ -1559,6 +1800,7 @@ if __name__ == "__main__":
         and config["API-KEY"] != "BigLongRandomStringOfLettersAndNumbers"
     ):
         logger.debug("Mongo API Key found - using https api ")
+        MONGO_CONN_TRACKING_ACTIVE = False
         MONGO_API_KEY = config["API-KEY"]
         mongo_insert = mongo_https_insert
         if "MONGO_URL" in config:
@@ -1601,6 +1843,7 @@ if __name__ == "__main__":
             sys.exit()
 
         logger.debug("Mongo User and Password found - using MongoClient")
+        MONGO_CONN_TRACKING_ACTIVE = True
         mongo_insert = mongo_client_insert
 
     if args.feederid:
@@ -1613,6 +1856,15 @@ if __name__ == "__main__":
             "No FEEDER_ID defined in command line options or .env file - Exiting"
         )
         sys.exit()
+
+    if MONGO_CONN_TRACKING_ACTIVE:
+        if MONGO_CONN_LOG_ENABLED:
+            logger.info(
+                "Mongo connection logging enabled at %d second interval(s)",
+                MONGO_CONN_LOG_INTERVAL_SECS,
+            )
+        else:
+            logger.info("Mongo connection logging disabled")
 
     if args.readlocalfiles:
         logger.debug("Using Local json files")

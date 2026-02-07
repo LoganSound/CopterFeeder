@@ -1,4 +1,4 @@
-.PHONY: help build up down clean pull install-docker setup-buildx bake black pre-commit bump
+.PHONY: help build up down clean setup-buildx setup-commitizen check-version-tag bake black pre-commit bump force-bump
 
 # Default target: build the container
 build:
@@ -14,10 +14,13 @@ help:
 	@echo "  make pull           - Run git pull"
 	@echo "  make install-docker - Install Docker and Docker Compose (Debian/Ubuntu; see README)"
 	@echo "  make setup-buildx   - Set up buildx multi-arch builder (buildx/ scripts)"
+	@echo "  make setup-commitizen - Install commitizen and set up pre-commit hooks if needed"
+	@echo "  make check-version-tag - Verify git tag exists for current version; create if missing"
 	@echo "  make bake           - Build and push multi-arch images (arm64, amd64)"
 	@echo "  make black          - Run Black code formatter"
 	@echo "  make pre-commit     - Run pre-commit hooks on all files"
 	@echo "  make bump           - Bump version with commitizen"
+	@echo "  make force-bump    - Force a patch bump (cz bump --increment PATCH)"
 	@echo "  make help           - Show this help"
 
 # Sentinel: build only when Dockerfile or app sources are newer than last build
@@ -27,6 +30,7 @@ help:
 # Start containers in background; builds first only when inputs have changed
 up: .build.done
 	docker compose up -d
+	docker compose ps
 
 # Stop and remove containers
 down:
@@ -55,6 +59,29 @@ install-docker:
 setup-buildx:
 	./buildx/setup_buildx_kubernetes_builder.sh
 
+# Install commitizen and set up pre-commit hooks (idempotent)
+setup-commitizen:
+	@command -v cz >/dev/null 2>&1 || { \
+		if command -v brew >/dev/null 2>&1; then \
+			brew install commitizen || pip install -r requirements-dev.txt; \
+		else \
+			pip install -r requirements-dev.txt; \
+		fi; \
+	}
+	pre-commit install
+	pre-commit install --hook-type commit-msg
+
+# Verify git tag exists for current version; create if missing (from pyproject.toml / commitizen)
+check-version-tag:
+	@ver=$$(command -v cz >/dev/null 2>&1 && cz version --project 2>/dev/null || grep -E '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/'); \
+	if git rev-parse "$$ver" >/dev/null 2>&1; then \
+		echo "Version tag $$ver exists and aligns with current version"; \
+	else \
+		echo "Version tag $$ver missing; creating annotated tag at HEAD"; \
+		git tag -a "$$ver" -m "Version $$ver"; \
+		echo "Created tag $$ver. Push with: git push origin $$ver"; \
+	fi
+
 # Build and push multi-arch images using docker-compose-buildx.yml
 bake:
 	docker buildx bake -f docker-compose-buildx.yml --builder=multiarch-builder --push --set '*.platform=linux/arm64,linux/amd64'
@@ -67,6 +94,16 @@ black:
 pre-commit:
 	pre-commit run --all-files
 
-# Bump version using commitizen (updates version files and CHANGELOG)
+# Bump version using commitizen (updates version files and CHANGELOG); also updates code_date
 bump:
+	@code_date=$$(date +%Y%m%d); \
+	sed -i.bak "s/CODE_DATE = \"[0-9]*\"/CODE_DATE = \"$$code_date\"/" fcs.py && rm -f fcs.py.bak; \
+	sed -i.bak "s/code_date=\"[0-9]*\"/code_date=\"$$code_date\"/" Dockerfile && rm -f Dockerfile.bak; \
 	cz bump
+
+# Force a patch bump without requiring conventional commits; also updates code_date
+force-bump:
+	@code_date=$$(date +%Y%m%d); \
+	sed -i.bak "s/CODE_DATE = \"[0-9]*\"/CODE_DATE = \"$$code_date\"/" fcs.py && rm -f fcs.py.bak; \
+	sed -i.bak "s/code_date=\"[0-9]*\"/code_date=\"$$code_date\"/" Dockerfile && rm -f Dockerfile.bak; \
+	cz bump --increment PATCH
