@@ -63,7 +63,7 @@ spec:
                 configMapKeyRef:
                   key: SERVER
                   name: fcs-dev-env
-          image: registry.brauhausdc.org:5000/fcs/fcs:26.2.0
+          image: registry.brauhausdc.org:5000/fcs/fcs:26.2.1
           name: fcs
           ports:
             - containerPort: 8999
