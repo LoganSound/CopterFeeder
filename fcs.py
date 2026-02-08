@@ -44,7 +44,6 @@ from icao_heli_types import icao_heli_types
 CODE_DATE = "20260208"
 VERSION = "26.3.0"
 
-# this is a comment to trigger a commit - it will be removed later
 
 FEEDER_ID: str | None = None
 
