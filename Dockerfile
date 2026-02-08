@@ -3,7 +3,7 @@ FROM python:3.12 AS builder
 
 # Add build metadata
 LABEL maintainer="CopterSpotter Team"
-LABEL version="25.3.0"
+LABEL version="25.4.0"
 LABEL code_date="20260208"
 LABEL description="Feed CopterSpotter Service"
 
@@ -31,7 +31,7 @@ RUN pip wheel --no-deps --wheel-dir /build/wheels -r requirements.txt
 # Runtime stage
 FROM python:3.12-slim
 
-ARG VERSION=25.3.0
+ARG VERSION=25.4.0
 
 # Add runtime metadata
 LABEL maintainer="CopterSpotter Team"

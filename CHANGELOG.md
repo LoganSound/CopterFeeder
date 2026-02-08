@@ -1,3 +1,43 @@
+## 26.2.0 (2026-02-08)
+
+### Feat
+
+- harden mongo connection efficiency defaults
+
+## 25.2.17 (2026-02-07)
+
+### Fix
+
+- updated to use http/protobuf for otel
+- add otel configs
+
+## 25.2.16 (2026-02-07)
+
+### Fix
+
+- **logging**: lower missing callsign message to debug
+- add missing pool_ready no-op CMAP handler
+
+## 25.2.15 (2026-02-06)
+
+### Fix
+
+- Added more handlers with pass
+
+## 25.2.14 (2026-02-06)
+
+### Fix
+
+- added no-op defs to clean up errors and keep tracking
+
+## 25.2.13 (2026-02-06)
+
+### Fix
+
+- Added logging for mongo connections updated README and Makefile
+
+## 25.2.12 (2026-02-04)
+
 ## 25.3.0 (2026-02-08)
 
 ### Feat
