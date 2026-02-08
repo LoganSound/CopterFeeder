@@ -27,4 +27,11 @@ if [ -n "$GRAFANA_OTLP_USERNAME" ] || [ -n "$GRAFANA_OTLP_ENDPOINT" ]; then
     export OTEL_EXPORTER_OTLP_PROTOCOL="${OTEL_EXPORTER_OTLP_PROTOCOL:-http/protobuf}"
 fi
 
+# Disable OTLP exporters when no endpoint is configured to avoid connection errors to localhost:4317
+if [ -z "$OTEL_EXPORTER_OTLP_ENDPOINT" ]; then
+    export OTEL_TRACES_EXPORTER=none
+    export OTEL_METRICS_EXPORTER=none
+    export OTEL_LOGS_EXPORTER=none
+fi
+
 exec opentelemetry-instrument "$@"
