@@ -17,6 +17,7 @@
 
 - A Raspberry Pi or another host with Ubuntu or a similar Linux distribution
 - A supported SDR, see the ADSB.im [supported list](https://www.adsb.im/supported#sdrs)
+- **make** – used for build and common tasks (see [Makefile](#makefile)). If it isn’t installed: `sudo apt install make` (Ubuntu/Debian) or use your system package manager.
 
 ## Running with Docker
 
@@ -162,7 +163,7 @@ Operational tradeoffs:
 
 Atlas app-name attribution uses `CopterFeeder/<FEEDER_ID>` (fallback: `CopterFeeder/unknown`) so each feeder can be identified in MongoDB monitoring.
 
-**OpenTelemetry:** The container uses OpenTelemetry zero-code auto-instrumentation (traces, metrics, logs for pymongo, requests, and Python logging). By default, telemetry is exported to OTLP. The `feeder_id` Resource attribute is automatically set from `FEEDER_ID`. Set in `.env` for Grafana Cloud:
+**OpenTelemetry:** The container uses OpenTelemetry zero-code auto-instrumentation (traces, metrics, logs for pymongo, requests, and Python logging). By default, telemetry is exported to OTLP. The `feeder_id` Resource attribute is automatically set from `FEEDER_ID`. Ask Project Admins for OTEL/Grafana OTLP configuration. Set in `.env` for Grafana Cloud:
 
 - `GRAFANA_OTLP_ENDPOINT` – OTLP HTTP endpoint URL (e.g. `https://otlp-gateway-prod-us-central-0.grafana.net/otlp`)
 - `GRAFANA_OTLP_USERNAME` – Grafana Cloud instance ID

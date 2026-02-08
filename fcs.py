@@ -23,7 +23,15 @@ import daemon
 import requests
 import validators
 from dotenv import dotenv_values
-from opentelemetry import metrics
+
+try:
+    from opentelemetry import metrics
+
+    _otel_available = True
+except ImportError:
+    metrics = None  # type: ignore[misc, assignment]
+    _otel_available = False
+
 from prometheus_client import Counter, Gauge, Summary, start_http_server
 from pymongo import MongoClient, monitoring
 from pymongo.errors import ConnectionFailure, OperationFailure
@@ -167,12 +175,11 @@ MONGO_URL = "https://us-central1.gcp.data.mongodb-api.com/app/feeder-puqvq/endpo
 #   "feeder":
 
 
-# Prometheus and OpenTelemetry metrics (both exported: Prometheus /metrics, OTel to OTLP)
+# Prometheus and OpenTelemetry metrics (Prometheus /metrics; OTel to OTLP when configured)
 
 PROM_PORT = 8999
 
-# OTel meter and instruments (created in init_prometheus; used for OTLP export)
-_otel_meter = metrics.get_meter("copterfeeder", version=VERSION)
+# OTel instruments (created in init_prometheus when OTEL_METRICS_EXPORTER contains "otlp")
 _otel_fcs_rx = None
 _otel_fcs_mongo_inserts = None
 _otel_fcs_sources = None
@@ -1565,29 +1572,36 @@ def init_prometheus() -> Counter:
             labelnames=["source", "feeder_id"],
         )
 
-        # Initialize OpenTelemetry metrics (exported to OTLP)
-        _otel_fcs_rx = _otel_meter.create_counter(
-            name="fcs_rx_msgs",
-            description="Messages received from aircraft",
-            unit="1",
+        # Initialize OpenTelemetry metrics when OTEL_METRICS_EXPORTER includes otlp
+        _otel_metrics_enabled = (
+            _otel_available
+            and "otlp" in os.environ.get("OTEL_METRICS_EXPORTER", "").lower()
         )
-        _otel_fcs_mongo_inserts = _otel_meter.create_counter(
-            name="fcs_mongo_inserts",
-            description="MongoDB insert operations by status code",
-            unit="1",
-        )
-        _otel_fcs_sources = _otel_meter.create_counter(
-            name="fcs_msg_srcs",
-            description="Message sources by type (ADSB, MLAT, etc)",
-            unit="1",
-        )
-        _otel_fcs_update_heli_duration = _otel_meter.create_histogram(
-            name="helicopter_db_update_duration_seconds",
-            description="Time spent processing and updating the helicopter database in seconds",
-            unit="s",
-        )
-
-        logger.info("Prometheus and OTel metrics initialized successfully")
+        if _otel_metrics_enabled:
+            _otel_meter = metrics.get_meter("copterfeeder", version=VERSION)
+            _otel_fcs_rx = _otel_meter.create_counter(
+                name="fcs_rx_msgs",
+                description="Messages received from aircraft",
+                unit="1",
+            )
+            _otel_fcs_mongo_inserts = _otel_meter.create_counter(
+                name="fcs_mongo_inserts",
+                description="MongoDB insert operations by status code",
+                unit="1",
+            )
+            _otel_fcs_sources = _otel_meter.create_counter(
+                name="fcs_msg_srcs",
+                description="Message sources by type (ADSB, MLAT, etc)",
+                unit="1",
+            )
+            _otel_fcs_update_heli_duration = _otel_meter.create_histogram(
+                name="helicopter_db_update_duration_seconds",
+                description="Time spent processing and updating the helicopter database in seconds",
+                unit="s",
+            )
+            logger.info("Prometheus and OTel metrics initialized successfully")
+        else:
+            logger.info("Prometheus metrics initialized successfully (OTel disabled)")
         return fcs_rx
 
     except Exception as e:
