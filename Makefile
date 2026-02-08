@@ -31,6 +31,8 @@ help:
 up: .build.done
 	docker compose up -d --force-recreate
 	docker compose ps
+	@echo ""
+	@echo "container is running - to view logs, run: docker compose logs -f fcs"
 
 # Stop and remove containers
 down:
