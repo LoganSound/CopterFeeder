@@ -1,3 +1,9 @@
+## 25.3.0 (2026-02-08)
+
+### Feat
+
+- harden mongo connection efficiency defaults
+
 ## 25.2.17 (2026-02-07)
 
 ### Fix
