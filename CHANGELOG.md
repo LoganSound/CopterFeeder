@@ -1,3 +1,16 @@
+## 26.3.1 (2026-02-08)
+
+### Fix
+
+- cleanup comment
+
+## 26.3.0 (2026-02-08)
+
+### Fix
+
+- make otel use conditional
+- make otel conditional
+
 ## 26.2.1 (2026-02-08)
 
 ## 25.4.0 (2026-02-08)

@@ -29,8 +29,10 @@ help:
 
 # Start containers in background; builds first only when inputs have changed
 up: .build.done
-	docker compose up -d
+	docker compose up -d --force-recreate
 	docker compose ps
+	@echo ""
+	@echo "container is running - to view logs, run: docker compose logs -f fcs"
 
 # Stop and remove containers
 down:
