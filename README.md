@@ -160,6 +160,7 @@ Operational tradeoffs:
 - Prioritizes lower connection footprint over maximum burst throughput.
 - Small pools can briefly queue inserts under local spikes.
 - Timeouts fail quickly on unhealthy networks, which improves recovery behavior but may surface transient errors sooner.
+- In MongoClient mode, startup performs a bounded Mongo readiness check (up to ~75 seconds with backoff) and exits if Mongo stays unavailable so supervisors can restart.
 
 Atlas app-name attribution uses `CopterFeeder/<FEEDER_ID>` (fallback: `CopterFeeder/unknown`) so each feeder can be identified in MongoDB monitoring.
 
