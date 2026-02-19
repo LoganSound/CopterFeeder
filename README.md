@@ -131,6 +131,23 @@ docker compose logs -f
 
 📝 **Note:** `Ctrl-C` escapes you from viewing logs
 
+## Updating CopterFeeder
+
+1. Navigate to the project folder and pull the latest
+
+```shell
+cd ./CopterFeeder
+git pull
+```
+
+1. Build and restart the Docker container:
+
+```shell
+docker compose down
+make build
+docker compose up -d
+```
+
 ## Logging
 
 The application uses Python’s standard `logging` module. Log output includes timestamp, module name, level, and message.
@@ -169,23 +186,6 @@ Atlas app-name attribution uses `CopterFeeder/<FEEDER_ID>` (fallback: `CopterFee
 - `GRAFANA_OTLP_API_KEY` – Grafana Cloud API key
 
 Override to add `console` for local debugging (e.g. `OTEL_TRACES_EXPORTER=console,otlp`). The entrypoint automatically sets `OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf` for Grafana's otlphttp endpoint.
-
-## Updating CopterFeeder
-
-1. Navigate to the project folder and pull the latest
-
-```shell
-cd ./CopterFeeder
-git pull
-```
-
-1. Build and restart the Docker container:
-
-```shell
-docker compose down
-make build
-docker compose up -d
-```
 
 ## Makefile
 
