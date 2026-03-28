@@ -15,6 +15,11 @@ This skill is a direct conversion of the CopterSpotter runbook in `references/so
 - You need a reproducible feeder report for a fixed historical range.
 - The workflow should use MongoDB MCP aggregations instead of ad hoc shell or database commands.
 
+## Prerequisites
+
+- This skill requires MongoDB MCP access.
+- If MongoDB MCP is unavailable or not connected, stop and ask the user to provide or connect it.
+
 ## Workflow
 
 ### 1. Discover repo defaults before asking
