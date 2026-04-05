@@ -1,0 +1,4 @@
+interface:
+  display_name: "ADSB Feeder Healthcheck"
+  short_description: "Check ADS-B feeder activity in MongoDB"
+  default_prompt: "Use $adsb-feeder-healthcheck to inspect feeder recency or last-seen activity with MongoDB MCP."
