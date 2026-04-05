@@ -59,6 +59,8 @@ DEFAULT_MONGO_WAIT_QUEUE_TIMEOUT_MS = 1000
 DEFAULT_MONGO_SERVER_SELECTION_TIMEOUT_MS = 5000
 DEFAULT_MONGO_CONNECT_TIMEOUT_MS = 5000
 DEFAULT_MONGO_SOCKET_TIMEOUT_MS = 8000
+DEFAULT_MONGO_STARTUP_READINESS_TIMEOUT_SECS = 75
+DEFAULT_MONGO_STARTUP_READINESS_MAX_BACKOFF_SECS = 16
 
 MONGO_MAX_POOL_SIZE = DEFAULT_MONGO_MAX_POOL_SIZE
 MONGO_MIN_POOL_SIZE = DEFAULT_MONGO_MIN_POOL_SIZE
@@ -391,6 +393,67 @@ def build_mongo_app_name(feeder_id: str | None) -> str:
     if not normalized_feeder_id:
         normalized_feeder_id = "unknown"
     return f"{DEFAULT_MONGO_APP_NAME}/{normalized_feeder_id}"
+
+
+def verify_mongo_startup_readiness() -> None:
+    """
+    Verify MongoDB connectivity during startup with bounded retries.
+
+    Raises:
+        Exception: Re-raises the latest exception when readiness checks exhaust retry budget.
+    """
+    mongo_uri = build_mongo_uri()
+    mongo_app_name = build_mongo_app_name(FEEDER_ID)
+    start_ts = perf_counter()
+    attempt = 1
+    sleep_secs = 1.0
+
+    while True:
+        try:
+            get_mongo_client(mongo_uri, mongo_app_name)
+            elapsed = perf_counter() - start_ts
+            logger.info(
+                "Mongo startup readiness check passed feeder_id=%s appname=%s attempts=%d elapsed=%.1fs",
+                FEEDER_ID,
+                mongo_app_name,
+                attempt,
+                elapsed,
+            )
+            return
+        except Exception as e:
+            elapsed = perf_counter() - start_ts
+            remaining_secs = DEFAULT_MONGO_STARTUP_READINESS_TIMEOUT_SECS - elapsed
+            if remaining_secs <= 0:
+                logger.error(
+                    "Mongo startup readiness check failed feeder_id=%s appname=%s attempts=%d elapsed=%.1fs error=%s",
+                    FEEDER_ID,
+                    mongo_app_name,
+                    attempt,
+                    elapsed,
+                    e,
+                )
+                raise
+
+            retry_sleep_secs = min(
+                sleep_secs,
+                remaining_secs,
+                DEFAULT_MONGO_STARTUP_READINESS_MAX_BACKOFF_SECS,
+            )
+            logger.warning(
+                "Mongo startup readiness check failed feeder_id=%s appname=%s attempt=%d elapsed=%.1fs retry_in=%.1fs error=%s",
+                FEEDER_ID,
+                mongo_app_name,
+                attempt,
+                elapsed,
+                retry_sleep_secs,
+                e,
+            )
+            sleep(retry_sleep_secs)
+            sleep_secs = min(
+                sleep_secs * 2,
+                float(DEFAULT_MONGO_STARTUP_READINESS_MAX_BACKOFF_SECS),
+            )
+            attempt += 1
 
 
 def emit_mongo_connection_stats_if_due(now_ts: float | None = None) -> None:
@@ -1989,6 +2052,10 @@ if __name__ == "__main__":
             MONGO_SOCKET_TIMEOUT_MS,
             conn_log_state,
         )
+        try:
+            verify_mongo_startup_readiness()
+        except Exception:
+            sys.exit(1)
 
     if args.readlocalfiles:
         logger.debug("Using Local json files")
