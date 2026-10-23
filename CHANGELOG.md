@@ -5,6 +5,8 @@
 - Add planning roadmap: FCS code review, brauhaus ADS-B integration, helicopter-audio
   fusion, and proposed FastAPI **fcs-api** query service (`docs/planning/`, `25a9ad6` on
   `main`).
+- Extend roadmap with BirdNET-Analyzer custom rotor classifier workflow, NCR helicopter
+  operators/types, and public audio dataset references (§4.1–4.6).
 
 ### Fix
 
