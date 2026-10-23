@@ -6,7 +6,8 @@
   fusion, and proposed FastAPI **fcs-api** query service (`docs/planning/`, `25a9ad6` on
   `main`).
 - Extend roadmap with BirdNET-Analyzer custom rotor classifier workflow, NCR helicopter
-  operators/types, and public audio dataset references (§4.1–4.6).
+  operators/types, and public audio dataset references (§4.1–4.6, `2022b26`).
+- Record planning commit chain in implementation log and `docs/planning/README.md`.
 
 ### Fix
 

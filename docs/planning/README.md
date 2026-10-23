@@ -10,5 +10,4 @@ they capture decisions and open work to pick up in a later session.
 When implementing items from these docs, update `CHANGELOG.md` and link the PR from the
 planning doc’s “Implementation log” section.
 
-**Published:** roadmap landed on `main` as commit `25a9ad6` (2026-10-23); session resume in
-[brauhausdc/cursor-agent](https://github.com/brauhausdc/cursor-agent) (`17db656`).
+**Published (2026-10-23):** CopterFeeder `main` — [`25a9ad6`](https://github.com/LoganSound/CopterFeeder/commit/25a9ad6) (initial roadmap), [`206ce00`](https://github.com/LoganSound/CopterFeeder/commit/206ce00) (log/CHANGELOG), [`2022b26`](https://github.com/LoganSound/CopterFeeder/commit/2022b26) (BirdNET-Analyzer + NCR heli inventory). Session resume: [cursor-agent `17db656`](https://github.com/brauhausdc/cursor-agent/commit/17db656) / [`61c064c`](https://github.com/brauhausdc/cursor-agent/commit/61c064c) (resume README).
