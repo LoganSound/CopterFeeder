@@ -28,6 +28,7 @@ Typical deployment: Raspberry Pi or Ubuntu host with an SDR, often via [ADSB.im]
 | `buildx/` | Scripts and config for Docker buildx multi-arch (Kubernetes builder) |
 | `deprecated/` | Old scripts; avoid modifying for new behavior |
 | `Types/` | Reference data (e.g. ICAO_TYPES.csv) |
+| `docs/planning/` | Roadmap and design notes (FCS review, heli-audio, FastAPI query API) |
 
 ## Tech stack
 
