@@ -1,5 +1,11 @@
 ## 26.3.1 (2026-02-08)
 
+### Docs
+
+- Add planning roadmap: FCS code review, brauhaus ADS-B integration, helicopter-audio
+  fusion, and proposed FastAPI **fcs-api** query service (`docs/planning/`, `25a9ad6` on
+  `main`).
+
 ### Fix
 
 - cleanup comment

@@ -230,8 +230,10 @@ geospatial index on `geometry` if not already present.
 | Date | Change |
 | ---- | ------ |
 | 2026-10-23 | Initial planning doc from agent review (FCS, brauhaus, heli-audio, FastAPI API concept). |
+| 2026-10-23 | **Land:** `docs/planning/*`, `AGENTS.md` → [CopterFeeder `25a9ad6`](https://github.com/LoganSound/CopterFeeder/commit/25a9ad6) on `main`. |
+| 2026-10-23 | **Resume bookmark:** [cursor-agent `17db656`](https://github.com/brauhausdc/cursor-agent/commit/17db656) — `scripts/resume/agent_resume_20261023_d39d190b.sh`. |
 
-_Add rows when PRs land._
+_Add rows when implementation PRs land._
 
 ---
 
